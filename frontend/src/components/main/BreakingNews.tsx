@@ -44,7 +44,7 @@ export default function BreakingNews() {
               {SLIDE_CONTENT.map((slide, index) => (
                 <CarouselItem
                   key={index}
-                  className="pl-4 md:pl-1 md:basis-1/2 lg:basis-1/3"
+                  className="pl-4 md:pl-4 md:basis-1/2 lg:basis-1/3"
                 >
                   <div>
                     <SlideCard data={slide} />
