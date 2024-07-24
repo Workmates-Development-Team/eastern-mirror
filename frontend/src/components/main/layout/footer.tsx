@@ -44,7 +44,7 @@ const Footer = () => {
           ))}
         </ul>
 
-        <nav className="hidden flex-col gap-6 md:flex md:flex-row md:items-center md:gap-5 lg:gap-6 mt-8">
+        <nav className="flex-col md:flex md:flex-row md:items-center gap-10 mt-8">
           {NAVBAR_LINKS.map((link, i) => (
             <Link
               key={i}

@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import { NAVBAR_LINKS } from "@/constant/path";
 import { cn } from "@/lib/utils";
+import NavMenu from "./nav-menu";
 
 export default function Navbar() {
   return (
@@ -14,9 +15,9 @@ export default function Navbar() {
         <Image width={300} height={120} src="/images/logo.webp" alt="logo" />
       </div>
 
-      <header className="sticky z-50 top-12 container flex h-16 items-center gap-4 bg-[#002366] px-4 md:px-6">
+      <header className="sticky z-20 top-12 container flex h-16 items-center gap-4 bg-[#002366] px-4 md:px-6">
         <nav className="hidden flex-col gap-6 md:flex md:flex-row md:items-center md:gap-5 lg:gap-6">
-          {NAVBAR_LINKS.map((link, i) => (
+          {/* {NAVBAR_LINKS.map((link, i) => (
             <Link
               key={i}
               href={link.href}
@@ -24,7 +25,9 @@ export default function Navbar() {
             >
               {link.label}
             </Link>
-          ))}
+          ))} */}
+
+          <NavMenu links={NAVBAR_LINKS} />
 
           <Link
             href="/advertisment"
@@ -62,7 +65,11 @@ export default function Navbar() {
           </SheetContent>
         </Sheet>
         <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          <input type="text" placeholder="Seacrh..." className="py-1 outline-none bg-transparent text-white border-b" />
+          <input
+            type="text"
+            placeholder="Seacrh..."
+            className="py-1 outline-none bg-transparent text-white border-b"
+          />
           <Button
             variant="ghost"
             className="hover:bg-transparent"

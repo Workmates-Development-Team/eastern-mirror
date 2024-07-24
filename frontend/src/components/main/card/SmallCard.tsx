@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
+import { cn, url_maker } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const SmallCard = ({ data, isBorder }: PropsType) => {
@@ -11,21 +12,25 @@ const SmallCard = ({ data, isBorder }: PropsType) => {
       )}
     >
       <div className="col-span-4">
-        <h2 className="text-[#080F18] lora-bold text-lg pb-2.5">
-          {data.title}
-        </h2>
+        <Link href={"/" + url_maker(data.title)}>
+          <h2 className="text-[#080F18] lora-bold text-lg pb-2.5">
+            {data.title}
+          </h2>
+        </Link>
         <p className="text-[#646464] text-sm pb-2.5">{data.content}</p>
         <p className="text-xs text-[#BBBBBB]">{data.published_on}</p>
       </div>
 
       <div className="col-span-2">
-        <Image
-          width={199}
-          height={117}
-          className="w-full h-[94%] max-h-[117px] rounded-xl object-cover"
-          src={data.image}
-          alt="blog-image"
-        />
+        <Link href={"/" + url_maker(data.title)}>
+          <Image
+            width={199}
+            height={117}
+            className="w-full h-[94%] max-h-[117px] rounded-xl object-cover"
+            src={data.image}
+            alt="blog-image"
+          />
+        </Link>
       </div>
     </div>
   );

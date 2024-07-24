@@ -71,6 +71,28 @@ export const NAVBAR_LINKS = [
   {
     label: "NAGALAND",
     href: "/nagaland",
+    subLinks: [
+      {
+        label: "Dimapur",
+        href: "/dimapur",
+      },
+      {
+        label: "Mokokchung",
+        href: "/mokokchung",
+      },
+      {
+        label: "Wokha",
+        href: "/wokha",
+      },
+      {
+        label: "Zunheboto",
+        href: "/zunheboto",
+      },
+      {
+        label: "Tuensang",
+        href: "/tuensang",
+      },
+    ],
   },
 
   {
@@ -81,6 +103,7 @@ export const NAVBAR_LINKS = [
   {
     label: "SPORTS",
     href: "/sports",
+   
   },
 
   {
@@ -247,7 +270,6 @@ export const FOOTER_LINKS = [
         label: "Corrections",
         href: "/corrections",
       },
-      
     ],
   },
 ];

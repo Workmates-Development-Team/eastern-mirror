@@ -1,4 +1,5 @@
 import { CircleDollarSign, ShieldEllipsis, View } from "lucide-react";
+import { title } from "process";
 
 export const STATS = [
   {
@@ -108,4 +109,32 @@ export const TRENDING = [
   {
     label: "Anime & Comics",
   },
+];
+
+export const MOST_POPULAR = [
+  {
+    title: "Major tribes still dominate list of civil servants in state",
+    image:
+      "/images/top_news/image1.png",
+  },
+  {
+    title: 'Extortion at gunpoint in Chozuba town',
+    image: '/images/top_news/image1.png'
+  },
+  {
+    title: 'Extortion at gunpoint in Chozuba town',
+    image: '/images/top_news/image1.png'
+  },
+  {
+    title: 'Extortion at gunpoint in Chozuba town',
+    image: '/images/top_news/image1.png'
+  },
+  {
+    title: 'Extortion at gunpoint in Chozuba town',
+    image: '/images/top_news/image1.png'
+  },
+  {
+    title: 'Extortion at gunpoint in Chozuba town',
+    image: '/images/top_news/image1.png'
+  }
 ];

@@ -1,4 +1,5 @@
 import BreakingNews from "@/components/main/BreakingNews";
+import ExclusiveSection from "@/components/main/sections/ExlcusiveSection";
 import Section1 from "@/components/main/sections/Section1";
 import Section2 from "@/components/main/sections/Section2";
 import Section3 from "@/components/main/sections/Section3";
@@ -14,6 +15,7 @@ export default function Home() {
       <Section1 data={TOP_NEWS} heading="INDIA" />
       <Section1 data={TOP_NEWS} heading="EDITOR’S PICK" />
       <Section3 data={TOP_NEWS} heading="ART & ENTERTAINMENT" trending={TRENDING} />
+      <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE"/>
       <Section1 data={TOP_NEWS} heading="REGION" />
       <Section1 data={TOP_NEWS} heading="WORLD" />
       <Section3 data={TOP_NEWS} heading="SPORTS NEWS" watchNow={true} />
