@@ -216,7 +216,7 @@ const Details = ({ params }: { params: { slug: string } }) => {
 
             <div className="flex flex-col gap-12 mt-10">
               {TOP_NEWS.slice(0, 4).map((item: any, i: number) => (
-                <div className="max-w-[400px]">
+                <div key={i} className="max-w-[400px]">
                   <StoryCard item={item} />
                 </div>
               ))}

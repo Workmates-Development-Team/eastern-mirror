@@ -18,12 +18,12 @@ const Footer = () => {
 
       <div className="mt-12 grid grid-cols-5">
         {FOOTER_LINKS?.map((item, i) => (
-          <div>
+          <div key={i}>
             <h3 className="lora-medium pb-[22px]">{item.section}</h3>
 
             <ul className="flex flex-col gap-3">
               {item.links.map((link, i) => (
-                <li className="text-[15px] opacity-80 roboto-regular">
+                <li key={i} className="text-[15px] opacity-80 roboto-regular">
                   <Link href={link.href}>{link.label}</Link>
                 </li>
               ))}

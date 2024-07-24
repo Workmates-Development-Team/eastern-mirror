@@ -58,7 +58,7 @@ export default function NavMenu({ links }: PropsType) {
     <NavigationMenu>
       <NavigationMenuList className="flex-col gap-6 md:flex md:flex-row md:items-center md:gap-5 lg:gap-6">
         {links?.map((item: LinksInstance, i: number) => (
-          <NavigationMenuItem className="text-white hover:text-white relative">
+          <NavigationMenuItem key={i} className="text-white hover:text-white relative">
             {item?.subLinks?.length ? (
               <>
                 <NavigationMenuTrigger className="!bg-transparent text-white hover:text-white hover:bg-transparent focus:bg-transparent py-0 px-0">
@@ -75,7 +75,7 @@ export default function NavMenu({ links }: PropsType) {
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 md:w-[350px] lg:w-[450px] lg:grid-cols-2">
                     {item.subLinks.map((subLink: SubLink, i: number) => (
-                      <ListItem href={item.href + subLink.href} title={subLink.label}>
+                      <ListItem key={i} href={item.href + subLink.href} title={subLink.label}>
                         {subLink.label}
                       </ListItem>
                     ))}

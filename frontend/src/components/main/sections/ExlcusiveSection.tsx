@@ -15,7 +15,7 @@ const ExclusiveSection = ({ data, heading }: PropsType) => {
       <div className="container py-2 px-4 md:px-6 ">
         <div className="grid md:grid-cols-4 grid-cols-1 gap-7">
           {data.map((item: any, i: number) => (
-            <StoryCard item={item} />
+            <StoryCard key={i} item={item} />
           ))}
           <div className="flex justify-center col-span-4">
             <Link

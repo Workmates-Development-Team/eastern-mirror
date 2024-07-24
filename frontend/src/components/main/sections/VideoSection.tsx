@@ -14,10 +14,8 @@ const VideoSection = ({ data, heading }: PropsType) => {
       <div className="container py-2 px-4 md:px-6 ">
         <div className="grid md:grid-cols-4 grid-cols-1 gap-7">
           {data.map((item: any, i: number) => (
-            <div className="relative">
-                <div className="absolute top-0 left-0 right-0 bottom-0 bg-black opacity-25">
-
-                </div>
+            <div key={i} className="relative">
+              <div className="absolute top-0 left-0 right-0 bottom-0 bg-black opacity-25"></div>
               <Image
                 className="w-full h-[201.61px] object-cover"
                 src={item.image}

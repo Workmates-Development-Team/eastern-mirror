@@ -49,6 +49,7 @@ const Nagaland = () => {
           <div className="flex flex-wrap gap-3 ">
             {categories.map((item: string, i: number) => (
               <Link
+              key={i}
                 className={cn(buttonVariants({ variant: "outline" }))}
                 href={"/nagaland/" + item.toLocaleLowerCase()}
               >
@@ -59,7 +60,7 @@ const Nagaland = () => {
 
           <div className="mt-10 flex flex-col gap-7">
             {TOP_NEWS.map((item, i) => (
-              <Card data={item} />
+              <Card key={i} data={item} />
             ))}
           </div>
         </div>
@@ -74,6 +75,7 @@ const Nagaland = () => {
           <div className="flex flex-col gap-4 mt-10">
             {MOST_POPULAR.map((item: any, i: number) => (
               <PopularCard
+              key={i}
                 isBorder={i !== MOST_POPULAR.length - 1}
                 data={item}
               />

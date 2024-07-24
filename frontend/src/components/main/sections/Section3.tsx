@@ -56,7 +56,7 @@ const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
 
         <div className="grid grid-cols-4 mt-6 gap-10">
           {data.map((item: any, i: number) => (
-            <div>
+            <div key={i}>
               <div>
                 <Image
                   src={item.image}
