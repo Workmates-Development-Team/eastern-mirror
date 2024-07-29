@@ -1,6 +1,4 @@
 import AreaChartComponent from "@/components/admin/charts/AreaChart";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { STATS } from "@/static/data";
 import { Calendar, ChevronDown, View } from "lucide-react";
 

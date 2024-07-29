@@ -1,9 +1,11 @@
 import PostTable from "@/components/admin/table/PostTable";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
-const Post = () => {
+export default function Post() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-[#f3f2f7ab]">
       <div className="flex items-center justify-between">
@@ -15,9 +17,9 @@ const Post = () => {
         </div>
 
         <div>
-          <Button size="sm">
+          <Link href='/em-admin/post/add-post' className={cn(buttonVariants({size: 'sm'}))} >
             <Plus className="w-4 h-4 mr-2" /> Add New Post
-          </Button>
+          </Link>
         </div>
       </div>
 
@@ -26,6 +28,4 @@ const Post = () => {
       </div>
     </main>
   );
-};
-
-export default Post;
+}

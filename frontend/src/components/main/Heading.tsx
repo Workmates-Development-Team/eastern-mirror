@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const Heading = ({ title }: PropsType) => {
+export default function Heading({ title }: PropsType) {
   return (
     <div className="container px-4 md:px-6 flex items-center justify-center mt-28 mb-10">
       <div className="flex-grow flex flex-col gap-2">
@@ -15,8 +15,7 @@ const Heading = ({ title }: PropsType) => {
           width={280}
           height={30}
           src="/svg/heading_bg.svg"
-          alt="heading-bg"
-        />
+          alt="heading-bg" />
         <span className="relative z-10 lora-medium text-xl">{title}</span>
       </div>
       <div className="flex-grow flex flex-col gap-2">
@@ -26,9 +25,7 @@ const Heading = ({ title }: PropsType) => {
       </div>
     </div>
   );
-};
-
-export default Heading;
+}
 
 type PropsType = {
   title: string;

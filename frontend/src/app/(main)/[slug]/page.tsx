@@ -42,7 +42,7 @@ const Details = ({ params }: { params: { slug: string } }) => {
                   <p className="text-xs text-[#3D5A80]">Share</p>
                 </div>
 
-                <div >
+                <div>
                   <Image
                     width={30}
                     height={30}
@@ -224,7 +224,7 @@ const Details = ({ params }: { params: { slug: string } }) => {
           </div>
         </div>
 
-        <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE"/>
+        <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE" />
       </div>
     </div>
   );
