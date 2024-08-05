@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const authorSchema = new mongoose.Schema(
   {
@@ -13,8 +13,15 @@ const authorSchema = new mongoose.Schema(
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin",
+      ref: 'Admin',
       required: true,
+    },
+    avatar: {
+      type: String,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -22,4 +29,4 @@ const authorSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Author", authorSchema);
+export default mongoose.model('Author', authorSchema);

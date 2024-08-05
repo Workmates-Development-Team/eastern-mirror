@@ -6,5 +6,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function url_maker(text: string){
-  return text.toLocaleLowerCase().split(" ").join("-")
+  return text?.toLocaleLowerCase().split(" ").join("-")
 }

@@ -76,9 +76,9 @@ const SlideCard = ({
         className="rounded-md"
         height={112}
         src={data.image}
-        alt={data.title}
+        alt={data?.title}
       />
     </div>
-    <h3 className="text-sm roboto-regular leading-7">{data.title}</h3>
+    <h3 className="text-sm roboto-regular leading-7">{data?.title}</h3>
   </div>
 );

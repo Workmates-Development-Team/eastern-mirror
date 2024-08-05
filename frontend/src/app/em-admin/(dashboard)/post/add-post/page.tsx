@@ -155,7 +155,7 @@ const AddPost = () => {
         style={{ background: "#0080000a", minHeight: 400 }}
       />
       <Button
-        className="absolute top-4 right-4 rounded-3xl"
+        className="absolute top-20 z-10 right-4 rounded-3xl"
         size="sm"
         onClick={handleSubmit}
       >

@@ -108,7 +108,7 @@ const PopularCard = ({
   >
     <div>
       <div className="w-[65px] h-[65px]">
-        <Link href={"/" + url_maker(data.title)}>
+        <Link href={"/" + url_maker(data?.title)}>
           <Image
             width={65}
             height={65}
@@ -121,9 +121,9 @@ const PopularCard = ({
     </div>
 
     <div>
-      <Link href={"/" + url_maker(data.title)}>
+      <Link href={"/" + url_maker(data?.title)}>
         <h2 className="text-[#646464] lora-regular text-lg pb-2.5">
-          {data.title}
+          {data?.title}
         </h2>
       </Link>
     </div>
@@ -133,7 +133,7 @@ const PopularCard = ({
 const Card = ({ data }: { data: any }) => (
   <div className="bg-[#F5F6F9] grid grid-cols-6 gap-7">
     <div className="col-span-2 relative">
-      <Link href={"/" + url_maker(data.title)} className="w-full h-[200px] ">
+      <Link href={"/" + url_maker(data?.title)} className="w-full h-[200px] ">
         <Image
           width={300}
           height={200}
@@ -149,9 +149,9 @@ const Card = ({ data }: { data: any }) => (
     </div>
 
     <div className="col-span-4 flex flex-col justify-center p-3 pl-0">
-      <Link href={"/" + url_maker(data.title)}>
+      <Link href={"/" + url_maker(data?.title)}>
         <h2 className="text-[#080F18] lora-bold text-lg pb-2.5">
-          {data.title}
+          {data?.title}
         </h2>
       </Link>
       <p className="text-[#646464] text-sm pb-2.5">{data.content}</p>

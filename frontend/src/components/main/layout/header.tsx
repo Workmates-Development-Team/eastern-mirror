@@ -1,7 +1,7 @@
 import { buttonVariants } from "@/components/ui/button";
-import { getCurrentFormattedDate } from "@/helper/date";
 import { cn } from "@/lib/utils";
 import { SOCIAL_LINKS } from "@/static/socials";
+import { getCurrentFormattedDate } from "@/utils/date";
 import Link from "next/link";
 
 export default function Header() {
