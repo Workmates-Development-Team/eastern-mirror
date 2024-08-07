@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
@@ -30,8 +32,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+import { useSetRecoilState } from "recoil";
+import { profileState } from "@/atoms/profileAtom";
+import { authState } from "@/atoms/authAtom";
 
 const AdminNavbar = () => {
+  const router = useRouter();
+  const setProfile = useSetRecoilState(profileState);
+  const setAuth = useSetRecoilState(authState);
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    setAuth({
+      isAuthenticated: false,
+      token: "",
+    });
+    setProfile({
+      id: "",
+      name: "",
+      email: "",
+      isDeleted: false,
+      isActive: true,
+      createdAt: "",
+      updatedAt: "",
+    });
+    router.push("/em-admin/login");
+  };
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-white px-4 lg:h-[60px] lg:px-6 sticky top-0">
       <Sheet>
@@ -132,7 +159,7 @@ const AdminNavbar = () => {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

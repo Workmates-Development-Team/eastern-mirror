@@ -1,13 +1,14 @@
 "use client"
 
 import { RecoilRoot } from "recoil";
+import { Toaster } from 'react-hot-toast';
 
-import { cn } from "@/lib/utils";
+
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <RecoilRoot>{children}</RecoilRoot>;
+  return <RecoilRoot><Toaster />{children}</RecoilRoot>;
 }

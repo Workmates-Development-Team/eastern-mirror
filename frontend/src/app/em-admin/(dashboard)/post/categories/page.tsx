@@ -2,6 +2,8 @@ import AddCategory from "@/components/admin/AddCategory";
 import CategoryTable from "@/components/admin/table/CategoryTable";
 import React from "react";
 
+
+
 export default function Category() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-[#f3f2f7ab]">

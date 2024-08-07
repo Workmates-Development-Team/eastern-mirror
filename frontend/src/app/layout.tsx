@@ -16,6 +16,8 @@ export const metadata: Metadata = {
     "Eastern Mirror brings you the latest breaking news and current affairs. The top stories on politics, business, sports, technology, education, arts and",
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,7 +28,7 @@ export default function RootLayout({
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased w-full overflow-x-hidden",
           fontSans.variable
         )}
       >

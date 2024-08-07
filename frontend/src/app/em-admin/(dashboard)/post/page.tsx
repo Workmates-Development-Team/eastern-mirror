@@ -17,7 +17,10 @@ export default function Post() {
         </div>
 
         <div>
-          <Link href='/em-admin/post/add-post' className={cn(buttonVariants({size: 'sm'}))} >
+          <Link
+            href="/em-admin/post/add-post"
+            className={cn(buttonVariants({ size: "sm" }))}
+          >
             <Plus className="w-4 h-4 mr-2" /> Add New Post
           </Link>
         </div>

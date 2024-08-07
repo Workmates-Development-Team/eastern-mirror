@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import NavMenu from "./nav-menu";
 
 export default function Navbar() {
+  
   return (
     <>
       <div className="container px-4 md:px-6 flex justify-center mb-4">

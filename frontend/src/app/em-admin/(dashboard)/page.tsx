@@ -1,7 +1,14 @@
-import { redirect } from 'next/navigation';
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Dashboard() {
-  redirect('/em-admin/dashboard');
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/em-admin/dashboard");
+  }, [router]);
 
   return null;
 }

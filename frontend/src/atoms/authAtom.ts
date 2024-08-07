@@ -1,9 +1,11 @@
-import { atom } from 'recoil';
+import { atom, useSetRecoilState } from "recoil";
+import { useEffect } from "react";
 
 export const authState = atom({
-  key: 'authState',
+  key: "authState",
   default: {
     isAuthenticated: false,
-    token: sessionStorage.getItem('token') || '',
+    token: "", // Initial default value without accessing sessionStorage
   },
 });
+

@@ -1,11 +1,14 @@
 "use client";
 
 import React, { useState, DragEvent, ChangeEvent } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { X } from "lucide-react";
+
+// Dynamically import ReactQuill with no SSR
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const AddPost = () => {
   const [value, setValue] = useState<string>("");
@@ -77,7 +80,7 @@ const AddPost = () => {
         type="text"
         placeholder="Title"
         className={cn(
-          "lora-blod  text-2xl border-none outline-none bg-transparent w-full pb-10"
+          "lora-blod text-2xl border-none outline-none bg-transparent w-full pb-10"
         )}
         onChange={(e) => setTitle(e.target.value)}
       />
@@ -99,8 +102,13 @@ const AddPost = () => {
               className="h-full w-full object-cover rounded-md"
             />
 
-            <Button onClick={handleClear} className="absolute rounded-full top-2 right-2 bg-transparent text-white" size='icon' variant='outline'>
-                <X className="w-4 h-4" />
+            <Button
+              onClick={handleClear}
+              className="absolute rounded-full top-2 right-2 bg-transparent text-white"
+              size="icon"
+              variant="outline"
+            >
+              <X className="w-4 h-4" />
             </Button>
           </div>
         ) : (

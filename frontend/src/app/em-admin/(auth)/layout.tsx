@@ -32,7 +32,6 @@ const DashboardLayout = ({
         setProfile(data);
       } catch (error) {
         console.log(error);
-        router.push("/em-admin/login");
       } finally {
         setLoading(false);
       }
@@ -42,23 +41,14 @@ const DashboardLayout = ({
   }, [router]);
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      console.log(loading, isAuthenticated, 'okay')
-      router.push("/em-admin/login");
+    if (isAuthenticated) {
+      router.push("/em-admin/dashboard");
     }
-  }, [isAuthenticated, loading]);
+  }, [isAuthenticated, router]);
 
   if (loading) return <Spinner />;
 
-  return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <AdminSidebar />
-      <div className="flex flex-col">
-        <AdminNavbar />
-        {children}
-      </div>
-    </div>
-  );
+  return <>{children}</>;
 };
 
 export default DashboardLayout;
