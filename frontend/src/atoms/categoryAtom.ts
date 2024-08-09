@@ -4,7 +4,7 @@ export const categoryState = atom({
   key: "categoryState",
   default: [
     {
-      id: "",
+      _id: "",
       name: "",
       parentCategory: {
         id: "",

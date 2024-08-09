@@ -27,19 +27,10 @@ export const ADMIN_SIDEBAR_LINKS = [
     ],
   },
   {
-    label: "Users",
-    path: "/em-admin/user",
+    label: "Authors",
+    path: "/authors",
     icon: () => <Users className="h-4 w-4" />,
-    subLinks: [
-      {
-        label: "All Users",
-        path: "/em-admin",
-      },
-      {
-        label: "Add New Users",
-        path: "/em-admin",
-      },
-    ],
+   
   },
   {
     label: "Settings",

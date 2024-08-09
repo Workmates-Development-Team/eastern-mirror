@@ -22,8 +22,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { categoryState } from "@/atoms/categoryAtom";
 import { useRecoilValue } from "recoil";
+import { authorState } from "@/atoms/authorAtom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export type Category = {
   id: string;
@@ -32,41 +33,73 @@ export type Category = {
   status: boolean;
 };
 
-export default function CategoryTable() {
-  const categories = useRecoilValue(categoryState);
+type AUthorTableProps = {
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  search: string;
+};
+
+export default function AuthorTable({ setSearch, search }: AUthorTableProps) {
+  const authors = useRecoilValue(authorState);
 
   return (
     <div className="w-full">
       <div className="py-4">
-        <h2 className="text-lg font-semibold">Categories</h2>
+        <h2 className="text-lg font-semibold">Authors</h2>
         <div className="flex items-center py-4">
-          <Input placeholder="Filter category names..." className="max-w-sm" />
+          <Input
+            placeholder="Search authors..."
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            className="max-w-sm"
+          />
         </div>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Category Name</TableHead>
-                <TableHead>Parent Category</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Username</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {categories?.length ? (
-                categories.map((row: any) => (
+              {authors?.length ? (
+                authors.map((row: any) => (
                   <TableRow key={row._id}>
                     <TableCell>
-                      <div>{row?.name}</div>
+                      <div className="flex gap-2 items-center">
+                        <div>
+                          <Avatar>
+                            <AvatarImage
+                              src={
+                                row?.avatar
+                                  ? process.env.NEXT_PUBLIC_API_BASE_URL +
+                                    row.avatar
+                                  : "/images/noprofile.png"
+                              }
+                            />
+                            <AvatarFallback>
+                              {row?.name?.slice(0, 1)}
+                            </AvatarFallback>
+                          </Avatar>
+                        </div>
+                        <div>
+                          <p className="text-base font-medium">{row?.name}</p>
+                          <p className="text-gray-400 text-sm ">{row?.email}</p>
+                        </div>
+                      </div>
                     </TableCell>
 
                     <TableCell>
-                      <div>{row?.parentCategory?.name || "---"}</div>
+                      <div>{row?.username}</div>
                     </TableCell>
                     <TableCell>
                       <div>
-                        <Badge variant={true ? "default" : "destructive"}>
-                          {true ? "Active" : "Inactive"}
+                        <Badge
+                          variant={!row?.isDeleted ? "default" : "destructive"}
+                        >
+                          {!row?.isDeleted ? "Active" : "Inactive"}
                         </Badge>
                       </div>
                     </TableCell>
@@ -105,10 +138,7 @@ export default function CategoryTable() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={categories.length}
-                    className="h-24 text-center"
-                  >
+                  <TableCell colSpan={0} className="h-24 text-center">
                     No results.
                   </TableCell>
                 </TableRow>

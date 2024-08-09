@@ -1,5 +1,6 @@
 "use client";
 import { authState } from "@/atoms/authAtom";
+import { categoryState } from "@/atoms/categoryAtom";
 import { profileState } from "@/atoms/profileAtom";
 import AdminNavbar from "@/components/admin/Navbar";
 import AdminSidebar from "@/components/admin/Sidebar";
@@ -41,9 +42,27 @@ const DashboardLayout = ({
     fetchProfile();
   }, [router]);
 
+  const setCategories = useSetRecoilState(categoryState);
+
+  const getCategories = async () => {
+    try {
+      const { data } = await axiosInstance.get("/category/all");
+
+      setCategories(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getCategories();
+    }
+  }, [isAuthenticated]);
+
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      console.log(loading, isAuthenticated, 'okay')
+      console.log(loading, isAuthenticated, "okay");
       router.push("/em-admin/login");
     }
   }, [isAuthenticated, loading]);

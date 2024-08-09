@@ -29,6 +29,7 @@ interface SearchSelectProps {
     value: string;
     label: string;
   }[];
+  className?: string;
 }
 
 export function SeacrhSelect({
@@ -38,6 +39,7 @@ export function SeacrhSelect({
   open,
   setOpen,
   categories,
+  className = "",
 }: SearchSelectProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -46,7 +48,7 @@ export function SeacrhSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className={cn(className, "w-full justify-between")}
         >
           {value
             ? categories.find((framework) => framework.value === value)?.label

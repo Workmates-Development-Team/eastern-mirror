@@ -5,6 +5,20 @@ import { getFilePath } from "../utils/helper.js";
 import path from "path";
 import fs from "fs";
 
+const generateUniqueUsername = async (baseUsername) => {
+  let username = baseUsername;
+  let count = 1;
+  let exists = await authorModels.exists({ username });
+
+  while (exists) {
+    username = `${baseUsername}-${Math.floor(100 + Math.random() * 900)}`; // Add random 3-digit number
+    exists = await authorModels.exists({ username });
+    count++;
+  }
+
+  return username;
+};
+
 class AuthorController {
   static async add(req, res) {
     try {
@@ -31,9 +45,13 @@ class AuthorController {
         avatar = `/avatar/${req.file.filename}`;
       }
 
+      const baseUsername = name.toLowerCase().replace(/\s+/g, "-");
+      const username = await generateUniqueUsername(baseUsername);
+
       const author = new authorModels({
         name,
         email,
+        username,
         createdBy: userId,
         avatar,
       });
@@ -42,12 +60,14 @@ class AuthorController {
       res.status(201).json({ message: "Author created successfully", author });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const filePath = getFilePath(req.file.filename);
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            console.error("Failed to delete the file:", err);
-          }
-        });
+        if (req.file) {
+          const filePath = getFilePath(req.file.filename);
+          fs.unlink(filePath, (err) => {
+            if (err) {
+              console.error("Failed to delete the file:", err);
+            }
+          });
+        }
 
         return res
           .status(400)
@@ -128,7 +148,13 @@ class AuthorController {
 
   static async getAll(req, res) {
     try {
-      const { page = 1, limit = 10, search = "" } = req.query;
+      const {
+        page = 1,
+        limit = 10,
+        search = "",
+        sortBy = "createdAt",
+        sortOrder = "-1",
+      } = req.query;
       const skip = (page - 1) * limit;
 
       // Build search query
@@ -146,6 +172,7 @@ class AuthorController {
 
       const authors = await authorModels
         .find(searchQuery)
+        .sort({ [sortBy]: Number(sortOrder) })
         .skip(Number(skip))
         .limit(Number(limit));
 

@@ -1,19 +1,70 @@
 "use client";
 
-import React, { useState, DragEvent, ChangeEvent } from "react";
+import React, { useState, DragEvent, ChangeEvent, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import "react-quill/dist/quill.snow.css";
 import { X } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { SeacrhSelect } from "@/components/admin/SearchSelect";
+import { useRecoilValue } from "recoil";
+import { categoryState } from "@/atoms/categoryAtom";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Chip from "@mui/material/Chip";
+import { Box } from "@mui/material";
+import { SelectDate } from "@/components/admin/SelectDate";
+import axiosInstance from "@/utils/axios";
 
 // Dynamically import ReactQuill with no SSR
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+type CategoryOption = {
+  label: string;
+  value: string;
+};
+
+type AuthorProps = {
+  name: string;
+  _id: string;
+  avatar?: string;
+};
 
 const AddPost = () => {
   const [value, setValue] = useState<string>("");
   const [title, setTitle] = useState("");
   const [media, setMedia] = useState("");
+  const [category, setCategory] = useState("");
+  const [openPovover, setOpenPopover] = useState(false);
+  const [categories, setCategories] = useState<CategoryOption[]>([]);
+  const categories2 = useRecoilValue(categoryState);
+
+  const [authors, setAuthors] = useState<AuthorProps[]>([]);
+
+  const getAuthors = async () => {
+    try {
+      const { data } = await axiosInstance.get(`/author/all`);
+      setAuthors(data?.authors);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAuthors();
+  }, []);
+
+  useEffect(() => {
+    const newArray = categories2?.map(
+      (item: { name: string; _id: string }) => ({
+        label: item?.name,
+        value: item._id,
+      })
+    );
+
+    setCategories(newArray);
+  }, [categories2]);
 
   const handleEditorChange = (content: string) => {
     setValue(content);
@@ -145,6 +196,98 @@ const AddPost = () => {
         )}
       </div>
 
+      <div className="mb-6 grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-2 col-span-2">
+          <Label htmlFor="name">Category</Label>
+          <SeacrhSelect
+            placeholder="Select Category"
+            value={category}
+            setValue={(value) => setCategory(value)}
+            open={openPovover}
+            setOpen={setOpenPopover}
+            categories={categories}
+            className="h-[55.961px]"
+          />
+        </div>
+        <div className="flex flex-col gap-2  col-span-2">
+          <Label htmlFor="name">Tags</Label>
+          <Autocomplete
+            multiple
+            id="tags-filled"
+            options={suggestedTags.map((option) => option.title)}
+            freeSolo
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => {
+                const { key, ...tagProps } = getTagProps({ index });
+                return (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    key={key}
+                    {...tagProps}
+                  />
+                );
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                placeholder="Select Tags"
+              />
+            )}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="author">Author</Label>
+          <Autocomplete
+            id="author"
+            options={authors}
+            autoHighlight
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option) => {
+              const { key, ...optionProps } = props;
+              return (
+                <Box
+                  key={key}
+                  component="li"
+                  sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                  {...optionProps}
+                >
+                  <img
+                    loading="lazy"
+                    width="20"
+                    height="20"
+                    className="rounded-full aspect-square h-5 w-5"
+                    src={
+                      option?.avatar
+                        ? process.env.NEXT_PUBLIC_API_BASE_URL + option.avatar
+                        : "/images/noprofile.png"
+                    }
+                    alt=""
+                  />
+                  {option.name}
+                </Box>
+              );
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                inputProps={{
+                  ...params.inputProps,
+                  autoComplete: "author",
+                }}
+              />
+            )}
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="name">Date</Label>
+          <SelectDate />
+        </div>
+      </div>
+
       <ReactQuill
         value={value}
         onChange={(content, delta, source, editor) =>
@@ -174,3 +317,5 @@ const AddPost = () => {
 };
 
 export default AddPost;
+
+const suggestedTags = [{ title: "Facebook  account" }];

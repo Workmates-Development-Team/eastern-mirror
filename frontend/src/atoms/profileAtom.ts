@@ -1,14 +1,14 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const profileState = atom({
-    key: 'profileState',
-    default: {
-      id: '',
-      name: '',
-      email: '',
-      isDeleted: false,
-      isActive: true,
-      createdAt: '',
-      updatedAt: '',
-    },
-  });
+  key: "profileState",
+  default: {
+    id: "",
+    name: "",
+    email: "",
+    isDeleted: false,
+    isActive: true,
+    createdAt: "",
+    updatedAt: "",
+  },
+});

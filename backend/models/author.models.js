@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const authorSchema = new mongoose.Schema(
   {
@@ -11,9 +11,14 @@ const authorSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Admin',
+      ref: "Admin",
       required: true,
     },
     avatar: {
@@ -29,4 +34,4 @@ const authorSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('Author', authorSchema);
+export default mongoose.model("Author", authorSchema);
