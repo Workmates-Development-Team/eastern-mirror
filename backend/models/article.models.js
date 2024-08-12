@@ -16,11 +16,13 @@ const articleSchema = new mongoose.Schema(
       type: String,
     },
 
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
+    category: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+        required: true,
+      },
+    ],
 
     tags: [{ type: String }],
 
@@ -50,6 +52,10 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
 
+    slug: {
+      type: String,
+      required: true,
+    },
     publishedAt: {
       type: Date,
       default: Date.now,

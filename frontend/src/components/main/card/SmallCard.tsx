@@ -1,4 +1,4 @@
-import { cn, url_maker } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { formatDate } from "@/utils/date";
 import { getImageUrl } from "@/utils/getImageUrl";
 import Image from "next/image";
@@ -14,17 +14,19 @@ const SmallCard = ({ data, isBorder }: PropsType) => {
       )}
     >
       <div className="col-span-4">
-        <Link href={"/" + url_maker(data?.title)}>
+        <Link href={"/" + data?.slug}>
           <h2 className="text-[#080F18] lora-bold text-lg pb-2.5">
             {data?.title}
           </h2>
         </Link>
-        <p className="text-[#646464] text-sm pb-2.5">{data.content.slice(0, 101).trim()+'...'}</p>
-        <p className="text-xs text-[#BBBBBB]">{formatDate(data.publishedAt)}</p>
+        <div dangerouslySetInnerHTML={{__html: data?.content.slice(0, 101).trim() + "..."}} className="text-[#646464] text-sm pb-2.5">
+          
+        </div>
+        <p className="text-xs text-[#BBBBBB]">{formatDate(data?.publishedAt)}</p>
       </div>
 
       <div className="col-span-2">
-        <Link href={"/" + url_maker(data?.title)}>
+        <Link href={"/" + data?.slug}>
           <Image
             width={199}
             height={117}
@@ -50,6 +52,8 @@ type PropsType = {
     publishedAt: string;
     url: string;
     thumbnail: string;
+
+    slug: string;
   };
 
   isBorder: boolean;

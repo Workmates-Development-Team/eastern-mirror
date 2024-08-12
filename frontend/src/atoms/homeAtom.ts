@@ -1,9 +1,9 @@
 import { atom } from "recoil";
 
-export const articleState = atom({
-  key: "articleState",
+export const homeState = atom({
+  key: "homeState",
   default: {
-    articles: [],
+    top: [],
     currentPage: 1,
     totalPages: 1,
   },

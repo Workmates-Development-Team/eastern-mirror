@@ -5,6 +5,8 @@ import articleModels from "../models/article.models.js";
 import { articleSchema } from "../middlewares/inputValidation.js";
 import { getFilePath2 } from "../utils/helper.js";
 import fs from "fs";
+import { connect } from "http2";
+import mongoose, { Types } from "mongoose";
 
 class ArticleController {
   static async add(req, res) {
@@ -20,16 +22,12 @@ class ArticleController {
         author,
         isPublished,
         publishedAt,
+        slug,
       } = articleSchema.parse(req.body);
 
       let thumbnail = "";
       if (req.file) {
         thumbnail = `/article/${req.file.filename}`;
-      }
-
-      const categoryExists = await categoryModels.findById(category);
-      if (!categoryExists) {
-        return res.status(400).json({ message: "Invalid category ID" });
       }
 
       const authorExists = await authorModels.findById(author);
@@ -41,14 +39,15 @@ class ArticleController {
         title,
         content,
         thumbnail,
-        category,
-        tags,
+        category: JSON.parse(category),
+        tags: JSON.parse(tags),
         isPopular,
         showOnTop,
         showOnHomePage,
-        isPublished: isPublished || false,
+        isPublished: true,
         publishedAt,
         author,
+        slug,
       });
 
       await article.save();
@@ -56,6 +55,7 @@ class ArticleController {
         .status(201)
         .json({ message: "Article created successfully", article });
     } catch (error) {
+      console.log(error);
       if (error instanceof z.ZodError) {
         const filePath = getFilePath2(req.file.filename);
         fs.unlink(filePath, (err) => {
@@ -105,6 +105,7 @@ class ArticleController {
         showOnTop,
         showOnHomePage,
         author,
+        publishedAt,
       } = req.body;
 
       // Validate category and author
@@ -175,31 +176,34 @@ class ArticleController {
         order = "desc",
         search = "",
         category = "",
-        parentCategory = "",
         author = "",
       } = req.query;
 
       const query = {};
 
+      // Add full-text search if applicable
       if (search) {
         query.$text = { $search: search };
       }
 
+      // Handle category filtering
       if (category) {
-        query.category = category;
-      }
-
-      if (parentCategory) {
-        const parent = await categoryModels.findOne({ name: parentCategory });
-        if (parent) {
-          const childCategories = await categoryModels.find({
-            parentCategory: parent._id,
+        const categories = await categoryModels.find({ name: category });
+        if (!categories.length) {
+          return res.status(200).json({
+            articles: [],
+            totalPages: 0,
+            currentPage: 1,
           });
-          const childCategoryIds = childCategories.map((cat) => cat._id);
-          query.category = { $in: [parent._id, ...childCategoryIds] };
+        }
+        const categoryIds = categories.map((cat) => cat._id);
+
+        if (categoryIds.length > 0) {
+          query.category = { $in: categoryIds };
         }
       }
 
+      // Handle author filtering
       if (author) {
         const authorObj = await authorModels.findOne({ name: author });
         if (authorObj) {
@@ -207,6 +211,7 @@ class ArticleController {
         }
       }
 
+      // Query the articles with population and pagination
       const articles = await articleModels
         .find(query)
         .populate({
@@ -222,12 +227,37 @@ class ArticleController {
         .skip((page - 1) * limit)
         .limit(parseInt(limit));
 
+      // Count total documents matching the query
       const totalArticles = await articleModels.countDocuments(query);
 
       res.status(200).json({
         articles,
         totalPages: Math.ceil(totalArticles / limit),
         currentPage: parseInt(page),
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  static async getBySlug(req, res) {
+    try {
+      const { slug } = req.params;
+      const article = await articleModels
+        .findOne({
+          slug,
+        })
+        .populate({
+          path: "category",
+          select: "name parentCategory",
+          populate: {
+            path: "parentCategory",
+            select: "name",
+          },
+        })
+        .populate("author", "name");
+
+      res.status(200).json({
+        article,
       });
     } catch (error) {
       res.status(500).json({ message: error.message });

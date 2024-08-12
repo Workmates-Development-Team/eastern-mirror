@@ -8,8 +8,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { IoShareSocial } from "react-icons/io5";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getImageUrl } from "@/utils/getImageUrl";
 
 const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
+  if (!data?.length) return null;
+  console.log(data)
   return (
     <section>
       <div className="container py-2 bg-[#002366] mt-28 rounded-[21px] pt-10 pb-4 px-20 text-white">
@@ -31,7 +34,7 @@ const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
               className="w-full h-[375px] object-cover"
               width={665}
               height={375}
-              src={data[0].image}
+              src={getImageUrl(data[0].thumbnail)}
               alt="image"
             />
 
@@ -46,8 +49,12 @@ const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
 
             {watchNow ? (
               <div className="mt-6">
-                <Button variant='secondary' className="rounded-3xl flex items-center gap-2 text-[#065A68] font-bold">
-                  Watch Video<ChevronRight className="w-4 h-4" />
+                <Button
+                  variant="secondary"
+                  className="rounded-3xl flex items-center gap-2 text-[#065A68] font-bold"
+                >
+                  Watch Video
+                  <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
             ) : null}
@@ -55,11 +62,11 @@ const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
         </div>
 
         <div className="grid grid-cols-4 mt-6 gap-10">
-          {data.map((item: any, i: number) => (
+          {data?.slice(1, 5)?.map((item: any, i: number) => (
             <div key={i}>
               <div>
                 <Image
-                  src={item.image}
+                  src={getImageUrl(item.thumbnail)}
                   alt="image"
                   width={280}
                   height={145.8}

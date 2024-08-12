@@ -13,8 +13,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function SelectDate() {
+export function SelectDate({publishedAt} : {publishedAt: Date}) {
   const [date, setDate] = React.useState<Date>();
+
+  console.log(date)
 
   return (
     <Popover>

@@ -15,5 +15,6 @@ router.patch("/toggle-publish/:id", ArticleController.togglePublish);
 router.put("/update/:id", ArticleController.update);
 router.delete("/delete/:id", ArticleController.delete);
 router.get("/all", ArticleController.getAll);
+router.get("/by/:slug", ArticleController.getBySlug);
 
 export default router;

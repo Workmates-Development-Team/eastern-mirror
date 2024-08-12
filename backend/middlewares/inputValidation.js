@@ -61,6 +61,11 @@ export const articleSchema = z.object({
       required_error: "Title is required",
     })
     .min(1, "Title is required"),
+    slug: z
+    .string({
+      required_error: "slug is required",
+    })
+    .min(1, "slug is required"),
   content: z
     .string({
       required_error: "Content is required",
@@ -72,9 +77,10 @@ export const articleSchema = z.object({
       required_error: "Category ID is required",
     })
     .min(1, "Category ID is required"),
-  tags: z.array(z.string()).optional(),
+  tags: z.string().optional(),
   isPopular: z.boolean().optional(),
   showOnTop: z.boolean().optional(),
+  isPublished: z.boolean().optional(),
   showOnHomePage: z.boolean().optional(),
   author: z
     .string({

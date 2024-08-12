@@ -2,7 +2,6 @@ import { IoShareSocial } from "react-icons/io5";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { url_maker } from "@/lib/utils";
 import { getImageUrl } from "@/utils/getImageUrl";
 import { formatDate } from "@/utils/date";
 
@@ -14,7 +13,7 @@ const BigCard = ({ data }: { data: PropsType }) => {
           <IoShareSocial className="w-[22.63px] h-[22.63px] text-white" />
         </div>
 
-        <Link href={"/" + url_maker(data?.title)}>
+        <Link href={"/" + data?.slug}>
           <Image
             className="w-full h-[440px] object-cover"
             width={500}
@@ -28,23 +27,23 @@ const BigCard = ({ data }: { data: PropsType }) => {
             <div className="flex items-center justify-between uppercase text-xs">
               <div>
                 <span>Published on </span>{" "}
-                <span>{formatDate(data.publishedAt)}</span>
+                <span>{formatDate(data?.publishedAt)}</span>
               </div>
 
               <div>
                 <span>BY </span>{" "}
                 <Link href="#" className="font-medium underline">
-                  {data.author?.name}
+                  {data?.author?.name}
                 </Link>
               </div>
             </div>
-            <Link href={"/" + url_maker(data?.title)}>
+            <Link href={"/" + data?.slug}>
               <h2 className="lora-bold pt-1.5 text-xl">{data?.title}</h2>
             </Link>
           </div>
           <div
             dangerouslySetInnerHTML={{
-              __html: data.content.slice(0, 137) + "...",
+              __html: data?.content.slice(0, 137) + "...",
             }}
             className="pt-5 px-5 w-[90%] text-sm roboto-regular text-[#646464]"
           ></div>
@@ -65,4 +64,5 @@ type PropsType = {
   publishedAt: string;
   url: string;
   thumbnail: string;
+  slug: string;
 };

@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const Section1 = ({ data, heading }: PropsType) => {
+  if(!data?.length) return null
   return (
     <section>
       <Heading title={heading} />

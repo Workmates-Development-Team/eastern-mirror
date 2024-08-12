@@ -60,7 +60,7 @@ const AdminNavbar = () => {
   };
 
   return (
-    <header className="flex h-14 items-center gap-4 border-b bg-white px-4 lg:h-[60px] lg:px-6 sticky top-0">
+    <header className="flex h-14 items-center gap-4 border-b bg-white px-4 lg:h-[60px] z-50 lg:px-6 sticky top-0">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">

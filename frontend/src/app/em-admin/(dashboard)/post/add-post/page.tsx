@@ -5,24 +5,28 @@ import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import "react-quill/dist/quill.snow.css";
-import { X } from "lucide-react";
+import { ArrowUpToLine, X } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { SeacrhSelect } from "@/components/admin/SearchSelect";
 import { useRecoilValue } from "recoil";
 import { categoryState } from "@/atoms/categoryAtom";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import { Box } from "@mui/material";
-import { SelectDate } from "@/components/admin/SelectDate";
 import axiosInstance from "@/utils/axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 // Dynamically import ReactQuill with no SSR
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 type CategoryOption = {
-  label: string;
-  value: string;
+  name: string;
+  _id: string;
+  parentCategory?: {
+    id: string; // Adjusted this to match the expected type
+    name: string;
+  };
 };
 
 type AuthorProps = {
@@ -35,12 +39,13 @@ const AddPost = () => {
   const [value, setValue] = useState<string>("");
   const [title, setTitle] = useState("");
   const [media, setMedia] = useState("");
-  const [category, setCategory] = useState("");
-  const [openPovover, setOpenPopover] = useState(false);
-  const [categories, setCategories] = useState<CategoryOption[]>([]);
-  const categories2 = useRecoilValue(categoryState);
-
+  const [file, setFile] = useState<File | null>(null);
+  const [category, setCategory] = useState<CategoryOption[]>([]);
+  const categories = useRecoilValue(categoryState);
   const [authors, setAuthors] = useState<AuthorProps[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedAuthor, setSelectedAuthor] = useState<string>("");
+  const router = useRouter();
 
   const getAuthors = async () => {
     try {
@@ -55,17 +60,6 @@ const AddPost = () => {
     getAuthors();
   }, []);
 
-  useEffect(() => {
-    const newArray = categories2?.map(
-      (item: { name: string; _id: string }) => ({
-        label: item?.name,
-        value: item._id,
-      })
-    );
-
-    setCategories(newArray);
-  }, [categories2]);
-
   const handleEditorChange = (content: string) => {
     setValue(content);
   };
@@ -79,12 +73,45 @@ const AddPost = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
-    console.log({
-      title,
-      desc: value,
-      img: media,
-      slug: slugify(title),
-    });
+    try {
+      console.log({
+        title,
+        content: value,
+        category: category?.map((item) => item?._id),
+        author: selectedAuthor,
+        tags: selectedTags,
+        slug: slugify(title),
+        thumbnail: file,
+      });
+
+      const slug = slugify(title);
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", value);
+      formData.append(
+        "category",
+        JSON.stringify(category?.map((item) => item?._id))
+      );
+      formData.append("author", selectedAuthor);
+      formData.append("tags", JSON.stringify(selectedTags));
+      formData.append("slug", slug);
+      if (file) {
+        formData.append("thumbnail", file);
+      }
+      const { data } = await axiosInstance.post("/article/add", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(data);
+      toast.success(data?.message);
+      router.push("/em-admin/post/");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Something Went Wrong");
+    }
   };
 
   const [dragActive, setDragActive] = useState(false);
@@ -103,6 +130,7 @@ const AddPost = () => {
     if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
       const file = event.dataTransfer.files[0];
       const reader = new FileReader();
+      setFile(file);
       reader.onload = (e) => {
         setMedia(e.target?.result as string);
       };
@@ -114,6 +142,7 @@ const AddPost = () => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       const reader = new FileReader();
+      setFile(file);
       reader.onload = (e) => {
         setMedia(e.target?.result as string);
       };
@@ -124,6 +153,20 @@ const AddPost = () => {
   const handleClear = () => {
     setMedia("");
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue =
+        "You have unsaved changes. Do you want to save the draft or leave the page?";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [title, value, media]);
 
   return (
     <div className="p-[50px]">
@@ -146,7 +189,7 @@ const AddPost = () => {
         onDrop={handleDrop}
       >
         {media ? (
-          <div className="relative w-full bg-red-400">
+          <div className="relative w-full">
             <img
               src={media}
               alt="Selected file"
@@ -199,16 +242,41 @@ const AddPost = () => {
       <div className="mb-6 grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-2 col-span-2">
           <Label htmlFor="name">Category</Label>
-          <SeacrhSelect
-            placeholder="Select Category"
+          <Autocomplete
+            multiple
+            id="tags-filled"
+            options={categories.map((option) => option)}
+            freeSolo
             value={category}
-            setValue={(value) => setCategory(value)}
-            open={openPovover}
-            setOpen={setOpenPopover}
-            categories={categories}
-            className="h-[55.961px]"
+            getOptionLabel={(option) =>
+              typeof option === "string" ? option : option.name || ""
+            }
+            onChange={(event, newValue) => {
+              setCategory(newValue as CategoryOption[]);
+            }}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => {
+                const { key, ...tagProps } = getTagProps({ index });
+                return (
+                  <Chip
+                    variant="outlined"
+                    label={typeof option === "string" ? option : option.name}
+                    key={key}
+                    {...tagProps}
+                  />
+                );
+              })
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                placeholder="Select Tags"
+              />
+            )}
           />
         </div>
+
         <div className="flex flex-col gap-2  col-span-2">
           <Label htmlFor="name">Tags</Label>
           <Autocomplete
@@ -216,6 +284,10 @@ const AddPost = () => {
             id="tags-filled"
             options={suggestedTags.map((option) => option.title)}
             freeSolo
+            value={selectedTags}
+            onChange={(event, newValue) => {
+              setSelectedTags(newValue);
+            }}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => {
                 const { key, ...tagProps } = getTagProps({ index });
@@ -238,18 +310,21 @@ const AddPost = () => {
             )}
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 col-span-2">
           <Label htmlFor="author">Author</Label>
           <Autocomplete
             id="author"
             options={authors}
             autoHighlight
             getOptionLabel={(option) => option.name}
+            onChange={(event, newValue) => {
+              setSelectedAuthor(newValue?._id || "");
+            }}
             renderOption={(props, option) => {
               const { key, ...optionProps } = props;
               return (
                 <Box
-                  key={key}
+                  key={option._id}
                   component="li"
                   sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
                   {...optionProps}
@@ -275,16 +350,11 @@ const AddPost = () => {
                 {...params}
                 inputProps={{
                   ...params.inputProps,
-                  autoComplete: "author",
+                  autoComplete: "off",
                 }}
               />
             )}
           />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="name">Date</Label>
-          <SelectDate />
         </div>
       </div>
 
@@ -305,13 +375,24 @@ const AddPost = () => {
         }}
         style={{ background: "#0080000a", minHeight: 400 }}
       />
-      <Button
-        className="absolute top-20 z-10 right-4 rounded-3xl"
-        size="sm"
-        onClick={handleSubmit}
-      >
-        Publish
-      </Button>
+      <div className="absolute top-20 z-10 right-4 flex gap-3">
+        {/* <Button
+          disabled={!title?.length && !value.length && !media.length}
+          className=" rounded-3xl"
+          size="sm"
+          onClick={handleSubmit}
+        >
+          Save to draft
+        </Button> */}
+        <Button
+          disabled={!title?.length || !value.length}
+          className="rounded-3xl"
+          size="sm"
+          onClick={handleSubmit}
+        >
+          Publish <ArrowUpToLine className="ml-2 w-4 h-4" />
+        </Button>
+      </div>
     </div>
   );
 };
