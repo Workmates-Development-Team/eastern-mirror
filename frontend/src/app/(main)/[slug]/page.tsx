@@ -3,11 +3,13 @@
 import BreadcrumbComponent from "@/components/main/BreadcrumbConponent";
 import StoryCard from "@/components/main/card/StoryCard";
 import ExclusiveSection from "@/components/main/sections/ExlcusiveSection";
+import { url_maker } from "@/lib/utils";
 import { TOP_NEWS } from "@/static/data";
 import axiosInstance from "@/utils/axios";
 import { formatDate } from "@/utils/date";
 import { getImageUrl } from "@/utils/getImageUrl";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoShareSocial } from "react-icons/io5";
@@ -27,8 +29,8 @@ type dataInstance = {
 const Details = () => {
   const { slug } = useParams();
   const [loading, setLoading] = useState(true);
-  const [links, setLinks] = useState([])
-  const pathname = usePathname()
+  const [links, setLinks] = useState([]);
+  const pathname = usePathname();
 
   // useEffect(() => {
   //   if(pathname) {
@@ -59,8 +61,8 @@ const Details = () => {
       setData(data?.article);
     } catch (error) {
       console.log(error);
-    } finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -136,35 +138,66 @@ const Details = () => {
               </div>
 
               <div className="mt-6">
-                {
-                  data?.thumbnail? <Image
-                  width={841}
-                  height={474}
-                  className="w-full max-h-[474px] object-cover"
-                  alt="image"
-                  src={getImageUrl(data?.thumbnail)}
-                />: null
-                }
-                
+                {data?.thumbnail ? (
+                  <Image
+                    width={841}
+                    height={474}
+                    className="w-full max-h-[474px] object-cover"
+                    alt="image"
+                    src={getImageUrl(data?.thumbnail)}
+                  />
+                ) : null}
 
-                <div dangerouslySetInnerHTML={{__html: data?.content}} className="mt-10">
-                  
-                </div>
+                <div
+                  dangerouslySetInnerHTML={{ __html: data?.content }}
+                  className="mt-10"
+                ></div>
               </div>
             </div>
           </div>
 
           <div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-28">
               <div className="bg-[#002366] py-2 px-4 text-white text-lg roboto-regular">
                 <p>MOST POPULAR</p>
               </div>
             </div>
 
-            <div className="flex flex-col gap-12 mt-10">
+            <div className="flex flex-col gap-7 mt-10">
               {TOP_NEWS.slice(0, 4).map((item: any, i: number) => (
-                <div key={i} className="max-w-[400px]">
-                  <StoryCard item={item} />
+                <div key={i} className="flex gap-4">
+                  <div className="">
+                    <div className="w-[150px]">
+                      <Link href={"/" + url_maker(item.title)}>
+                        <Image
+                          className="w-[150px] h-[150px] object-cover"
+                          src={item.image}
+                          width={150}
+                          height={150}
+                          alt="image"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col justify-center">
+                    <Link href={"/" + data?.slug}>
+                      <h2 className="text-[#080F18] lora-bold text-lg pb-2.5">
+                        {item?.title.length > 50
+                          ? item.title.slice(0, 50).trim() + "..."
+                          : item.title}{" "}
+                      </h2>
+                    </Link>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: item?.content?.slice(0, 67) + '...',
+                      }}
+                      className="text-[#646464] text-sm pb-2.5"
+                    ></div>
+                    <p className="text-xs text-[#BBBBBB]">
+                      {formatDate(data?.publishedAt)}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>

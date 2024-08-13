@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 import NavMenu from "./nav-menu";
 
 export default function Navbar() {
-  
   return (
     <>
       <div className="container px-4 md:px-6 flex justify-center mb-4">
@@ -18,16 +17,6 @@ export default function Navbar() {
 
       <header className="sticky z-20 top-12 container flex h-16 items-center gap-4 bg-[#002366] px-4 md:px-6">
         <nav className="hidden flex-col gap-6 md:flex md:flex-row md:items-center md:gap-5 lg:gap-6">
-          {/* {NAVBAR_LINKS.map((link, i) => (
-            <Link
-              key={i}
-              href={link.href}
-              className="text-[#FFFFFF] whitespace-nowrap transition-colors lora-regular text-sm"
-            >
-              {link.label}
-            </Link>
-          ))} */}
-
           <NavMenu links={NAVBAR_LINKS} />
 
           <Link

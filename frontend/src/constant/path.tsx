@@ -30,7 +30,6 @@ export const ADMIN_SIDEBAR_LINKS = [
     label: "Authors",
     path: "/authors",
     icon: () => <Users className="h-4 w-4" />,
-   
   },
   {
     label: "Settings",
@@ -87,14 +86,21 @@ export const NAVBAR_LINKS = [
   },
 
   {
-    label: "ARTS AND ENTERTAINMENT",
-    href: "/arts-and-entertainment",
+    label: "India",
+    href: "/india",
+  },
+  {
+    label: "Exclusives",
+    href: "/exclusives",
+  },
+  {
+    label: "opinion",
+    href: "/opinion",
   },
 
   {
     label: "SPORTS",
     href: "/sports",
-   
   },
 
   {
@@ -103,13 +109,8 @@ export const NAVBAR_LINKS = [
   },
 
   {
-    label: "OPINION",
-    href: "/opinion",
-  },
-
-  {
-    label: "FEATURE",
-    href: "/FEATURE",
+    label: "ARTS AND ENTERTAINMENT",
+    href: "/arts-and-entertainment",
   },
 ];
 

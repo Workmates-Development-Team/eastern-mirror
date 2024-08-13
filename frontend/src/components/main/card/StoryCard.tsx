@@ -22,9 +22,9 @@ const StoryCard = ({ item }: { item: any }) => {
         />
       </Link>
 
-      <div className="h-[42%] bottom-0 w-full absolute px-[22px] py-2 text-[#FFFFFF] flex flex-col justify-between">
+      <div className="h-[32%] bottom-0 w-full absolute px-[22px] py-2 bg-[#00000045] text-[#FFFFFF] flex flex-col justify-between backdrop-blur-sm">
         <Link href={"/" + url_maker(item.title)}>
-          <h3 className="roboto-regular">{item.title}</h3>
+          <h3 className="roboto-regular">{item.title?.slice(0,50)?.trim() + '...'}</h3>
         </Link>
         <p className="font-normal text-sm">8 Foto</p>
       </div>

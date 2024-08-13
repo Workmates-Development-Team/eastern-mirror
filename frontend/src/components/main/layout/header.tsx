@@ -13,7 +13,15 @@ export default function Header() {
 
       <div className="flex items-center gap-6">
         <div>
-          <Link className={cn(buttonVariants({variant: "outline", size: 'sm'}), "roboto-bold rounded-3xl text-xs text-[#002366]")} href="#">READ e-Paper</Link>
+          <Link
+            className={cn(
+              buttonVariants({ variant: "destructive", size: "sm" }),
+              "roboto-bold rounded-3xl text-xs animate-pulse"
+            )}
+            href="#"
+          >
+            READ e-Paper
+          </Link>
         </div>
 
         <ul className="flex items-center gap-3.5">

@@ -65,7 +65,7 @@ export default function NavMenu({ links }: PropsType) {
                   <Link
                     key={i}
                     href={item.href}
-                    className="text-[#FFFFFF] whitespace-nowrap transition-colors lora-regular text-sm"
+                    className="text-[#FFFFFF] uppercase whitespace-nowrap transition-colors lora-regular text-sm"
                   >
                     {item.label}
                   </Link>
@@ -85,7 +85,7 @@ export default function NavMenu({ links }: PropsType) {
               </>
             ) : (
               <Link href={item.href} legacyBehavior passHref>
-                <NavigationMenuLink className="text-[#FFFFFF] whitespace-nowrap transition-colors lora-regular text-sm">
+                <NavigationMenuLink className="text-[#FFFFFF] uppercase whitespace-nowrap transition-colors lora-regular text-sm">
                   {item.label}
                 </NavigationMenuLink>
               </Link>

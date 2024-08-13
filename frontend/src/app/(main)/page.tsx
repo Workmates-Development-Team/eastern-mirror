@@ -9,6 +9,7 @@ import Section3 from "@/components/main/sections/Section3";
 import VideoSection from "@/components/main/sections/VideoSection";
 import { TOP_NEWS, TRENDING } from "@/static/data";
 import axiosServer from "@/utils/axiosServer";
+import Event from "@/components/main/Event";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -84,6 +85,7 @@ export default function Home() {
     <div className="min-h-screen">
       <BreakingNews />
       <Section1 data={articles} heading="TOP NEWS" />
+      <Event />
       <Section2 data={nagaland} heading="NAGALAND" />
       <Section1 data={india} heading="INDIA" />
       <Section1 data={editorsPick} heading="EDITOR’S PICK" />
