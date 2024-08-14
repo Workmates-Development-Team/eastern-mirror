@@ -54,11 +54,11 @@ export default function Navbar() {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
+        <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2">
           <input
             type="text"
             placeholder="Seacrh..."
-            className="py-1 outline-none bg-transparent text-white border-b"
+            className="py-1 outline-none bg-transparent text-white border-b max-w-[150px]"
           />
           <Button
             variant="ghost"
