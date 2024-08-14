@@ -19,11 +19,11 @@ const Section2 = ({ data, heading }: PropsType) => {
           </div>
 
           <div className="flex flex-col gap-5 mt-10">
-            {data.slice(1, 5).map((item: any, i: number) => (
+            {data.slice(1, 4).map((item: any, i: number) => (
               <SmallCard
                 data={item}
                 key={i}
-                isBorder={i !== data.slice(1, 5).length - 1}
+                isBorder={i !== data.slice(1, 4).length - 1}
               />
             ))}
 

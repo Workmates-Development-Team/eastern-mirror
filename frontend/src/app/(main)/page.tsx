@@ -83,10 +83,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <BreakingNews />
+      {/* <BreakingNews /> */}
       <Section1 data={articles} heading="TOP NEWS" />
       <Event />
       <Section2 data={nagaland} heading="NAGALAND" />
+      <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE" />
       <Section1 data={india} heading="INDIA" />
       <Section1 data={editorsPick} heading="EDITOR’S PICK" />
       <Section3
@@ -94,11 +95,11 @@ export default function Home() {
         heading="ART & ENTERTAINMENT"
         trending={TRENDING}
       />
-      <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE" />
-      <Section1 data={region} heading="REGION" />
+      
+      {/* <Section1 data={region} heading="REGION" /> */}
       <Section1 data={world} heading="WORLD" />
       <Section3 data={sports} heading="SPORTS NEWS" watchNow={true} />
-      <Section1 data={business} heading="BUSINESS" />
+      {/* <Section1 data={business} heading="BUSINESS" /> */}
       <VideoSection data={TOP_NEWS} heading="VIDEOS" />
     </div>
   );

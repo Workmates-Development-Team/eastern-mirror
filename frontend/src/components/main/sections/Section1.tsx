@@ -16,11 +16,11 @@ const Section1 = ({ data, heading }: PropsType) => {
         <BigCard data={data[0]} />
 
         <div className="flex flex-col gap-5">
-          {data.slice(1, 5).map((item: any, i: number) => (
+          {data.slice(1, 4).map((item: any, i: number) => (
             <SmallCard
               data={item}
               key={i}
-              isBorder={i !== data.slice(1, 5).length - 1}
+              isBorder={i !== data.slice(1, 4).length - 1}
             />
           ))}
 
