@@ -18,7 +18,7 @@ const Section2 = ({ data, heading }: PropsType) => {
             <BigCard data={data[0]} />
           </div>
 
-          <div className="flex flex-col gap-5 mt-10">
+          <div className="flex flex-col gap-5">
             {data.slice(1, 4).map((item: any, i: number) => (
               <SmallCard
                 data={item}

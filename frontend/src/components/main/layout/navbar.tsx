@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <>
       <div className="container px-4 md:px-6 flex justify-center mb-4">
-        <Image width={300} height={120} src="/images/logo.webp" alt="logo" />
+        <Image width={395} height={153} src="/images/logo.webp" alt="logo" />
       </div>
 
       <header className="sticky z-20 top-12 container flex h-16 items-center gap-4 bg-[#002366] px-4 md:px-6">

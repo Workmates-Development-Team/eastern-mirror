@@ -44,9 +44,9 @@ export function formatDate(isoDateString: string): string {
     year: "numeric",
     month: "short",
     day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
+    // hour: "numeric",
+    // minute: "numeric",
+    // hour12: true,
   };
 
   const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
