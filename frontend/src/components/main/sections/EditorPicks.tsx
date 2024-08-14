@@ -7,7 +7,7 @@ import Image from "next/image";
 import { FaRegPlayCircle } from "react-icons/fa";
 import StoryCard from "../card/StoryCard";
 
-const ExclusiveSection = ({ data, heading }: PropsType) => {
+const EditorPicksSection = ({ data, heading }: PropsType) => {
   return (
     <section>
       <Heading title={heading} />
@@ -34,7 +34,7 @@ const ExclusiveSection = ({ data, heading }: PropsType) => {
   );
 };
 
-export default ExclusiveSection;
+export default EditorPicksSection;
 
 type PropsType = {
   data: any;

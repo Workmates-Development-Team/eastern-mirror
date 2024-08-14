@@ -1,4 +1,6 @@
 import { url_maker } from "@/lib/utils";
+import { formatDate } from "@/utils/date";
+import { getImageUrl } from "@/utils/getImageUrl";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,6 +8,7 @@ import { FaRegPlayCircle } from "react-icons/fa";
 import { IoShareSocial } from "react-icons/io5";
 
 const StoryCard = ({ item }: { item: any }) => {
+  console.log(item)
   return (
     <div className="relative">
       <div className="bg-black z-10 bg-opacity-10 cursor-pointer absolute backdrop-blur-sm w-[30.71px] h-[30.71px] flex items-center justify-center rounded-sm top-3 right-5">
@@ -15,7 +18,7 @@ const StoryCard = ({ item }: { item: any }) => {
       <Link href={"/" + url_maker(item.title)}>
         <Image
           className="w-full h-[354.99px] object-cover"
-          src={item.image}
+          src={item.image || getImageUrl(item.thumbnail)}
           width={330}
           height={354.99}
           alt="image"
@@ -26,7 +29,7 @@ const StoryCard = ({ item }: { item: any }) => {
         <Link href={"/" + url_maker(item.title)}>
           <h3 className="roboto-regular">{item.title?.slice(0,50)?.trim() + '...'}</h3>
         </Link>
-        <p className="font-normal text-sm">8 Foto</p>
+        <p className="font-normal text-sm">{formatDate(item.publishedAt) || '8 Foto'}</p>
       </div>
     </div>
   );

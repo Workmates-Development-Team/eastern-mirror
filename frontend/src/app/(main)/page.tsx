@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import BreakingNews from "@/components/main/BreakingNews";
-import ExclusiveSection from "@/components/main/sections/ExlcusiveSection";
 import Section1 from "@/components/main/sections/Section1";
 import Section2 from "@/components/main/sections/Section2";
 import Section3 from "@/components/main/sections/Section3";
@@ -10,6 +9,7 @@ import VideoSection from "@/components/main/sections/VideoSection";
 import { TOP_NEWS, TRENDING } from "@/static/data";
 import axiosServer from "@/utils/axiosServer";
 import Event from "@/components/main/Event";
+import Section4 from "@/components/main/sections/section4";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -87,9 +87,10 @@ export default function Home() {
       <Section1 data={articles} heading="TOP NEWS" />
       <Event />
       <Section2 data={nagaland} heading="NAGALAND" />
-      <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE" />
+      <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" />
       <Section1 data={india} heading="INDIA" />
-      <Section1 data={editorsPick} heading="EDITOR’S PICK" />
+      {/* <Section1 data={editorsPick} heading="EDITOR’S PICK" /> */}
+      <Section4 data={editorsPick} heading="EDITOR’S PICK" />
       <Section3
         data={artsEntertainment}
         heading="ART & ENTERTAINMENT"

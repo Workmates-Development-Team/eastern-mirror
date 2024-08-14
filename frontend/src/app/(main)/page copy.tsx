@@ -1,8 +1,8 @@
 import BreakingNews from "@/components/main/BreakingNews";
-import ExclusiveSection from "@/components/main/sections/ExlcusiveSection";
 import Section1 from "@/components/main/sections/Section1";
 import Section2 from "@/components/main/sections/Section2";
 import Section3 from "@/components/main/sections/Section3";
+import Section4 from "@/components/main/sections/section4";
 import VideoSection from "@/components/main/sections/VideoSection";
 import { TOP_NEWS, TRENDING } from "@/static/data";
 import axiosServer from "@/utils/axiosServer";
@@ -64,7 +64,7 @@ export default async function Home() {
           heading="ART & ENTERTAINMENT"
           trending={TRENDING}
         />
-        <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE" />
+        <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" />
         <Section1 data={region} heading="REGION" />
         <Section1 data={world} heading="WORLD" />
         <Section3 data={sports} heading="SPORTS NEWS" watchNow={true} />

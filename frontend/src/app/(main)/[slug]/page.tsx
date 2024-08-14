@@ -2,7 +2,7 @@
 
 import BreadcrumbComponent from "@/components/main/BreadcrumbConponent";
 import StoryCard from "@/components/main/card/StoryCard";
-import ExclusiveSection from "@/components/main/sections/ExlcusiveSection";
+import Section4 from "@/components/main/sections/section4";
 import { url_maker } from "@/lib/utils";
 import { TOP_NEWS } from "@/static/data";
 import axiosInstance from "@/utils/axios";
@@ -204,7 +204,7 @@ const Details = () => {
           </div>
         </div>
 
-        <ExclusiveSection data={TOP_NEWS} heading="EM EXCLUSIVE" />
+        <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" />
       </div>
     </div>
   );
