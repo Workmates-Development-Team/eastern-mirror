@@ -11,7 +11,7 @@ const FileUpload = () => {
         id="file-upload-input"
       />
       <label htmlFor="file-upload-input" className="file-upload-label">
-        <img src="/svg/svgviewer-output.svg" />
+        <img src="/svg/svgviewer-output.svg" alt="no-image" />
       </label>
     </div>
   );
