@@ -93,7 +93,7 @@ const Details = () => {
                 Published on {formatDate(data?.publishedAt)}
               </p>
               <p className="text-[#9B9B9B] text-sm roboto-regular">
-                By {data.author?.name}
+                By {data?.author?.name}
               </p>
 
               <div className="flex mt-2 items-center gap-10">
@@ -190,7 +190,7 @@ const Details = () => {
                     </Link>
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: item?.content?.slice(0, 67) + '...',
+                        __html: item?.content?.slice(0, 67) + "...",
                       }}
                       className="text-[#646464] text-sm pb-2.5"
                     ></div>

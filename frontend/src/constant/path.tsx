@@ -82,6 +82,34 @@ export const NAVBAR_LINKS = [
         label: "Tuensang",
         href: "/tuensang",
       },
+      {
+        label: "Kiphire",
+        href: "/tuensang",
+      },
+      {
+        label: "Mon",
+        href: "/tuensang",
+      },
+      {
+        label: "Peren",
+        href: "/tuensang",
+      },
+      {
+        label: "Phek",
+        href: "/tuensang",
+      },
+      {
+        label: "Longleng",
+        href: "/tuensang",
+      },
+      {
+        label: "Noklak",
+        href: "/tuensang",
+      },
+      {
+        label: "Diaspora",
+        href: "/tuensang",
+      },
     ],
   },
 
@@ -96,21 +124,85 @@ export const NAVBAR_LINKS = [
   {
     label: "opinion",
     href: "/opinion",
+    subLinks: [
+      {
+        label: "Editorial",
+        href: "/editorial",
+      },
+      {
+        label: "OP-Ed",
+        href: "/op-ed",
+      },
+      {
+        label: "Views & Reviews",
+        href: "/views-reviews",
+      },
+      {
+        label: "Letters to the Editor",
+        href: "/letters-to-the-editor",
+      },
+    ],
   },
 
   {
     label: "SPORTS",
     href: "/sports",
+    subLinks: [
+      {
+        label: "Football",
+        href: "/football",
+      },
+      {
+        label: "Cricket",
+        href: "/cricket",
+      },
+      {
+        label: "Nagaland Sports",
+        href: "/nagaland-sports",
+      },
+      {
+        label: "Other Sports",
+        href: "/other-sports",
+      },
+    ],
   },
 
   {
     label: "SCIENCE AND TECH",
     href: "/science-and-tech",
+    subLinks: [
+      {
+        label: "Tech News",
+        href: "/tech-news",
+      },
+      {
+        label: "Gaming",
+        href: "/gaming",
+      },
+      {
+        label: "Climate and Environment",
+        href: "/environment",
+      },
+    ],
   },
 
   {
     label: "ARTS AND ENTERTAINMENT",
     href: "/arts-and-entertainment",
+    subLinks: [
+      {
+        label: "Pop Culture",
+        href: "/pop-culture",
+      },
+      {
+        label: "Rhythm of Love",
+        href: "/rhythm-of-love",
+      },
+      {
+        label: "Book Reviews",
+        href: "/book-reviews",
+      },
+    ],
   },
 ];
 

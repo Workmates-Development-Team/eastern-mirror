@@ -18,7 +18,8 @@ export default function Header() {
               buttonVariants({ variant: "destructive", size: "sm" }),
               "roboto-bold rounded-3xl text-xs animate-pulse"
             )}
-            href="#"
+            href="https://epaper.easternmirrornagaland.com/"
+            target="_blank"
           >
             READ e-Paper
           </Link>
