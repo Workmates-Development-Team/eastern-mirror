@@ -78,29 +78,28 @@ const Details = () => {
         <BreadcrumbComponent
           links={[
             { label: "Home", href: "/" },
-            // { label: "Nagaland", href: "/nagaland" },
             {
               label: data?.title,
             },
           ]}
         />
 
-        <div className="grid grid-cols-3 gap-7  mt-20">
-          <div className="col-span-2">
+        <div className="grid grid-cols-3 gap-7  md:mt-20 mt-10">
+          <div className="ms:col-span-2 col-span-3">
             <div className="max-w-[842px]">
-              <h1 className="text-2xl lora-bold">{data?.title}</h1>
-              <p className="mt-2.5 text-[#9B9B9B] text-sm roboto-regular">
+              <h1 className="md:text-2xl text-[21px] leading-tight md:leading-normal lora-bold">{data?.title}</h1>
+              <p className="mt-2.5 text-[#9B9B9B] md:text-sm text-xs roboto-regular">
                 Published on {formatDate(data?.publishedAt)}
               </p>
-              <p className="text-[#9B9B9B] text-sm roboto-regular">
-                By {data?.author?.name}
+              <p className="text-[#9B9B9B] md:text-sm text-xs roboto-regular">
+                By <span className="underline">{data?.author?.name}</span>
               </p>
 
-              <div className="flex mt-2 items-center gap-10">
+              <div className="flex mt-2 items-center md:gap-10 gap-2">
                 <div className="flex flex-col items-center">
-                  <IoShareSocial className="w-[23.45px] h-[34.49px]" />
+                  <IoShareSocial className="md:w-[23.45px] w-5  md:h-[34.49px] h-5" />
 
-                  <p className="text-xs text-[#3D5A80]">Share</p>
+                  <p className="md:text-xs text-[10px] text-[#3D5A80]">Share</p>
                 </div>
 
                 <div>
@@ -109,6 +108,7 @@ const Details = () => {
                     height={30}
                     src="/images/logos_telegram.svg"
                     alt="logos_telegram"
+                    className="md:w-[30px] md:h-[30px] w-6 h-6"
                   />
                 </div>
                 <div>
@@ -117,6 +117,7 @@ const Details = () => {
                     height={34}
                     src="/images/logos_whatsapp-icon.svg"
                     alt="logos_whatsapp-icon"
+                    className="md:w-[34px] md:h-[34px] w-7 h-7"
                   />
                 </div>
                 <div>
@@ -125,6 +126,7 @@ const Details = () => {
                     height={30}
                     src="/images/ant-design_message-filled.svg"
                     alt="ant-design_message-filled"
+                    className="md:w-[30px] md:h-[30px] w-6 h-6"
                   />
                 </div>
                 <div>
@@ -133,16 +135,17 @@ const Details = () => {
                     height={30}
                     src="/images/logos_facebook.svg"
                     alt="logos_facebook"
+                    className="md:w-[30px] md:h-[30px] w-6 h-6"
                   />
                 </div>
               </div>
 
-              <div className="mt-6">
+              <div className="md:mt-6 mt-4">
                 {data?.thumbnail ? (
                   <Image
                     width={841}
                     height={474}
-                    className="w-full max-h-[474px] object-cover"
+                    className="w-full max-h-[474px]  object-cover"
                     alt="image"
                     src={getImageUrl(data?.thumbnail)}
                   />
@@ -150,27 +153,27 @@ const Details = () => {
 
                 <div
                   dangerouslySetInnerHTML={{ __html: data?.content }}
-                  className="mt-10"
+                  className="md:mt-10 mt-5 text-sm md:text-base"
                 ></div>
               </div>
             </div>
           </div>
 
-          <div>
-            <div className="flex justify-center mt-28">
-              <div className="bg-[#002366] py-2 px-4 text-white text-lg roboto-regular">
+          <div className="md:col-span-1 col-span-3">
+            <div className="flex justify-center md:mt-28 mt-8">
+              <div className="bg-[#002366] py-2 px-4 text-white md:text-lg text-base roboto-regular">
                 <p>MOST POPULAR</p>
               </div>
             </div>
 
-            <div className="flex flex-col gap-7 mt-10">
+            <div className="flex flex-col md:gap-7 gap-2 md:mt-10 mt-7">
               {TOP_NEWS.slice(0, 4).map((item: any, i: number) => (
                 <div key={i} className="flex gap-4">
                   <div className="">
-                    <div className="w-[150px]">
+                    <div className="md:w-[150px] w-[120px]">
                       <Link href={"/" + url_maker(item.title)}>
                         <Image
-                          className="w-[150px] h-[150px] object-cover"
+                          className="md:w-[150px] w-[120px] md:h-[150px] h-[120px] object-cover"
                           src={item.image}
                           width={150}
                           height={150}
@@ -182,7 +185,7 @@ const Details = () => {
 
                   <div className="flex flex-col justify-center">
                     <Link href={"/" + data?.slug}>
-                      <h2 className="text-[#080F18] lora-bold text-lg pb-2.5">
+                      <h2 className="text-[#080F18] lora-bold md:text-lg text-sm leading-tight md:leading-normal pb-2.5">
                         {item?.title.length > 50
                           ? item.title.slice(0, 50).trim() + "..."
                           : item.title}{" "}
@@ -192,9 +195,9 @@ const Details = () => {
                       dangerouslySetInnerHTML={{
                         __html: item?.content?.slice(0, 67) + "...",
                       }}
-                      className="text-[#646464] text-sm pb-2.5"
+                      className="text-[#646464] md:text-sm text-xs md:pb-2.5"
                     ></div>
-                    <p className="text-xs text-[#BBBBBB]">
+                    <p className="text-xs text-[#BBBBBB] hidden md:block">
                       {formatDate(data?.publishedAt)}
                     </p>
                   </div>
@@ -204,7 +207,7 @@ const Details = () => {
           </div>
         </div>
 
-        <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" />
+        {/* <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" /> */}
       </div>
     </div>
   );

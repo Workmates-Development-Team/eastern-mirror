@@ -33,7 +33,7 @@ const categories = [
   "Zunheboto",
 ];
 
-const Nagaland = () => {
+const Dimapur = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const Nagaland = () => {
         <BreadcrumbComponent
           links={[
             { label: "Home", href: "/" },
-            { label: "Nagaland", href: "/nagaland" },
+            { label: "Dimapur" },
           ]}
         />
       </div>
@@ -94,7 +94,7 @@ const Nagaland = () => {
   );
 };
 
-export default Nagaland;
+export default Dimapur;
 
 const PopularCard = ({
   data,

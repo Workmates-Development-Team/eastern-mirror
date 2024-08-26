@@ -57,17 +57,18 @@ const Nagaland = () => {
         />
       </div>
 
-      <Section1 data={TOP_NEWS} heading="TOP NEWS" />
-
       <Heading title={"Nagaland"} />
 
       <div className="container py-2 px-4 md:px-6 grid md:grid-cols-3 grid-cols-1 gap-7 mt-3">
-        <div className="col-span-2">
-          <div className="flex flex-wrap gap-3 ">
+        <div className="md:col-span-2">
+          <div className="flex flex-wrap md:gap-3 gap-2">
             {categories.map((item: string, i: number) => (
               <Link
                 key={i}
-                className={cn(buttonVariants({ variant: "outline" }))}
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "md:h-10 h-9 text-xs md:text-sm px-3 md:px-4"
+                )}
                 href={"/nagaland/" + item.toLocaleLowerCase()}
               >
                 {item}
@@ -75,7 +76,7 @@ const Nagaland = () => {
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col gap-7">
+          <div className="md:mt-10 mt-8 flex flex-col md:gap-7 gap-4">
             {data.map((item, i) => (
               <Card key={i} data={item} />
             ))}
@@ -84,12 +85,12 @@ const Nagaland = () => {
 
         <div className="">
           <div className="flex justify-center">
-            <div className="bg-[#002366] py-2 px-4 text-white text-lg roboto-regular">
+            <div className="bg-[#002366]  md:text-lg text-base py-2 px-4 text-white roboto-regular">
               <p>MOST POPULAR</p>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 mt-10">
+          <div className="flex flex-col gap-4 md:mt-10 mt-7 ">
             {MOST_POPULAR.map((item: any, i: number) => (
               <PopularCard
                 key={i}
@@ -119,8 +120,8 @@ const PopularCard = ({
 }) => (
   <div
     className={cn(
-      isBorder ? "border-b-2" : "",
-      " border-[#DDDDDD] pb-4 flex items-center gap-7"
+      isBorder ? "md:border-b-2 border-b" : "",
+      " border-[#DDDDDD] md:pb-4 pb-3 flex items-center md:gap-7 gap-4"
     )}
   >
     <div>
@@ -139,7 +140,7 @@ const PopularCard = ({
 
     <div>
       <Link href={"/" + url_maker(data?.title)}>
-        <h2 className="text-[#646464] lora-regular text-lg pb-2.5">
+        <h2 className="text-[#646464] lora-regular md:text-lg text-sm">
           {data?.title}
         </h2>
       </Link>
@@ -150,8 +151,8 @@ const PopularCard = ({
 const Card = ({ data }: { data: any }) => {
   console.log(data);
   return (
-    <div className="bg-[#F5F6F9] grid grid-cols-6 gap-7">
-      <div className="col-span-2 relative">
+    <div className="bg-[#F5F6F9] grid grid-cols-6 md:gap-7 gap-3">
+      <div className="md:col-span-2 col-span-3 relative">
         <Link href={"/" + data?.slug} className="w-full h-[200px] ">
           <Image
             width={300}
@@ -162,14 +163,14 @@ const Card = ({ data }: { data: any }) => {
           />
         </Link>
 
-        <div className="bg-black text-white uppercase absolute top-0 left-0 text-sm py-2 px-3 roboto-regular">
+        <div className="bg-black text-white uppercase absolute top-0 left-0 md:text-sm text-xs py-2 px-3 roboto-regular">
           {data?.category[0].name}
         </div>
       </div>
 
-      <div className="col-span-4 flex flex-col justify-center p-3 pl-0">
+      <div className="md:col-span-4 col-span-3 flex flex-col justify-center md:p-3 p-2 pl-0">
         <Link href={"/" + data?.slug}>
-          <h2 className="text-[#080F18] lora-bold text-lg pb-2.5">
+          <h2 className="text-[#080F18] lora-bold md:text-lg leading-tight md:leading-normal text-sm md:pb-2.5 pb-2">
             {data?.title}
           </h2>
         </Link>
@@ -177,9 +178,9 @@ const Card = ({ data }: { data: any }) => {
           dangerouslySetInnerHTML={{
             __html: data?.content.slice(0, 200) + "...",
           }}
-          className="text-[#646464] text-sm pb-2.5"
+          className="text-[#646464] md:text-sm text-xs pb-2.5 truncate md:whitespace-normal md:overflow-visible md:text-overflow-clip"
         ></div>
-        <p className="text-xs text-[#BBBBBB]">
+        <p className="text-xs text-[#BBBBBB] hidden md:block">
           {formatDate(data?.publishedAt)}
         </p>
       </div>
