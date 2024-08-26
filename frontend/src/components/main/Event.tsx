@@ -42,7 +42,7 @@ const Event = () => {
             </Link>
           </div>
         </div>
-        <div className="grid md:grid-cols-3 grid-cols-1 gap-7">
+        <div className="grid md:grid-cols-3 grid-cols-1 md:gap-7 gap-5">
           <div>
             <CardVertical
               data={{
@@ -69,13 +69,13 @@ const Event = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col md:gap-4 gap-3">
             {items?.map((item, i) => (
-              <div key={i} className="flex gap-4">
+              <div key={i} className="flex md:gap-4 gap-2.5">
                 <div className="">
-                  <div className="w-[120px]">
+                  <div className="md:w-[120px] w-[110px]">
                     <Image
-                      className="w-[120px] h-[90px] object-cover"
+                      className="w-full md:h-[90px] h-[80px] object-cover"
                       src={item.image}
                       width={120}
                       height={90}
@@ -85,16 +85,16 @@ const Event = () => {
                 </div>
 
                 <div className="flex flex-col justify-center">
-                  <p className="text-[#b71c1c] text-xs uppercase font-semibold">
+                  <p className="text-[#b71c1c] md:text-xs text-[10px] uppercase md:font-semibold font-medium">
                     Politics
                   </p>
-                  <h2 className="text-[#080F18] lora-bold text-sm pb-2">
+                  <h2 className="text-[#080F18] lora-bold md:text-sm text-xs md:pb-2 pb-1.5">
                     {item?.title.length > 50
                       ? item.title.slice(0, 50).trim() + "..."
                       : item.title}{" "}
                   </h2>
 
-                  <div className="flex items-center justify-between text-xs text-[#080F18]">
+                  <div className="flex items-center justify-between md:text-xs text-[10px] text-[#080F18]">
                     <p>Omar Rashid</p>
                     <p >23 mins read</p>
                   </div>
@@ -139,7 +139,7 @@ const CardVertical = ({
       <h3 className="text-[#080F18] lora-bold md:text-lg text-base pb-1">
         From Ghazipur to Srinagar: The Life of RSS Product Manoj Sinha
       </h3>
-      <div className="flex items-center justify-between text-xs">
+      <div className="flex items-center justify-between md:text-xs text-[10px]">
         <p>Omar Rashid</p>
         <p className="text-[#080F18]">23 mins read</p>
       </div>

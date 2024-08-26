@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState, useEffect } from "react";
 import BreakingNews from "@/components/main/BreakingNews";
@@ -19,7 +19,7 @@ export default function Home() {
   const [artsEntertainment, setArtsEntertainment] = useState([]);
   const [world, setWorld] = useState([]);
   const [sports, setSports] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +47,6 @@ export default function Home() {
         );
         setArtsEntertainment(artsEntertainmentData?.articles || []);
 
-
         const { data: worldData } = await axiosServer.get(
           "/article/all?category=World"
         );
@@ -57,8 +56,6 @@ export default function Home() {
           "/article/all?category=Sports"
         );
         setSports(sportsData?.articles || []);
-
-     
       } catch (error) {
         console.error("Error fetching articles:", error);
         setError("Error fetching data");
@@ -72,8 +69,7 @@ export default function Home() {
     return <div>{error}</div>;
   }
 
-
-  console.log(editorsPick)
+  console.log(editorsPick);
   return (
     <div className="min-h-screen">
       <Section1 data={articles} heading="TOP NEWS" />
@@ -87,7 +83,7 @@ export default function Home() {
         heading="ART & ENTERTAINMENT"
         trending={TRENDING}
       />
-      
+
       <Section1 data={world} heading="WORLD" />
       <Section3 data={sports} heading="SPORTS NEWS" watchNow={true} />
       <VideoSection data={TOP_NEWS} heading="VIDEOS" />

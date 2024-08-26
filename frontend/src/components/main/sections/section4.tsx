@@ -13,16 +13,16 @@ const Section4 = ({ data, heading }: PropsType) => {
       <Heading title={heading} />
 
       <div className="container py-2 px-4 md:px-6 ">
-        <div className="grid md:grid-cols-4 grid-cols-1 gap-7">
+        <div className="grid md:grid-cols-4 grid-cols-1 md:gap-7 gap-5">
           {data.map((item: any, i: number) => (
             <StoryCard key={i} item={item} />
           ))}
-          <div className="flex justify-center col-span-4">
+          <div className="flex justify-center md:col-span-4">
             <Link
               href="#"
               className={cn(
                 buttonVariants({ variant: "ghost" }),
-                "bg-[#D4E2FF] text-[#244B9C] font-medium rounded-3xl hover:bg-[#D4E2FF] hover:text-[#244B9C]"
+                "bg-[#D4E2FF] text-[#244B9C] font-medium md:h-10 h-9 text-xs md:text-sm rounded-3xl hover:bg-[#D4E2FF] hover:text-[#244B9C]"
               )}
             >
               View more
