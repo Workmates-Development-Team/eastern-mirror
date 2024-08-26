@@ -180,7 +180,7 @@ const AddPost = () => {
       />
 
       <div
-        className={`flex justify-center bg-[#F6F7F9] p-3 rounded-md mb-6 h-[350px] border border-dashed ${
+        className={`flex justify-center bg-[#F6F7F9] p-3 rounded-md mb-6 min-h-[350px] border border-dashed ${
           dragActive ? "border-blue-600" : ""
         }`}
         onDragEnter={handleDrag}

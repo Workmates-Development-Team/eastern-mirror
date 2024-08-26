@@ -17,8 +17,10 @@ export default function Home() {
   const [india, setIndia] = useState([]);
   const [editorsPick, setEditorsPick] = useState([]);
   const [artsEntertainment, setArtsEntertainment] = useState([]);
+  const [region, setRegion] = useState([]);
   const [world, setWorld] = useState([]);
   const [sports, setSports] = useState([]);
+  const [business, setBusiness] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -47,6 +49,10 @@ export default function Home() {
         );
         setArtsEntertainment(artsEntertainmentData?.articles || []);
 
+        const { data: regionData } = await axiosServer.get(
+          "/article/all?category=Region"
+        );
+        setRegion(regionData?.articles || []);
 
         const { data: worldData } = await axiosServer.get(
           "/article/all?category=World"
@@ -58,7 +64,10 @@ export default function Home() {
         );
         setSports(sportsData?.articles || []);
 
-     
+        const { data: businessData } = await axiosServer.get(
+          "/article/all?category=Business"
+        );
+        setBusiness(businessData?.articles || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setError("Error fetching data");
@@ -72,15 +81,15 @@ export default function Home() {
     return <div>{error}</div>;
   }
 
-
-  console.log(editorsPick)
   return (
     <div className="min-h-screen">
+      {/* <BreakingNews /> */}
       <Section1 data={articles} heading="TOP NEWS" />
       <Event />
       <Section2 data={nagaland} heading="NAGALAND" />
       <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" />
       <Section1 data={india} heading="INDIA" />
+      {/* <Section1 data={editorsPick} heading="EDITOR’S PICK" /> */}
       <Section4 data={editorsPick} heading="EDITOR’S PICK" />
       <Section3
         data={artsEntertainment}
@@ -88,8 +97,10 @@ export default function Home() {
         trending={TRENDING}
       />
       
+      {/* <Section1 data={region} heading="REGION" /> */}
       <Section1 data={world} heading="WORLD" />
       <Section3 data={sports} heading="SPORTS NEWS" watchNow={true} />
+      {/* <Section1 data={business} heading="BUSINESS" /> */}
       <VideoSection data={TOP_NEWS} heading="VIDEOS" />
     </div>
   );

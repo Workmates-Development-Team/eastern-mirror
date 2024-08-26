@@ -15,16 +15,16 @@ const BigCard = ({ data }: { data: PropsType }) => {
 
         <Link href={"/" + data?.slug}>
           <Image
-            className="w-full h-[440px] object-cover"
+            className="w-full md:h-[440px] h-[220px]  object-cover"
             width={500}
-            height={473.3}
+            height={440}
             src={getImageUrl(data?.thumbnail)}
             alt="blog-image"
           />
         </Link>
         <div className="-mt-12 relative w-[95%] mx-auto">
-          <div className="bg-white px-[22px] py-2.5 shadow-md">
-            <div className="flex items-center justify-between uppercase text-xs">
+          <div className="bg-white md:px-[22px] px-3.5 py-2.5 shadow-md">
+            <div className="flex items-center justify-between uppercase md:text-xs text-[10px]">
               <div>
                 <span>Published on </span>{" "}
                 <span>{formatDate(data?.publishedAt)}</span>
@@ -38,14 +38,14 @@ const BigCard = ({ data }: { data: PropsType }) => {
               </div>
             </div>
             <Link href={"/" + data?.slug}>
-              <h2 className="lora-bold pt-1.5 text-xl">{data?.title}</h2>
+              <h2 className="lora-bold pt-1.5 md:text-xl text-base leading-5 sm:leading-normal">{data?.title}</h2>
             </Link>
           </div>
           <div
             dangerouslySetInnerHTML={{
               __html: data?.content.slice(0, 137) + "...",
             }}
-            className="pt-5 px-5 w-[90%] text-sm roboto-regular text-[#646464]"
+            className="md:pt-5 mt-3 md:px-5 w-[90%] md:text-sm text-xs roboto-regular text-[#646464]"
           ></div>
         </div>
       </div>

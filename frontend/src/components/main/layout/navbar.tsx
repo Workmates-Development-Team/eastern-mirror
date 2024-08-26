@@ -13,11 +13,11 @@ export default function Navbar() {
     <>
       <div className="container px-4 md:px-6 flex justify-center mb-4">
         <Link href="/">
-          <Image width={395} height={153} src="/images/logo.webp" alt="logo" />
+          <Image width={395} height={153} className="md:w-[395px] md:h-[153px] w-[300px] h-[130px]" src="/images/logo.webp" alt="logo" />
         </Link>
       </div>
 
-      <header className="sticky z-20 top-12 container flex h-16 items-center gap-4 bg-[#002366] px-4 md:px-6">
+      <header className="sticky z-20 md:top-12 top-[45px] container flex h-16 items-center gap-4 bg-[#002366] px-4 md:px-6">
         <nav className="hidden flex-col gap-6 md:flex md:flex-row md:items-center md:gap-5 lg:gap-6">
           <NavMenu links={NAVBAR_LINKS} />
 

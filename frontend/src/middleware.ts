@@ -1,13 +1,11 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
-// This function can be marked `async` if using `await` inside
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
 export function middleware(request: NextRequest) {
-    console.log('object')
-  return NextResponse.next()
+  console.log("object");
+  return NextResponse.next();
 }
- 
-// See "Matching Paths" below to learn more
-// export const config = {
-//   matcher: '/about/:path*',
-// }
+
+export const config = {
+  matcher: "/em-admin/:path*",
+};

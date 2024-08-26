@@ -30,15 +30,15 @@ const items = [
 const Event = () => {
   return (
     <section>
-      <div className="container py-2 px-4 md:px-6 mt-16">
-        <div className="flex justify-between  mb-5">
-          <h2 className="lora-bold pt-1.5 text-3xl">
+      <div className="container py-2 px-4 md:px-6 md:mt-16 mt-8">
+        <div className="flex justify-between  mb-5 items-center">
+          <h2 className="lora-bold md:text-3xl text-xl max-w-[60%]">
             5 years after article 370
           </h2>
 
           <div>
-            <Link href={"#"} className="flex items-center gap-2 uppercase">
-              View More <FaArrowRightLong />
+            <Link href={"#"} className="flex items-center md:gap-2 gap-1 uppercase text-sm md:text-base">
+              View More <FaArrowRightLong className="text-sm md:text-base" />
             </Link>
           </div>
         </div>
@@ -126,17 +126,17 @@ const CardVertical = ({
       <Image
         src={data.image}
         alt={data.title}
-        className="w-full h-[250px] object-cover"
+        className="w-full md:h-[250px] h-[225px] object-cover"
         width={397}
-        height={225}
+        height={250}
       />
     </div>
 
     <div>
-      <p className="text-[#b71c1c] text-sm uppercase font-bold mt-2">
+      <p className="text-[#b71c1c] md:text-sm text-xs uppercase md:font-bold font-medium mt-2">
         Politics
       </p>
-      <h3 className="text-[#080F18] lora-bold text-lg pb-1">
+      <h3 className="text-[#080F18] lora-bold md:text-lg text-base pb-1">
         From Ghazipur to Srinagar: The Life of RSS Product Manoj Sinha
       </h3>
       <div className="flex items-center justify-between text-xs">
