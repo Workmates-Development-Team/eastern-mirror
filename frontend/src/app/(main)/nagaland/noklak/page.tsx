@@ -1,5 +1,36 @@
+"use client";
+
+import SubPage from "@/components/main/SubPage";
+import axiosServer from "@/utils/axiosServer";
+import React, { useEffect, useState } from "react";
+
 const Noklak = () => {
-  return <div>Noklak</div>;
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axiosServer.get("/article/all?category=Noklak");
+        setData(data?.articles || []);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+  return (
+    <SubPage
+      data={data}
+      links={[{ label: "Noklak" }]}
+      title="Noklak"
+      loading={loading}
+    />
+  );
 };
 
 export default Noklak;

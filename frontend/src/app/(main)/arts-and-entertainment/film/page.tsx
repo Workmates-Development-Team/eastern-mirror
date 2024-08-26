@@ -4,7 +4,7 @@ import SubPage from "@/components/main/SubPage";
 import axiosServer from "@/utils/axiosServer";
 import React, { useEffect, useState } from "react";
 
-const RhythmOfLove = () => {
+const Film = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -13,7 +13,7 @@ const RhythmOfLove = () => {
       try {
         setLoading(true);
       const { data } = await axiosServer.get(
-        "/article/all?category=Rhythm of Love"
+        "/article/all?category=Film"
       );
       setData(data?.articles || []);
     } catch (error) {
@@ -30,12 +30,12 @@ const RhythmOfLove = () => {
       data={data}
       links={[
         { label: "Arts and Entertainment", href: "/arts-and-entertainment" },
-        { label: "Rhythm of Love" },
+        { label: "Film" },
       ]}
-      title="Rhythm of Love"
+      title="Film"
       loading={loading}
     />
   );
 };
 
-export default RhythmOfLove;
+export default Film;
