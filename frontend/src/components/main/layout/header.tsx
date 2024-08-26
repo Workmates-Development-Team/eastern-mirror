@@ -16,7 +16,7 @@ export default function Header() {
           <Link
             className={cn(
               buttonVariants({ variant: "destructive", size: "sm" }),
-              "roboto-bold rounded-3xl text-xs hidden md:block animate-pulse"
+              "roboto-bold rounded-3xl text-xs hidden md:flex animate-pulse"
             )}
             href="https://epaper.easternmirrornagaland.com/"
             target="_blank"
