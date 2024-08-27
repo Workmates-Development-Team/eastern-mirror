@@ -4,25 +4,75 @@ import axiosServer from "@/utils/axiosServer";
 import React, { useEffect, useState } from "react";
 
 const categories = [
-  "Chumoukedima",
-  "Diaspora",
-  "Dimapur",
-  "Kiphire",
-  "Kohima",
-  "Longleng",
-  "Mokokchung",
-  "Mon",
-  "Niuland",
-  "Noklak",
-  "Peren",
-  "Phek",
-  "Shamator",
-  "Tseminyu",
-  "Tuensang",
-  "Wokha",
-  "Zunheboto",
+  {
+    name: "Chumoukedima",
+    href: "/nagaland/chumoukedima",
+  },
+  {
+    name: "Diaspora",
+    href: "/nagaland/diaspora",
+  },
+  {
+    name: "Dimapur",
+    href: "/nagaland/dimapur",
+  },
+  {
+    name: "Kiphire",
+    href: "/nagaland/kiphire",
+  },
+  {
+    name: "Kohima",
+    href: "/nagaland/kohima",
+  },
+  {
+    name: "Longleng",
+    href: "/nagaland/longleng",
+  },
+  {
+    name: "Mokokchung",
+    href: "/nagaland/mokokchung",
+  },
+  {
+    name: "Mon",
+    href: "/nagaland/mon",
+  },
+  {
+    name: "Niuland",
+    href: "/nagaland/niuland",
+  },
+  {
+    name: "Noklak",
+    href: "/nagaland/noklak",
+  },
+  {
+    name: "Peren",
+    href: "/nagaland/peren",
+  },
+  {
+    name: "Phek",
+    href: "/nagaland/phek",
+  },
+  {
+    name: "Shamator",
+    href: "/nagaland/shamator",
+  },
+  {
+    name: "Tseminyu",
+    href: "/nagaland/tseminyu",
+  },
+  {
+    name: "Tuensang",
+    href: "/nagaland/tuensang",
+  },
+  {
+    name: "Wokha",
+    href: "/nagaland/wokha",
+  },
+  {
+    name: "Zunheboto",
+    href: "/nagaland/zunheboto",
+  },
 ];
-
 const Nagaland = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

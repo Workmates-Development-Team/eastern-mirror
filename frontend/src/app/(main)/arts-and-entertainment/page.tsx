@@ -4,7 +4,24 @@ import SubPage from "@/components/main/SubPage";
 import axiosServer from "@/utils/axiosServer";
 import React, { useEffect, useState } from "react";
 
-const categories = ["Book Reviews", "Film", "Music", "Pop Culture"];
+const categories = [
+  {
+    name: "Book Reviews",
+    href: "/category/book-reviews",
+  },
+  {
+    name: "Film",
+    href: "/category/film",
+  },
+  {
+    name: "Music",
+    href: "/category/music",
+  },
+  {
+    name: "Pop Culture",
+    href: "/category/pop-culture",
+  },
+];
 
 const ArtsandEntertainment = () => {
   const [data, setData] = useState([]);

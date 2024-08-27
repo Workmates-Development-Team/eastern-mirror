@@ -2,8 +2,6 @@
 
 import Loader from "@/components/Loader";
 import BreadcrumbComponent from "@/components/main/BreadcrumbConponent";
-import StoryCard from "@/components/main/card/StoryCard";
-import Section4 from "@/components/main/sections/section4";
 import { url_maker } from "@/lib/utils";
 import { TOP_NEWS } from "@/static/data";
 import axiosInstance from "@/utils/axios";
@@ -11,7 +9,7 @@ import { formatDate } from "@/utils/date";
 import { getImageUrl } from "@/utils/getImageUrl";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoShareSocial } from "react-icons/io5";
 
@@ -30,6 +28,7 @@ type dataInstance = {
 const Details = () => {
   const { slug } = useParams();
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const [data, setData] = useState<dataInstance>({
     title: "",
@@ -48,6 +47,9 @@ const Details = () => {
       setLoading(true);
       const { data } = await axiosInstance.get("/article/by/" + slug);
       console.log(data);
+      if (!data?.article) {
+        return router.push("/");
+      }
       setData(data?.article);
     } catch (error) {
       console.log(error);

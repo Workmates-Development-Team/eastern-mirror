@@ -9,7 +9,7 @@ import { TOP_NEWS, TRENDING } from "@/static/data";
 import axiosServer from "@/utils/axiosServer";
 import Event from "@/components/main/Event";
 import Section4 from "@/components/main/sections/section4";
-import { Loader } from "lucide-react";
+import Loader from "@/components/Loader";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

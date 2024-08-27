@@ -17,7 +17,7 @@ const SubPage = ({
   title,
   loading,
 }: {
-  categories?: string[];
+  categories?: { name: string; href: string }[];
   data: any;
   links: {}[];
   title: string;
@@ -40,19 +40,16 @@ const SubPage = ({
           <div className="md:col-span-2">
             {categories?.length ? (
               <div className="flex flex-wrap md:gap-3 gap-2">
-                {categories.map((item: string, i: number) => (
+                {categories.map((item, i: number) => (
                   <Link
                     key={i}
                     className={cn(
                       buttonVariants({ variant: "outline" }),
                       "md:h-10 h-9 text-xs md:text-sm px-3 md:px-4"
                     )}
-                    href={
-                      "/nagaland/" +
-                      item?.replace(" ", "-")?.toLocaleLowerCase()
-                    }
+                    href={"/nagaland/" + item?.href}
                   >
-                    {item}
+                    {item?.name}
                   </Link>
                 ))}
               </div>
