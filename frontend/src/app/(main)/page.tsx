@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import BreakingNews from "@/components/main/BreakingNews";
 import Section1 from "@/components/main/sections/Section1";
 import Section2 from "@/components/main/sections/Section2";
 import Section3 from "@/components/main/sections/Section3";
@@ -10,8 +9,10 @@ import { TOP_NEWS, TRENDING } from "@/static/data";
 import axiosServer from "@/utils/axiosServer";
 import Event from "@/components/main/Event";
 import Section4 from "@/components/main/sections/section4";
+import Loader from "@/components/Loader";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
   const [nagaland, setNagaland] = useState([]);
   const [india, setIndia] = useState([]);
@@ -24,6 +25,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const { data: articleData } = await axiosServer.get("/article/all");
         setArticles(articleData?.articles || []);
 
@@ -59,17 +61,22 @@ export default function Home() {
       } catch (error) {
         console.error("Error fetching articles:", error);
         setError("Error fetching data");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  if (error) {
-    return <div>{error}</div>;
+  if (loading) {
+    return (
+      <div className="container flex justify-center min-h-[50vh] pt-10">
+        <Loader />
+      </div>
+    );
   }
 
-  console.log(editorsPick);
   return (
     <div className="min-h-screen">
       <Section1 data={articles} heading="TOP NEWS" />

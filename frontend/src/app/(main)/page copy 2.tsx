@@ -1,7 +1,6 @@
-'use client'
+"use client";
 
 import { useState, useEffect } from "react";
-import BreakingNews from "@/components/main/BreakingNews";
 import Section1 from "@/components/main/sections/Section1";
 import Section2 from "@/components/main/sections/Section2";
 import Section3 from "@/components/main/sections/Section3";
@@ -10,22 +9,23 @@ import { TOP_NEWS, TRENDING } from "@/static/data";
 import axiosServer from "@/utils/axiosServer";
 import Event from "@/components/main/Event";
 import Section4 from "@/components/main/sections/section4";
+import { Loader } from "lucide-react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
   const [nagaland, setNagaland] = useState([]);
   const [india, setIndia] = useState([]);
   const [editorsPick, setEditorsPick] = useState([]);
   const [artsEntertainment, setArtsEntertainment] = useState([]);
-  const [region, setRegion] = useState([]);
   const [world, setWorld] = useState([]);
   const [sports, setSports] = useState([]);
-  const [business, setBusiness] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const { data: articleData } = await axiosServer.get("/article/all");
         setArticles(articleData?.articles || []);
 
@@ -49,11 +49,6 @@ export default function Home() {
         );
         setArtsEntertainment(artsEntertainmentData?.articles || []);
 
-        const { data: regionData } = await axiosServer.get(
-          "/article/all?category=Region"
-        );
-        setRegion(regionData?.articles || []);
-
         const { data: worldData } = await axiosServer.get(
           "/article/all?category=World"
         );
@@ -63,44 +58,41 @@ export default function Home() {
           "/article/all?category=Sports"
         );
         setSports(sportsData?.articles || []);
-
-        const { data: businessData } = await axiosServer.get(
-          "/article/all?category=Business"
-        );
-        setBusiness(businessData?.articles || []);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setError("Error fetching data");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  if (error) {
-    return <div>{error}</div>;
+  if (loading) {
+    return (
+      <div className="container flex justify-center min-h-[50vh] pt-10">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen">
-      {/* <BreakingNews /> */}
       <Section1 data={articles} heading="TOP NEWS" />
       <Event />
       <Section2 data={nagaland} heading="NAGALAND" />
       <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" />
       <Section1 data={india} heading="INDIA" />
-      {/* <Section1 data={editorsPick} heading="EDITOR’S PICK" /> */}
       <Section4 data={editorsPick} heading="EDITOR’S PICK" />
       <Section3
         data={artsEntertainment}
         heading="ART & ENTERTAINMENT"
         trending={TRENDING}
       />
-      
-      {/* <Section1 data={region} heading="REGION" /> */}
+
       <Section1 data={world} heading="WORLD" />
       <Section3 data={sports} heading="SPORTS NEWS" watchNow={true} />
-      {/* <Section1 data={business} heading="BUSINESS" /> */}
       <VideoSection data={TOP_NEWS} heading="VIDEOS" />
     </div>
   );
