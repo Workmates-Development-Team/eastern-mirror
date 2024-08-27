@@ -12,26 +12,24 @@ const India = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-      const { data } = await axiosServer.get(
-        "/article/all?category=India"
-      );
-      setData(data?.articles || []);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+        const { data } = await axiosServer.get("/article/all?category=India");
+        setData(data?.articles || []);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
   }, []);
   return (
     <SubPage
-    loading={loading}
-    data={data}
-    links={[{ label: "India" }]}
-    title="India"
-  />
+      loading={loading}
+      data={data}
+      links={[{ label: "India" }]}
+      title="India"
+    />
   );
 };
 

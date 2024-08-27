@@ -7,19 +7,19 @@ import React, { useEffect, useState } from "react";
 const categories = [
   {
     name: "Book Reviews",
-    href: "/category/book-reviews",
+    href: "/arts-and-entertainment/book-reviews",
   },
   {
     name: "Film",
-    href: "/category/film",
+    href: "/arts-and-entertainment/film",
   },
   {
     name: "Music",
-    href: "/category/music",
+    href: "/arts-and-entertainment/music",
   },
   {
     name: "Pop Culture",
-    href: "/category/pop-culture",
+    href: "/arts-and-entertainment/pop-culture",
   },
 ];
 
