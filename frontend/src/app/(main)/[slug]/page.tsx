@@ -143,8 +143,8 @@ const Details = () => {
                   {data?.thumbnail ? (
                     <Image
                       width={841}
-                      height={474}
-                      className="w-full max-h-[474px]  object-cover"
+                      height={300}
+                      className="mx-auto max-h-[474px]  object-contain"
                       alt="image"
                       src={getImageUrl(data?.thumbnail)}
                     />
