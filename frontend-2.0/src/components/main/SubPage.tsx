@@ -111,7 +111,7 @@ const PopularCard = ({
   >
     <div>
       <div className="w-[65px] h-[65px]">
-        <Link href={"/" + data?.slug}>
+        <Link href={"/details/" + data?.slug}>
           <Image
             width={65}
             height={65}
@@ -124,7 +124,7 @@ const PopularCard = ({
     </div>
 
     <div>
-      <Link href={"/" + data?.slug}>
+      <Link href={"/details/" + data?.slug}>
         <h2 className="text-[#646464] lora-regular md:text-lg text-sm">
           {data?.title}
         </h2>
@@ -138,7 +138,7 @@ const Card = ({ data }: { data: any }) => {
   return (
     <div className="bg-[#F5F6F9] grid grid-cols-6 md:gap-7 gap-3">
       <div className="md:col-span-2 col-span-3 relative">
-        <Link href={"/" + data?.slug} className="w-full h-[200px] ">
+        <Link href={"/details/" + data?.slug} className="w-full h-[200px] ">
           <Image
             width={300}
             height={200}
@@ -150,7 +150,7 @@ const Card = ({ data }: { data: any }) => {
       </div>
 
       <div className="md:col-span-4 col-span-3 flex flex-col justify-center md:p-3 p-2 pl-0">
-        <Link href={"/" + data?.slug}>
+        <Link href={"/details/" + data?.slug}>
           <h2 className="text-[#080F18] lora-bold md:text-lg leading-tight md:leading-normal text-sm md:pb-2.5 pb-2">
             {data?.title}
           </h2>

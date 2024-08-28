@@ -32,7 +32,7 @@ const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
 
         <div className="grid md:grid-cols-2 grid-cols-1 md:gap-7 gap-3 mt-2.5">
           <div className="relative">
-            <Link href={"/" + data[0]?.slug}>
+            <Link href={"/details/" + data[0]?.slug}>
               <Image
                 className="w-full md:h-[375px] h-[200px] object-cover rounded-[7.07px]"
                 width={665}
@@ -48,7 +48,7 @@ const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
           </div>
 
           <div className="flex flex-col justify-center md:gap-6 gap-3">
-            <Link href={"/" + data[0]?.slug}>
+            <Link href={"/details/" + data[0]?.slug}>
               <h2 className="lora-bold md:text-2xl text-lg leading-tight md:leading-normal">
                 {data[0].title}
               </h2>

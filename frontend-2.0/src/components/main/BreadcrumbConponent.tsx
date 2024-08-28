@@ -7,6 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import Link from "next/link";
 import React from "react";
 
 export default function BreadcrumbComponent({ links }: { links: any }) {
@@ -17,9 +18,9 @@ export default function BreadcrumbComponent({ links }: { links: any }) {
           <React.Fragment key={i}>
             <BreadcrumbItem>
               {i !== links.length - 1 ? (
-                <BreadcrumbLink className="capitalize" href={item.href}>
+                <Link className="capitalize" href={item.href}>
                   {item.label}
-                </BreadcrumbLink>
+                </Link>
               ) : (
                 <BreadcrumbPage className="capitalize">
                   {item.label}

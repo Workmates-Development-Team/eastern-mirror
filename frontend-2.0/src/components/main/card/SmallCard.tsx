@@ -14,7 +14,7 @@ const SmallCard = ({ data, isBorder }: PropsType) => {
       )}
     >
       <div className="col-span-4">
-        <Link href={"/" + data?.slug}>
+        <Link href={"/details/" + data?.slug}>
           <h2 className="text-[#080F18] text-sm lora-bold md:text-lg leading-tight md:leading-normal md:pb-2.5 pb-2">
             {data?.title}
           </h2>
@@ -31,7 +31,7 @@ const SmallCard = ({ data, isBorder }: PropsType) => {
       </div>
 
       <div className="col-span-2">
-        <Link href={"/" + data?.slug}>
+        <Link href={"/details/" + data?.slug}>
           <Image
             width={199}
             height={117}

@@ -10,38 +10,34 @@ import {
   sports,
 } from "@/static/submenu";
 import axiosServer from "@/utils/axiosServer";
-import { notFound, useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useParams, useRouter } from "next/navigation";
+import React from "react";
 
 const Menu = () => {
   const { menu } = useParams();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axiosServer.get("/article/all?category=" + menu);
-        console.log(data);
-        // if (data?.articles.length === 0) {
-        //   router.push("/");
-        // }
-        setData(data?.articles || []);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchCategoryArticles = async (category: string) => {
+    const { data } = await axiosServer.get(`/article/all?category=${category}`);
+    return data.articles;
+  };
 
-    fetchData();
-  }, [menu]);
-  console.log(menu);
+  const { isPending, data } = useQuery({
+    queryKey: [menu],
+    queryFn: () => fetchCategoryArticles(menu as string),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+
+  if (!isPending && (!data?.length || !data)) {
+    return router.push("/");
+  }
+
   return (
     <SubPage
-      loading={loading}
+      loading={isPending}
       data={data}
       categories={
         menu === "nagaland"

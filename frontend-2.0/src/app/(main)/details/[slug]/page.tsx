@@ -5,8 +5,10 @@ import BreadcrumbComponent from "@/components/main/BreadcrumbConponent";
 import { url_maker } from "@/lib/utils";
 import { TOP_NEWS } from "@/static/data";
 import axiosInstance from "@/utils/axios";
+import axiosServer from "@/utils/axiosServer";
 import { formatDate } from "@/utils/date";
 import { getImageUrl } from "@/utils/getImageUrl";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -30,43 +32,28 @@ const Details = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const [data, setData] = useState<dataInstance>({
-    title: "",
-    content: "",
-    author: {
-      name: "",
-    },
-    publishedAt: "",
-    url: "",
-    thumbnail: "",
-    slug: "",
-  });
-
-  const getDetails = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axiosInstance.get("/article/by/" + slug);
-      console.log(data);
-      if (!data?.article) {
-        return router.push("/");
-      }
-      setData(data?.article);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+  const fetchData = async (slug: string) => {
+    const { data } = await axiosServer.get("/article/by/" + slug);
+    return data.article;
   };
 
-  useEffect(() => {
-    if (getDetails) {
-      getDetails();
-    }
-  }, [slug]);
+  const { isPending, data } = useQuery({
+    queryKey: [slug],
+    queryFn: () => fetchData(slug as string),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+
+  if (!isPending && !data) {
+    return router.push("/");
+  }
+
+  console.log(isPending, data)
 
   return (
     <div className="min-h-screen">
-      {loading ? (
+      {isPending ? (
         <div className="container flex justify-center pt-10">
           <Loader />
         </div>

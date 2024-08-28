@@ -13,7 +13,7 @@ const BigCard = ({ data }: { data: PropsType }) => {
           <IoShareSocial className="w-[22.63px] h-[22.63px] text-white" />
         </div>
 
-        <Link href={"/" + data?.slug}>
+        <Link href={"/details/" + data?.slug}>
           <Image
             className="w-full md:h-[440px] h-[220px]  object-cover"
             width={500}
@@ -37,7 +37,7 @@ const BigCard = ({ data }: { data: PropsType }) => {
                 </Link>
               </div>
             </div>
-            <Link href={"/" + data?.slug}>
+            <Link href={"/details/" + data?.slug}>
               <h2 className="lora-bold pt-1.5 md:text-xl text-base leading-5 sm:leading-normal">{data?.title}</h2>
             </Link>
           </div>

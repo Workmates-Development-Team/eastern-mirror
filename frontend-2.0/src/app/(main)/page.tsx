@@ -10,66 +10,78 @@ import axiosServer from "@/utils/axiosServer";
 import Event from "@/components/main/Event";
 import Section4 from "@/components/main/sections/section4";
 import Loader from "@/components/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [articles, setArticles] = useState([]);
-  const [nagaland, setNagaland] = useState([]);
-  const [india, setIndia] = useState([]);
-  const [editorsPick, setEditorsPick] = useState([]);
-  const [artsEntertainment, setArtsEntertainment] = useState([]);
-  const [world, setWorld] = useState([]);
-  const [sports, setSports] = useState([]);
-  const [error, setError] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data: articleData } = await axiosServer.get("/article/all");
-        setArticles(articleData?.articles || []);
+  const fetchArticles = async () => {
+    const { data } = await axiosServer.get("/article/all");
+    return data.articles;
+  };
 
-        const { data: nagalandData } = await axiosServer.get(
-          "/article/all?category=nagaland"
-        );
-        setNagaland(nagalandData?.articles || []);
+  const fetchCategoryArticles = async (category: string) => {
+    const { data } = await axiosServer.get(`/article/all?category=${category}`);
+    return data.articles;
+  };
 
-        const { data: indiaData } = await axiosServer.get(
-          "/article/all?category=india"
-        );
-        setIndia(indiaData?.articles || []);
+  const { isPending, data: articles } = useQuery({
+    queryKey: ["articles"],
+    queryFn: fetchArticles,
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
-        const { data: editorsPickData } = await axiosServer.get(
-          "/article/all?category=editor's-pick"
-        );
-        setEditorsPick(editorsPickData?.articles || []);
+  const { data: nagaland } = useQuery({
+    queryKey: ["nagaland"],
+    queryFn: () => fetchCategoryArticles("nagaland"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
-        const { data: artsEntertainmentData } = await axiosServer.get(
-          "/article/all?category=arts-and-entertainment"
-        );
-        setArtsEntertainment(artsEntertainmentData?.articles || []);
+  const { data: india } = useQuery({
+    queryKey: ["india"],
+    queryFn: () => fetchCategoryArticles("india"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
-        const { data: worldData } = await axiosServer.get(
-          "/article/all?category=world"
-        );
-        setWorld(worldData?.articles || []);
+  const { data: editorsPick } = useQuery({
+    queryKey: ["editorsPick"],
+    queryFn: () => fetchCategoryArticles("editor's-pick"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
-        const { data: sportsData } = await axiosServer.get(
-          "/article/all?category=sports"
-        );
-        setSports(sportsData?.articles || []);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        setError("Error fetching data");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data: artsEntertainment } = useQuery({
+    queryKey: ["artsEntertainment"],
+    queryFn: () => fetchCategoryArticles("arts-and-entertainment"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
-    fetchData();
-  }, []);
+  const { data: world } = useQuery({
+    queryKey: ["world"],
+    queryFn: () => fetchCategoryArticles("world"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
-  if (loading) {
+  const { data: sports } = useQuery({
+    queryKey: ["sports"],
+    queryFn: () => fetchCategoryArticles("sports"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+
+  if (isPending) {
     return (
       <div className="container flex justify-center min-h-[50vh] pt-10">
         <Loader />
@@ -79,21 +91,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <Section1 data={articles} heading="TOP NEWS" />
+      <Section1 data={articles || []} heading="TOP NEWS" />
       <Event />
-      <Section2 data={nagaland} heading="NAGALAND" />
-      <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" />
-      <Section1 data={india} heading="INDIA" />
-      <Section4 data={editorsPick} heading="EDITOR’S PICK" />
+      <Section2 data={nagaland || []} heading="NAGALAND" />
+      <Section4 data={TOP_NEWS || []} heading="EM EXCLUSIVE" />
+      <Section1 data={india || []} heading="INDIA" />
+      <Section4 data={editorsPick || []} heading="EDITOR’S PICK" />
       <Section3
-        data={artsEntertainment}
+        data={artsEntertainment || []}
         heading="ART & ENTERTAINMENT"
         trending={TRENDING}
       />
 
-      <Section1 data={world} heading="WORLD" />
-      <Section3 data={sports} heading="SPORTS NEWS" watchNow={true} />
-      <VideoSection data={TOP_NEWS} heading="VIDEOS" />
+      <Section1 data={world || []} heading="WORLD" />
+      <Section3 data={sports || []} heading="SPORTS NEWS" watchNow={true} />
+      <VideoSection data={TOP_NEWS || []} heading="VIDEOS" />
     </div>
   );
 }
