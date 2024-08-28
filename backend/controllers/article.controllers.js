@@ -188,7 +188,7 @@ class ArticleController {
 
       // Handle category filtering
       if (category) {
-        const categories = await categoryModels.find({ name: category });
+        const categories = await categoryModels.find({ value: category });
         if (!categories.length) {
           return res.status(200).json({
             articles: [],
