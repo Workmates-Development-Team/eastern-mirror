@@ -17,17 +17,19 @@ export default function BreadcrumbComponent({ links }: { links: any }) {
           <React.Fragment key={i}>
             <BreadcrumbItem>
               {i !== links.length - 1 ? (
-                <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+                <BreadcrumbLink className="capitalize" href={item.href}>
+                  {item.label}
+                </BreadcrumbLink>
               ) : (
-                <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                <BreadcrumbPage className="capitalize">
+                  {item.label}
+                </BreadcrumbPage>
               )}
             </BreadcrumbItem>
 
             {i !== links.length - 1 && <BreadcrumbSeparator />}
           </React.Fragment>
         ))}
-
-        
       </BreadcrumbList>
     </Breadcrumb>
   );

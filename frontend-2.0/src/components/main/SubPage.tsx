@@ -47,7 +47,7 @@ const SubPage = ({
                       buttonVariants({ variant: "outline" }),
                       "md:h-10 h-9 text-xs md:text-sm px-3 md:px-4"
                     )}
-                    href={"/nagaland/" + item?.href}
+                    href={item?.href}
                   >
                     {item?.name}
                   </Link>

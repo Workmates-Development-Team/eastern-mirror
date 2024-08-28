@@ -1,6 +1,14 @@
 "use client";
 
 import SubPage from "@/components/main/SubPage";
+import { convertString } from "@/lib/utils";
+import {
+  artsAndEntertainment,
+  nagaland,
+  opinion,
+  scienceAndTech,
+  sports,
+} from "@/static/submenu";
 import axiosServer from "@/utils/axiosServer";
 import { notFound, useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -35,8 +43,21 @@ const Menu = () => {
     <SubPage
       loading={loading}
       data={data}
-      links={[{ label: menu }]}
-      title={menu as string}
+      categories={
+        menu === "nagaland"
+          ? nagaland
+          : menu === "arts-and-entertainment"
+          ? artsAndEntertainment
+          : menu === "opinion"
+          ? opinion
+          : menu === "science-and-tech"
+          ? scienceAndTech
+          : menu === "sports"
+          ? sports
+          : undefined
+      }
+      links={[{ label: convertString(menu as string) }]}
+      title={convertString(menu as string)}
     />
   );
 };

@@ -30,32 +30,32 @@ export default function Home() {
         setArticles(articleData?.articles || []);
 
         const { data: nagalandData } = await axiosServer.get(
-          "/article/all?category=Nagaland"
+          "/article/all?category=nagaland"
         );
         setNagaland(nagalandData?.articles || []);
 
         const { data: indiaData } = await axiosServer.get(
-          "/article/all?category=India"
+          "/article/all?category=india"
         );
         setIndia(indiaData?.articles || []);
 
         const { data: editorsPickData } = await axiosServer.get(
-          "/article/all?category=Editor's Pick"
+          "/article/all?category=editor's-pick"
         );
         setEditorsPick(editorsPickData?.articles || []);
 
         const { data: artsEntertainmentData } = await axiosServer.get(
-          "/article/all?category=Arts and Entertainment"
+          "/article/all?category=arts-and-entertainment"
         );
         setArtsEntertainment(artsEntertainmentData?.articles || []);
 
         const { data: worldData } = await axiosServer.get(
-          "/article/all?category=World"
+          "/article/all?category=world"
         );
         setWorld(worldData?.articles || []);
 
         const { data: sportsData } = await axiosServer.get(
-          "/article/all?category=Sports"
+          "/article/all?category=sports"
         );
         setSports(sportsData?.articles || []);
       } catch (error) {
