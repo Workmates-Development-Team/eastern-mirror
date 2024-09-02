@@ -22,6 +22,7 @@ const Menu = () => {
     const { data } = await axiosServer.get(`/article/all?category=${category}`);
     return data.articles;
   };
+  // 
 
   const { isPending, data } = useQuery({
     queryKey: [menu],
