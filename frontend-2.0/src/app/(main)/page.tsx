@@ -102,7 +102,7 @@ export default function Home() {
         heading="ART & ENTERTAINMENT"
         trending={TRENDING}
       />
-
+      <Section4 data={editorsPick || []} heading="Education" />
       <Section1 data={world || []} heading="WORLD" />
       <Section3 data={sports || []} heading="SPORTS NEWS" watchNow={true} />
       <VideoSection data={TOP_NEWS || []} heading="VIDEOS" />

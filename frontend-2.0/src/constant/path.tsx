@@ -63,52 +63,68 @@ export const NAVBAR_LINKS = [
     href: "/nagaland",
     subLinks: [
       {
+        label: "Chümoukedima",
+        href: "/chumoukedima",
+      },
+      {
         label: "Dimapur",
         href: "/dimapur",
+      },
+      {
+        label: "Kiphire",
+        href: "/kiphire",
+      },
+      {
+        label: "Kohima",
+        href: "/kohima",
+      },
+      {
+        label: "Longleng",
+        href: "/longleng",
       },
       {
         label: "Mokokchung",
         href: "/mokokchung",
       },
       {
-        label: "Wokha",
-        href: "/wokha",
+        label: "Mon",
+        href: "/mon",
       },
       {
-        label: "Zunheboto",
-        href: "/zunheboto",
+        label: "Niuland",
+        href: "/niuland",
+      },
+      {
+        label: "Noklak",
+        href: "/noklak",
+      },
+      {
+        label: "Peren",
+        href: "/peren",
+      },
+      {
+        label: "Phek",
+        href: "/phek",
+      },
+      {
+        label: "Shamator",
+        href: "/shamator",
+      },
+      {
+        label: "Tseminyü",
+        href: "/tseminyu",
       },
       {
         label: "Tuensang",
         href: "/tuensang",
       },
       {
-        label: "Kiphire",
-        href: "/tuensang",
+        label: "Wokha",
+        href: "/wokha",
       },
       {
-        label: "Mon",
-        href: "/tuensang",
-      },
-      {
-        label: "Peren",
-        href: "/tuensang",
-      },
-      {
-        label: "Phek",
-        href: "/tuensang",
-      },
-      {
-        label: "Longleng",
-        href: "/tuensang",
-      },
-      {
-        label: "Noklak",
-        href: "/tuensang",
-      },
-      {
-        label: "Diaspora",
-        href: "/tuensang",
+        label: "Zünheboto",
+        href: "/zunheboto",
       },
     ],
   },
@@ -130,14 +146,6 @@ export const NAVBAR_LINKS = [
         href: "/editorial",
       },
       {
-        label: "OP-Ed",
-        href: "/op-ed",
-      },
-      {
-        label: "Views & Reviews",
-        href: "/views-reviews",
-      },
-      {
         label: "Letters to the Editor",
         href: "/letters-to-the-editor",
       },
@@ -147,24 +155,6 @@ export const NAVBAR_LINKS = [
   {
     label: "SPORTS",
     href: "/sports",
-    subLinks: [
-      {
-        label: "Football",
-        href: "/football",
-      },
-      {
-        label: "Cricket",
-        href: "/cricket",
-      },
-      {
-        label: "Nagaland Sports",
-        href: "/nagaland-sports",
-      },
-      {
-        label: "Other Sports",
-        href: "/other-sports",
-      },
-    ],
   },
 
   {
@@ -198,162 +188,29 @@ export const NAVBAR_LINKS = [
         label: "Rhythm of Love",
         href: "/rhythm-of-love",
       },
-      {
-        label: "Book Reviews",
-        href: "/book-reviews",
-      },
     ],
   },
 ];
 
 export const FOOTER_LINKS = [
   {
-    section: "POPULAR CATEGORIES",
-    links: [
-      {
-        label: "Editor’s Pick",
-        href: "/editors-pick",
-      },
-      {
-        label: "Feature",
-        href: "/feature",
-      },
-      {
-        label: "Sports News",
-        href: "/sports-news",
-      },
-      {
-        label: "Health & Fitness Tips",
-        href: "/health-fitness-tips",
-      },
-      {
-        label: "EM Exclusive",
-        href: "/em-exclusive",
-      },
-    ],
+    label: "Editor’s Pick",
+    href: "editor's-pick",
   },
   {
-    section: "NAGALAND NEWS",
-    links: [
-      {
-        label: "Dimapur",
-        href: "/dimapur",
-      },
-      {
-        label: "Kiphire",
-        href: "/kiphire",
-      },
-      {
-        label: "Kohima",
-        href: "/kohima",
-      },
-      {
-        label: "Longleng",
-        href: "/longleng",
-      },
-      {
-        label: "Mokokchung",
-        href: "/mokokchung",
-      },
-      {
-        label: "Mon",
-        href: "/mon",
-      },
-      {
-        label: "Noklak",
-        href: "/noklak",
-      },
-      {
-        label: "Peren",
-        href: "/peren",
-      },
-      {
-        label: "Phek",
-        href: "/phek",
-      },
-      {
-        label: "Tuensang",
-        href: "/tuensang",
-      },
-    ],
+    label: "Education",
+    href: "education",
   },
   {
-    section: "LIVING AND ENTERTAINMENT",
-    links: [
-      {
-        label: "Health",
-        href: "/health",
-      },
-      {
-        label: "Rhythm of Love",
-        href: "/rhythm-of-love",
-      },
-      {
-        label: "Food",
-        href: "/food",
-      },
-      {
-        label: "Fashion",
-        href: "/fashion",
-      },
-      {
-        label: "Style Spot",
-        href: "/style-spot",
-      },
-      {
-        label: "Pop Culture",
-        href: "/pop-culture",
-      },
-      {
-        label: "Travel",
-        href: "/travel",
-      },
-    ],
+    label: "Editorial",
+    href: "editorial",
   },
   {
-    section: "OPINIONS",
-    links: [
-      {
-        label: "Editorial",
-        href: "/editorial",
-      },
-      {
-        label: "Views & Reviews",
-        href: "/views-reviews",
-      },
-      {
-        label: "Op-Ed",
-        href: "/op-ed",
-      },
-      {
-        label: "Letters to the Editor",
-        href: "/letters-to-the-editor",
-      },
-    ],
+    label: "Rhythm of Love",
+    href: "rythm-of-love",
   },
   {
-    section: "More......",
-    links: [
-      {
-        label: "Digi-buzz",
-        href: "/digi-buzz",
-      },
-      {
-        label: "Climate and Environment",
-        href: "/climate-and-environment",
-      },
-      {
-        label: "Entrepreneur’s Corner",
-        href: "/entrepreneur-corner",
-      },
-      {
-        label: "Scholarships",
-        href: "/scholarships",
-      },
-      {
-        label: "Corrections",
-        href: "/corrections",
-      },
-    ],
+    label: "About Us",
+    href: "about-us",
   },
 ];

@@ -16,19 +16,15 @@ const Footer = () => {
         />
       </div>
 
-      <div className="md:mt-12 mt-8 grid md:grid-cols-5 grid-cols-1 gap-8 md:gap-0 text-center md:text-start">
+      <div className="md:mt-12 mt-8 flex flex-wrap gap-10 justify-center items-center">
         {FOOTER_LINKS?.map((item, i) => (
-          <div key={i}>
-            <h3 className="lora-medium text-[15px] md:text-base md:pb-[22px] pb-[10px]">{item.section}</h3>
-
-            <ul className="flex flex-col md:gap-3 gap-2">
-              {item.links.map((link, i) => (
-                <li key={i} className="md:text-[15px] text-sm opacity-80 roboto-regular">
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Link
+            key={i}
+            className="lora-medium text-[15px] md:text-base md:pb-[22px] pb-[10px] uppercase"
+            href={item.href}
+          >
+            {item.label}
+          </Link>
         ))}
       </div>
 
@@ -55,7 +51,6 @@ const Footer = () => {
             </Link>
           ))}
         </nav>
-       
       </div>
     </div>
   );
