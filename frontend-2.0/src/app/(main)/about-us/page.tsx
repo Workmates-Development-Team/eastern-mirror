@@ -13,8 +13,8 @@ const AboutUs = () => {
               </h2>
               <p className="mt-4 text-gray-600 text-lg">
                 Eastern Mirror is a premier source for the latest news and
-                insights from the Northeast region of India. 'Journalism for
-                Justice' is the principle behind which we firmly stand and we
+                insights from the Northeast region of India. &apos;Journalism for
+                Justice&apos; is the principle behind which we firmly stand and we
                 provide a fair and unbiased platform for issues that matter and
                 impact our readers. Established with a commitment to
                 journalistic integrity, we aim to provide our readers with
