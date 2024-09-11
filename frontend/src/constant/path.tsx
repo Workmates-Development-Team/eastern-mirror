@@ -63,52 +63,68 @@ export const NAVBAR_LINKS = [
     href: "/nagaland",
     subLinks: [
       {
+        label: "Chümoukedima",
+        href: "/chumoukedima",
+      },
+      {
         label: "Dimapur",
         href: "/dimapur",
+      },
+      {
+        label: "Kiphire",
+        href: "/kiphire",
+      },
+      {
+        label: "Kohima",
+        href: "/kohima",
+      },
+      {
+        label: "Longleng",
+        href: "/longleng",
       },
       {
         label: "Mokokchung",
         href: "/mokokchung",
       },
       {
-        label: "Wokha",
-        href: "/wokha",
+        label: "Mon",
+        href: "/mon",
       },
       {
-        label: "Zunheboto",
-        href: "/zunheboto",
+        label: "Niuland",
+        href: "/niuland",
+      },
+      {
+        label: "Noklak",
+        href: "/noklak",
+      },
+      {
+        label: "Peren",
+        href: "/peren",
+      },
+      {
+        label: "Phek",
+        href: "/phek",
+      },
+      {
+        label: "Shamator",
+        href: "/shamator",
+      },
+      {
+        label: "Tseminyü",
+        href: "/tseminyu",
       },
       {
         label: "Tuensang",
         href: "/tuensang",
       },
       {
-        label: "Kiphire",
-        href: "/tuensang",
+        label: "Wokha",
+        href: "/wokha",
       },
       {
-        label: "Mon",
-        href: "/tuensang",
-      },
-      {
-        label: "Peren",
-        href: "/tuensang",
-      },
-      {
-        label: "Phek",
-        href: "/tuensang",
-      },
-      {
-        label: "Longleng",
-        href: "/tuensang",
-      },
-      {
-        label: "Noklak",
-        href: "/tuensang",
-      },
-      {
-        label: "Diaspora",
-        href: "/tuensang",
+        label: "Zünheboto",
+        href: "/zunheboto",
       },
     ],
   },
@@ -130,14 +146,6 @@ export const NAVBAR_LINKS = [
         href: "/editorial",
       },
       {
-        label: "OP-Ed",
-        href: "/op-ed",
-      },
-      {
-        label: "Views & Reviews",
-        href: "/views-reviews",
-      },
-      {
         label: "Letters to the Editor",
         href: "/letters-to-the-editor",
       },
@@ -147,24 +155,6 @@ export const NAVBAR_LINKS = [
   {
     label: "SPORTS",
     href: "/sports",
-    subLinks: [
-      {
-        label: "Football",
-        href: "/football",
-      },
-      {
-        label: "Cricket",
-        href: "/cricket",
-      },
-      {
-        label: "Nagaland Sports",
-        href: "/nagaland-sports",
-      },
-      {
-        label: "Other Sports",
-        href: "/other-sports",
-      },
-    ],
   },
 
   {
@@ -197,10 +187,6 @@ export const NAVBAR_LINKS = [
       {
         label: "Rhythm of Love",
         href: "/rhythm-of-love",
-      },
-      {
-        label: "Book Reviews",
-        href: "/book-reviews",
       },
     ],
   },
