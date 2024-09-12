@@ -193,23 +193,7 @@ export const NAVBAR_LINKS = [
 ];
 
 export const FOOTER_LINKS = [
-  {
-    section: "Eastern Mirror",
-    links: [
-      {
-        label: "About Us",
-        href: "/about-us",
-      },
-      {
-        label: "Contact Us",
-        href: "/contact-us",
-      },
-      {
-        label: "Advertise with Us",
-        href: "/advertise-with-us",
-      },
-    ],
-  },
+ 
   {
     section: "Nagaland Districts",
     links: [
@@ -377,6 +361,24 @@ export const FOOTER_LINKS = [
       {
         label: "Sports",
         href: "/sports",
+      },
+    ],
+  },
+
+  {
+    section: "Eastern Mirror",
+    links: [
+      {
+        label: "About Us",
+        href: "/about-us",
+      },
+      {
+        label: "Contact Us",
+        href: "/contact-us",
+      },
+      {
+        label: "Advertise with Us",
+        href: "/advertise-with-us",
       },
     ],
   },
