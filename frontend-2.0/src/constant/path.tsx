@@ -194,23 +194,190 @@ export const NAVBAR_LINKS = [
 
 export const FOOTER_LINKS = [
   {
-    label: "Editor’s Pick",
-    href: "editor's-pick",
+    section: "Eastern Mirror",
+    links: [
+      {
+        label: "About Us",
+        href: "/about-us",
+      },
+      {
+        label: "Contact Us",
+        href: "/contact-us",
+      },
+      {
+        label: "Advertise with Us",
+        href: "/advertise-with-us",
+      },
+    ],
   },
   {
-    label: "Education",
-    href: "education",
+    section: "Nagaland Districts",
+    links: [
+      {
+        label: "Chümoukedima",
+        href: "/chumoukedima",
+      },
+      {
+        label: "Dimapur",
+        href: "/dimapur",
+      },
+      {
+        label: "Kiphire",
+        href: "/kiphire",
+      },
+      {
+        label: "Kohima",
+        href: "/kohima",
+      },
+      {
+        label: "Longleng",
+        href: "/longleng",
+      },
+      {
+        label: "Mokokchung",
+        href: "/mokokchung",
+      },
+      {
+        label: "Mon",
+        href: "/mon",
+      },
+      {
+        label: "Niuland",
+        href: "/niuland",
+      },
+      {
+        label: "Noklak",
+        href: "/noklak",
+      },
+      {
+        label: "Peren",
+        href: "/peren",
+      },
+      {
+        label: "Phek",
+        href: "/phek",
+      },
+      {
+        label: "Shamator",
+        href: "/shamator",
+      },
+      {
+        label: "Tseminyü",
+        href: "/tseminyu",
+      },
+      {
+        label: "Tuensang",
+        href: "/tuensang",
+      },
+      {
+        label: "Wokha",
+        href: "/wokha",
+      },
+      {
+        label: "Zünheboto",
+        href: "/zunheboto",
+      },
+    ],
   },
   {
-    label: "Editorial",
-    href: "editorial",
+    section: "Popular Sections",
+    links: [
+      {
+        label: "EM Exclusive",
+        href: "/em-exclusive",
+      },
+      {
+        label: "Education",
+        href: "/education",
+      },
+      {
+        label: "Editor's Pick",
+        href: "/editor's-pick",
+      },
+      {
+        label: "Health",
+        href: "/health",
+      },
+    ],
   },
   {
-    label: "Rhythm of Love",
-    href: "rythm-of-love",
+    section: "News",
+    links: [
+      {
+        label: "World",
+        href: "/world",
+      },
+      {
+        label: "India",
+        href: "/india",
+      },
+      {
+        label: "Northeast India",
+        href: "/northeast-india",
+      },
+      {
+        label: "News in Brief",
+        href: "/news-in-brief",
+      },
+    ],
   },
   {
-    label: "About Us",
-    href: "about-us",
+    section: "OPINIONS",
+    links: [
+      {
+        label: "Editorial",
+        href: "/editorial",
+      },
+      {
+        label: "Views & Reviews",
+        href: "/views-reviews",
+      },
+      {
+        label: "Op-Ed",
+        href: "/op-ed",
+      },
+      {
+        label: "Book Reviews",
+        href: "/book-reviews",
+      },
+    ],
+  },
+  {
+    section: "Entertainment",
+    links: [
+      {
+        label: "Rhythm of Love",
+        href: "/rhythm-of-love",
+      },
+      {
+        label: "Music",
+        href: "/music",
+      },
+      {
+        label: "Film",
+        href: "/film",
+      },
+    ],
+  },
+  {
+    section: "Others",
+    links: [
+      {
+        label: "Videos",
+        href: "/videos",
+      },
+      {
+        label: "Business",
+        href: "/business",
+      },
+      {
+        label: "Science and Tech",
+        href: "/science-and-tech",
+      },
+      {
+        label: "Sports",
+        href: "/sports",
+      },
+    ],
   },
 ];

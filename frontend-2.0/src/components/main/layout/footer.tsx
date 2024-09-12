@@ -1,4 +1,5 @@
 import { FOOTER_LINKS, NAVBAR_LINKS } from "@/constant/path";
+import { cn } from "@/lib/utils";
 import { SOCIAL_LINKS } from "@/static/socials";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,15 +17,36 @@ const Footer = () => {
         />
       </div>
 
-      <div className="md:mt-12 mt-8 flex flex-wrap gap-10 justify-center items-center">
+      <div className="md:mt-12 mt-8 grid md:grid-cols-5 grid-cols-1 gap-8 md:gap-0 md:gap-y-8 text-center md:text-start">
         {FOOTER_LINKS?.map((item, i) => (
-          <Link
+          <div
             key={i}
-            className="lora-medium text-[15px] md:text-base md:pb-[22px] pb-[10px] uppercase"
-            href={item.href}
+            className={cn(
+              item.section === "Nagaland Districts" ? "col-span-2" : ""
+            )}
           >
-            {item.label}
-          </Link>
+            <h3 className="lora-medium text-[15px] md:text-base md:pb-[22px] pb-[10px] uppercase">
+              {item.section}
+            </h3>
+
+            <ul
+              className={cn(
+                item.section === "Nagaland Districts"
+                  ? "grid grid-cols-2"
+                  : "flex flex-col ",
+                "md:gap-3 gap-2"
+              )}
+            >
+              {item.links.map((link, i) => (
+                <li
+                  key={i}
+                  className="md:text-[15px] text-sm opacity-80 roboto-regular"
+                >
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
 
