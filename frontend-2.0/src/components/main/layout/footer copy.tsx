@@ -5,102 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const nagaland = [
-  {
-    label: "Chümoukedima",
-    href: "/chumoukedima",
-  },
-  {
-    label: "Dimapur",
-    href: "/dimapur",
-  },
-  {
-    label: "Kiphire",
-    href: "/kiphire",
-  },
-  {
-    label: "Kohima",
-    href: "/kohima",
-  },
-  {
-    label: "Longleng",
-    href: "/longleng",
-  },
-  {
-    label: "Mokokchung",
-    href: "/mokokchung",
-  },
-  {
-    label: "Mon",
-    href: "/mon",
-  },
-  {
-    label: "Niuland",
-    href: "/niuland",
-  },
-  {
-    label: "Noklak",
-    href: "/noklak",
-  },
-  {
-    label: "Peren",
-    href: "/peren",
-  },
-  {
-    label: "Phek",
-    href: "/phek",
-  },
-  {
-    label: "Shamator",
-    href: "/shamator",
-  },
-  {
-    label: "Tseminyü",
-    href: "/tseminyu",
-  },
-  {
-    label: "Tuensang",
-    href: "/tuensang",
-  },
-  {
-    label: "Wokha",
-    href: "/wokha",
-  },
-  {
-    label: "Zünheboto",
-    href: "/zunheboto",
-  },
-];
-
 const Footer = () => {
   return (
     <div className="mt-10 bg-[#002366] pt-8 pb-16 md:px-[52px] px-[35px] container text-[#FFFFFF]">
-      <div className="flex justify-cente items-start gap-16">
-        <div>
-          <h3 className="lora-medium text-[15px] md:text-base md:pb-[22px] pb-[10px] uppercase">
-            Nagaland Districts
-          </h3>
-
-          <ul className={"flex flex-wrap  md:gap-3 gap-2"}>
-            {nagaland.map((link, i) => (
-              <li
-                key={i}
-                className="md:text-[15px] text-sm opacity-80 roboto-regular"
-              >
-                <Link href={link.href}>{link.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <Image
-            src="/images/logo-light.png"
-            alt="logo-light"
-            width={300}
-            height={120}
-          />
-        </div>
+      <div className="flex justify-center">
+        <Image
+          src="/images/logo-light.png"
+          alt="logo-light"
+          width={300}
+          height={120}
+        />
       </div>
 
       <div className="md:mt-12 mt-8 grid md:grid-cols-5 grid-cols-1 gap-8 md:gap-0 md:gap-y-8 text-center md:text-start">
