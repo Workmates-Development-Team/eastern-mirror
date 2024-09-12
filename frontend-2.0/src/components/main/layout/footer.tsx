@@ -103,7 +103,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="md:mt-12 mt-8 grid md:grid-cols-5 grid-cols-1 gap-8 md:gap-0 md:gap-y-8 text-center md:text-start">
+      <div className="md:mt-12 mt-8 grid md:grid-cols-6 grid-cols-1 gap-8 md:gap-0 md:gap-y-8 text-center md:text-start">
         {FOOTER_LINKS?.map((item, i) => (
           <div
             key={i}
