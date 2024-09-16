@@ -47,7 +47,7 @@ export default function Navbar() {
               {NAVBAR_LINKS.map((link, i) => (
                 <Link
                   href={link.href}
-                  className="text-muted-foreground hover:text-foreground"
+                  className="text-muted-foreground hover:text-foreground capitalize"
                   key={i}
                 >
                   {link.label}

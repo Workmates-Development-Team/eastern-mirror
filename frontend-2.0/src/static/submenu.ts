@@ -64,10 +64,7 @@ export const nagaland = [
     name: "Chumoukedima",
     href: "/nagaland/chumoukedima",
   },
-  {
-    name: "Diaspora",
-    href: "/nagaland/diaspora",
-  },
+
   {
     name: "Dimapur",
     href: "/nagaland/dimapur",

@@ -4,6 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,7 +33,14 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+         <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
         {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -42,7 +42,7 @@ const Section2 = ({ data, heading }: PropsType) => {
         </div>
 
         <div>
-          <div className="md:w-[293px] w-full h-[530px]">
+          <div className="md:w-[293px] flex justify-center md:block h-[530px]">
             <AdSlider />
           </div>
         </div>

@@ -75,13 +75,13 @@ const nagaland = [
 const Footer = () => {
   return (
     <div className="mt-10 bg-[#002366] pt-8 pb-16 md:px-[52px] px-[35px] container text-[#FFFFFF]">
-      <div className="flex justify-cente items-start gap-16">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between md:items-start gap-16">
         <div>
-          <h3 className="lora-medium text-[15px] md:text-base md:pb-[22px] pb-[10px] uppercase">
+          <h3 className="lora-medium text-[15px] text-center md:text-start md:pb-[22px] pb-[10px] uppercase">
             Nagaland Districts
           </h3>
 
-          <ul className={"flex flex-wrap  md:gap-3 gap-2"}>
+          <ul className={"flex md:flex-wrap flex-col md:flex-row text-center md:text-start  md:gap-3 gap-2"}>
             {nagaland.map((link, i) => (
               <li
                 key={i}

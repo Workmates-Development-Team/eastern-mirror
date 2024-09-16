@@ -54,12 +54,12 @@ export const ADMIN_SIDEBAR_LINKS = [
 
 export const NAVBAR_LINKS = [
   {
-    label: "HOME",
+    label: "Home",
     href: "/",
   },
 
   {
-    label: "NAGALAND",
+    label: "nagaland",
     href: "/nagaland",
     subLinks: [
       {
@@ -153,12 +153,12 @@ export const NAVBAR_LINKS = [
   },
 
   {
-    label: "SPORTS",
+    label: "sports",
     href: "/sports",
   },
 
   {
-    label: "SCIENCE AND TECH",
+    label: "science and tech",
     href: "/science-and-tech",
     subLinks: [
       {
@@ -177,7 +177,7 @@ export const NAVBAR_LINKS = [
   },
 
   {
-    label: "ARTS AND ENTERTAINMENT",
+    label: "arts and entertainment",
     href: "/arts-and-entertainment",
     subLinks: [
       {
