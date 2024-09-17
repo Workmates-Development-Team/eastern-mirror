@@ -15,7 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Advertisment = () => {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
 
   const handleLinkClick = (activeValue: number) => {
     setActive(activeValue);
