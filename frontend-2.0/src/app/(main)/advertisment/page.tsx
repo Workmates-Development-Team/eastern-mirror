@@ -44,7 +44,7 @@ const Advertisment = () => {
             <div>
               <div className="mt-5 grid grid-cols-1 md:grid-cols-4 md:gap-7 gap-4">
                 {Array.from({ length: 8 })?.map((item, i) => (
-                  <div>
+                  <div key={i}>
                     <Image
                       className="w-full"
                       src="/images/image.jpg"
@@ -79,7 +79,7 @@ const Advertisment = () => {
             <div>
             <div className="mt-5 grid grid-cols-1 md:grid-cols-2 md:gap-7 gap-4">
               {Array.from({ length: 2 })?.map((item, i) => (
-                <div>
+                <div key={i}>
                   <Image
                     className="w-full"
                     src="/images/image.jpg"
