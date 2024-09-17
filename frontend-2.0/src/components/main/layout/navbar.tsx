@@ -59,7 +59,7 @@ export default function Navbar() {
         <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2">
           <input
             type="text"
-            placeholder="Seacrh..."
+            placeholder="Search..."
             className="py-1 outline-none bg-transparent text-white border-b max-w-[150px]"
           />
           <Button
