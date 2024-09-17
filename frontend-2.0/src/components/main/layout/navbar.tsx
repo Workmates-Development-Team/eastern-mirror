@@ -53,6 +53,16 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+
+<Link
+            href="/advertisment"
+            className={cn(
+              buttonVariants({ size: "sm" }),
+              "whitespace-nowrap transition-colors lora-regular text-sm rounded-3xl"
+            )}
+          >
+            ADVERTISEMENT
+          </Link>
             </nav>
           </SheetContent>
         </Sheet>
