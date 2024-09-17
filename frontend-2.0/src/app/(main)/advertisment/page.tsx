@@ -5,19 +5,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Advertisment = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const paramValue = searchParams.get("active");
-  const [active, setActive] = useState(Number(paramValue) || 0);
+ 
+  const [active, setActive] = useState(0);
 
-  useEffect(() => {
-    setActive(Number(paramValue) || 0);
-  }, [paramValue]);
-
+  
   const handleLinkClick = (activeValue: number) => {
-    console.log(activeValue)
-    router.push(`/advertisment?active=${activeValue}`, { scroll: false });
-    // setActive(activeValue)
+    setActive(activeValue)
   };
 
   return (
