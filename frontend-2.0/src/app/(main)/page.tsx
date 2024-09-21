@@ -72,6 +72,20 @@ export default function Home() {
     refetchOnWindowFocus: false,
     retry: 1,
   });
+  const { data: region } = useQuery({
+    queryKey: ["region"],
+    queryFn: () => fetchCategoryArticles("region"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+  const { data: business } = useQuery({
+    queryKey: ["business"],
+    queryFn: () => fetchCategoryArticles("business"),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
   const { data: sports } = useQuery({
     queryKey: ["sports"],
@@ -102,8 +116,10 @@ export default function Home() {
         heading="ART & ENTERTAINMENT"
         trending={TRENDING}
       />
-      <Section4 data={editorsPick || []} heading="Education" />
       <Section1 data={world || []} heading="WORLD" />
+      <Section1 data={region || []} heading="REGION" />
+      <Section1 data={business || []} heading="Business" />
+      <Section4 data={editorsPick || []} heading="Education" />
       <Section3 data={sports || []} heading="SPORTS NEWS" watchNow={true} />
       <VideoSection data={TOP_NEWS || []} heading="VIDEOS" />
     </div>
