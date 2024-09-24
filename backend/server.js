@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.config.js";
 import rootRoute from "./routes/index.routes.js";
 
+
 const app = express();
 const port = process.env.PORT || 5000;
 

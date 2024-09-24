@@ -1,8 +1,6 @@
 "use client";
 
-import * as React from "react";
 import { MoreHorizontal } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,29 +23,97 @@ import { Badge } from "@/components/ui/badge";
 import { useRecoilValue } from "recoil";
 import { articleState } from "@/atoms/articleAtom";
 import { formatDate } from "@/utils/date";
+import { Pagination } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import axiosInstance from "@/utils/axios";
+import { useDebounce } from "use-debounce";
+
+export type Article = {
+  _id: string;
+  title: string;
+  content: string;
+  publishedAt: string;
+  tags: string[];
+  category: Category[];
+  isPublished: boolean;
+};
 
 export type Category = {
-  id: string;
+  _id: string;
   name: string;
   parentCategory: string;
   status: boolean;
 };
 
+interface FetchArticlesResponse {
+  articles: Article[];
+  totalPages: number;
+  currentPage: number;
+}
+
 export default function CategoryTable() {
-  const { articles } = useRecoilValue(articleState);
+  const [search, setSearch] = useState<string>("");
+  const [debouncedSearch] = useDebounce(search, 500); // debounce with 500ms delay
+  const [page, setPage] = useState<number>(1);
+  const [limit] = useState<number>(10);
+  const [sort, setSort] = useState<string>("createdAt");
+  const [order, setOrder] = useState<string>("desc");
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchArticles = async (params: {
+    page?: number;
+    limit?: number;
+    sort?: string;
+    order?: string;
+    search?: string;
+    category?: string;
+    author?: string;
+  }): Promise<FetchArticlesResponse> => {
+    const { data } = await axiosInstance.get(
+      `/article/all?page=${params?.page}&search=${params?.search}`
+    );
+    setTotalPages(data?.totalPages);
+    return data;
+  };
+
+  const {
+    data = { articles: [], totalPages: 0, currentPage: 1 },
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["articles", { page, limit, sort, order, search: debouncedSearch }],
+    queryFn: () => fetchArticles({ page, limit, sort, order, search: debouncedSearch }),
+    staleTime: 300000, // 5 minutes
+    
+  });
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1); // Reset to first page on new search
+  };
+
+  const handlePageChange = (_: unknown, newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <div className="w-full">
       <div className="py-4">
         <h2 className="text-lg font-semibold">Categories</h2>
         <div className="flex items-center py-4">
-          <Input placeholder="Filter category names..." className="max-w-sm" />
+          <Input
+            placeholder="Search post..."
+            className="max-w-sm"
+            value={search}
+            onChange={handleSearch}
+          />
         </div>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Title </TableHead>
+                <TableHead>Title</TableHead>
                 <TableHead>Content</TableHead>
                 <TableHead>Published Date</TableHead>
                 <TableHead>Tags</TableHead>
@@ -57,13 +123,12 @@ export default function CategoryTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {articles?.length ? (
-                articles.map((row: any) => (
+              {data?.articles.length ? (
+                data.articles.map((row) => (
                   <TableRow key={row._id}>
                     <TableCell>
                       <div>{row?.title}</div>
                     </TableCell>
-
                     <TableCell>
                       <div
                         dangerouslySetInnerHTML={{
@@ -72,25 +137,22 @@ export default function CategoryTable() {
                       ></div>
                     </TableCell>
                     <TableCell>
-                      <div> {formatDate(row?.publishedAt)}</div>
+                      <div>{formatDate(row?.publishedAt)}</div>
                     </TableCell>
                     <TableCell>
-                      <div> {row?.tags?.join(", ")}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        {" "}
-                        {row?.category
-                          ?.map((item: { name: string }) => item?.name)
-                          .join(", ")}
-                      </div>
+                      <div>{row?.tags?.join(", ")}</div>
                     </TableCell>
                     <TableCell>
                       <div>
-                        <Badge variant={row?.isPublished ? "default" : "destructive"}>
-                          {row?.isPublished ? "Yes" : "No"}
-                        </Badge>
+                        {row?.category?.map((item) => item?.name).join(", ")}
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={row?.isPublished ? "default" : "destructive"}
+                      >
+                        {row?.isPublished ? "Yes" : "No"}
+                      </Badge>
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
@@ -103,14 +165,16 @@ export default function CategoryTable() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuItem
-                            onClick={() => alert(`Category ID: `)}
+                            onClick={() => alert(`Article ID: ${row._id}`)}
                           >
                             View Details
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={() => alert(`Editing Category ID: `)}
+                            onClick={() =>
+                              alert(`Editing Article ID: ${row._id}`)
+                            }
                           >
-                            Edit Category
+                            Edit Article
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
@@ -118,7 +182,7 @@ export default function CategoryTable() {
                               navigator.clipboard.writeText(row._id)
                             }
                           >
-                            Copy Category ID
+                            Copy Article ID
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -127,16 +191,22 @@ export default function CategoryTable() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={articles.length}
-                    className="h-24 text-center"
-                  >
+                  <TableCell colSpan={7} className="h-24 text-center">
                     No results.
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <Pagination
+            count={data?.totalPages || totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+          />
         </div>
       </div>
     </div>

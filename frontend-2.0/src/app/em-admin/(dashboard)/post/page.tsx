@@ -1,31 +1,14 @@
 "use client";
 
-import { articleState } from "@/atoms/articleAtom";
 import PostTable from "@/components/admin/table/PostTable";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import axiosInstance from "@/utils/axios";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+
 
 export default function Post() {
-  const setArticle = useSetRecoilState(articleState);
-  const [search, setSearch] = useState("");
-
-  const getArticles = async () => {
-    try {
-      const { data } = await axiosInstance.get("/article/all");
-      setArticle(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getArticles();
-  }, [search]);
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-[#f3f2f7ab]">

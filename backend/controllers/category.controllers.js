@@ -6,18 +6,17 @@ import slugify from "slugify";
 class CategoryController {
   static async add(req, res) {
     try {
-      const { name, parentCategory } = categorySchema.parse(req.body);
+      const { name } = categorySchema.parse(req.body);
 
-      const value = slugify(name, { lower: true });
-      const existingCategory = await categoryModels.findOne({ value });
+      const slug = slugify(name, { lower: true });
+      const existingCategory = await categoryModels.findOne({ slug });
       if (existingCategory) {
         return res.status(400).json({ message: "Category already exists" });
       }
 
       const category = new categoryModels({
         name,
-        value,
-        parentCategory: parentCategory || undefined,
+        slug,
       });
       await category.save();
 
@@ -57,32 +56,48 @@ class CategoryController {
     try {
       const {
         search,
-        parentCategory,
         sortBy = "createdAt",
-        sortOrder = "-1",
+        sortOrder = "1",
+        page = 1,
+        limit = 10,
       } = req.query;
-
+  
       let query = {};
-
+  
       if (search) {
         query.name = { $regex: search, $options: "i" };
       }
-
-      if (parentCategory) {
-        query.parentCategory = parentCategory;
-      }
-
+  
+      // Convert page and limit to numbers
+      const pageNumber = parseInt(page, 10);
+      const pageSize = parseInt(limit, 10);
+  
+      // Calculate the number of items to skip
+      const skip = (pageNumber - 1) * pageSize;
+  
       const categories = await categoryModels
         .find(query)
         .sort({ [sortBy]: Number(sortOrder) })
-        .populate("parentCategory", "name parentCategory")
-        .select("name parentCategory");
-      res.status(200).json(categories);
+        .skip(skip)
+        .limit(pageSize);
+  
+      const totalItems = await categoryModels.countDocuments(query);
+      
+      // Calculate total pages
+      const totalPages = Math.ceil(totalItems / pageSize);
+  
+      res.status(200).json({
+        categories,
+        totalItems,
+        totalPages,
+        currentPage: pageNumber,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
+  
 
   static async getByParent(req, res) {
     try {

@@ -178,14 +178,14 @@ class ArticleController {
         category = "",
         author = "",
       } = req.query;
-
+  
       const query = {};
-
-      // Add full-text search if applicable
+  
+      // Add title search if applicable
       if (search) {
-        query.$text = { $search: search };
+        query.title = { $regex: search, $options: "i" };  // Case-insensitive regex search on title
       }
-
+  
       // Handle category filtering
       if (category) {
         const categories = await categoryModels.find({ value: category });
@@ -197,12 +197,12 @@ class ArticleController {
           });
         }
         const categoryIds = categories.map((cat) => cat._id);
-
+  
         if (categoryIds.length > 0) {
           query.category = { $in: categoryIds };
         }
       }
-
+  
       // Handle author filtering
       if (author) {
         const authorObj = await authorModels.findOne({ name: author });
@@ -210,7 +210,7 @@ class ArticleController {
           query.author = authorObj._id;
         }
       }
-
+  
       // Query the articles with population and pagination
       const articles = await articleModels
         .find(query)
@@ -226,10 +226,10 @@ class ArticleController {
         .sort({ [sort]: order })
         .skip((page - 1) * limit)
         .limit(parseInt(limit));
-
+  
       // Count total documents matching the query
       const totalArticles = await articleModels.countDocuments(query);
-
+  
       res.status(200).json({
         articles,
         totalPages: Math.ceil(totalArticles / limit),
@@ -239,6 +239,8 @@ class ArticleController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  
   static async getBySlug(req, res) {
     try {
       const { slug } = req.params;

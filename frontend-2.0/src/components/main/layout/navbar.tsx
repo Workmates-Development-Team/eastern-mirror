@@ -13,7 +13,13 @@ export default function Navbar() {
     <>
       <div className="container px-4 md:px-6 flex justify-center mb-4">
         <Link href="/">
-          <Image width={395} height={153} className="md:w-[395px] md:h-[153px] w-[300px] h-[130px]" src="/images/logo.webp" alt="logo" />
+          <Image
+            width={395}
+            height={153}
+            className="md:w-[395px] md:h-[153px] w-[300px] h-[130px]"
+            src="/images/logo.webp"
+            alt="logo"
+          />
         </Link>
       </div>
 
@@ -54,15 +60,15 @@ export default function Navbar() {
                 </Link>
               ))}
 
-<Link
-            href="/advertisment"
-            className={cn(
-              buttonVariants({ size: "sm" }),
-              "whitespace-nowrap transition-colors lora-regular text-sm rounded-3xl"
-            )}
-          >
-            ADVERTISEMENT
-          </Link>
+              <Link
+                href="/advertisment"
+                className={cn(
+                  buttonVariants({ size: "sm" }),
+                  "whitespace-nowrap transition-colors lora-regular text-sm rounded-3xl"
+                )}
+              >
+                ADVERTISEMENT
+              </Link>
             </nav>
           </SheetContent>
         </Sheet>

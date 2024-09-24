@@ -6,15 +6,11 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    value: {
+    slug: {
       type: String,
       required: true,
     },
-    parentCategory: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      default: null,
-    },
+   
   },
   {
     timestamps: true,

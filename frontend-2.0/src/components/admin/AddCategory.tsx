@@ -21,33 +21,8 @@ import toast from "react-hot-toast";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { categoryState } from "@/atoms/categoryAtom";
 
-export default function AddCategory() {
+export default function AddCategory({ refetch }: { refetch: () => void }) {
   const [open, setOpen] = useState(false);
-  const [openPovover, setOpenPopover] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const categories2 = useRecoilValue(categoryState);
-  const setCategories2 = useSetRecoilState(categoryState);
-
-  const getCategories = async () => {
-    try {
-      const { data } = await axiosInstance.get(
-        "/category/all?sortBy=name&sortOrder=1"
-      );
-      console.log(data);
-      const newArray = data?.map((item: { name: string; _id: string }) => ({
-        label: item?.name,
-        value: item._id,
-      }));
-
-      setCategories(newArray);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   const {
     resetForm,
@@ -55,12 +30,9 @@ export default function AddCategory() {
     getFieldProps,
     handleSubmit,
     touched,
-    values,
-    setFieldValue,
   } = useFormik({
     initialValues: {
       name: "",
-      parentCategory: "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -71,16 +43,7 @@ export default function AddCategory() {
       try {
         const { data } = await axiosInstance.post("/category/add", values);
         console.log(data);
-        setCategories2([
-          {
-            ...data?.category,
-            parentCategory: categories2.find(
-              (item: any) => item._id === values.parentCategory
-            ),
-          },
-          ...categories2,
-        ]);
-        getCategories();
+
         toast.success(data?.message);
         resetForm();
         setOpen(false);
@@ -127,17 +90,6 @@ export default function AddCategory() {
             )}
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Parent Category</Label>
-            <SeacrhSelect
-              placeholder="Select Parent Name"
-              value={values.parentCategory}
-              setValue={(value) => setFieldValue("parentCategory", value)}
-              open={openPovover}
-              setOpen={setOpenPopover}
-              categories={categories}
-            />
-          </div>
           <DialogFooter>
             <div className="flex gap-4">
               <Button

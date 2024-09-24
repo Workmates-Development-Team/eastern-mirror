@@ -16,6 +16,7 @@ import { Box } from "@mui/material";
 import axiosInstance from "@/utils/axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Switch } from "@/components/ui/switch";
 
 // Dynamically import ReactQuill with no SSR
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -41,7 +42,8 @@ const AddPost = () => {
   const [media, setMedia] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [category, setCategory] = useState<CategoryOption[]>([]);
-  const categories = useRecoilValue(categoryState);
+  // const categories = useRecoilValue(categoryState);
+  const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState<AuthorProps[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<string>("");
@@ -245,7 +247,7 @@ const AddPost = () => {
           <Autocomplete
             multiple
             id="tags-filled"
-            options={categories.map((option) => option)}
+            options={categories?.map((option) => option)}
             freeSolo
             value={category}
             getOptionLabel={(option) =>
@@ -282,7 +284,7 @@ const AddPost = () => {
           <Autocomplete
             multiple
             id="tags-filled"
-            options={suggestedTags.map((option) => option.title)}
+            options={suggestedTags?.map((option) => option.title)}
             freeSolo
             value={selectedTags}
             onChange={(event, newValue) => {
@@ -375,6 +377,21 @@ const AddPost = () => {
         }}
         style={{ background: "#0080000a", minHeight: 400 }}
       />
+
+      <div className="mt-3 grid grid-cols-3 space-x-4">
+        <div className="flex items-center space-x-2">
+          <Switch id="airplane-mode" />
+          <Label htmlFor="airplane-mode">Show on Top news</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch id="airplane-mode" />
+          <Label htmlFor="airplane-mode">Show on Popular Section</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch id="airplane-mode" />
+          <Label htmlFor="airplane-mode">Show on Exclusive Section</Label>
+        </div>
+      </div>
       <div className="absolute top-20 z-10 right-4 flex gap-3">
         {/* <Button
           disabled={!title?.length && !value.length && !media.length}

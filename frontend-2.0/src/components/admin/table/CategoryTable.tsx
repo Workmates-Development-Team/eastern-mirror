@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { MoreHorizontal } from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,54 +22,88 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { categoryState } from "@/atoms/categoryAtom";
-import { useRecoilValue } from "recoil";
+import { Pagination } from "@mui/material";
+import axiosInstance from "@/utils/axios";
+import toast from "react-hot-toast";
 
-export type Category = {
-  id: string;
+interface Category {
+  _id: string;
   name: string;
-  parentCategory: string;
-  status: boolean;
-};
+  slug: string;
+}
 
-export default function CategoryTable() {
-  const categories = useRecoilValue(categoryState);
+interface CategoryTableProps {
+  totalPage: number;
+  categories: Category[];
+  searchTerm?: string;
+  setSearchTerm?: (term: string) => void;
+  setPage?: (term: number) => void;
+  page: number;
+  handlePageChange: (_: unknown, newPage: number) => void;
+  refetch: () => void;
+}
+
+export default function CategoryTable({
+  totalPage,
+  categories,
+  searchTerm,
+  setSearchTerm,
+  page,
+  handlePageChange,
+  setPage,
+  refetch,
+}: CategoryTableProps) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setPage?.(1);
+    setSearchTerm?.(value);
+  };
+
+  const [loading, setLoading] = React.useState(false);
+
+  const handleDelete = async (id: string) => {
+    try {
+      setLoading(true);
+      await axiosInstance.delete("/category/delete/" + id);
+      refetch();
+      toast.success("Deleted Successfully");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Something Went Wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full">
       <div className="py-4">
         <h2 className="text-lg font-semibold">Categories</h2>
         <div className="flex items-center py-4">
-          <Input placeholder="Filter category names..." className="max-w-sm" />
+          <Input
+            placeholder="Search category names..."
+            className="max-w-sm"
+            value={searchTerm}
+            onChange={handleChange}
+          />
         </div>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Category Name</TableHead>
-                <TableHead>Parent Category</TableHead>
-                <TableHead>Status</TableHead>
+
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {categories?.length ? (
-                categories.map((row: any) => (
+                categories?.map((row: any) => (
                   <TableRow key={row._id}>
                     <TableCell>
                       <div>{row?.name}</div>
                     </TableCell>
 
-                    <TableCell>
-                      <div>{row?.parentCategory?.name || "---"}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <Badge variant={true ? "default" : "destructive"}>
-                          {true ? "Active" : "Inactive"}
-                        </Badge>
-                      </div>
-                    </TableCell>
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -81,23 +115,19 @@ export default function CategoryTable() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuItem
-                            onClick={() => alert(`Category ID: `)}
+                            disabled={loading}
+                            onClick={() => handleDelete(row?._id)}
                           >
-                            View Details
+                            <Trash className="w-4 h-4 mr-2" /> Delete
                           </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => alert(`Editing Category ID: `)}
-                          >
-                            Edit Category
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
                           <DropdownMenuItem
                             onClick={() =>
-                              navigator.clipboard.writeText(row._id)
+                              alert(`Editing Category ID: ${row._id}`)
                             }
                           >
-                            Copy Category ID
+                            <Edit className="w-4 h-4 mr-2" /> Edit
                           </DropdownMenuItem>
+                          <DropdownMenuSeparator />
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -105,10 +135,7 @@ export default function CategoryTable() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={categories.length}
-                    className="h-24 text-center"
-                  >
+                  <TableCell colSpan={4} className="h-24 text-center">
                     No results.
                   </TableCell>
                 </TableRow>
@@ -116,6 +143,15 @@ export default function CategoryTable() {
             </TableBody>
           </Table>
         </div>
+      </div>
+
+      <div className="flex justify-center my-4">
+        <Pagination
+          count={totalPage}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
       </div>
     </div>
   );
