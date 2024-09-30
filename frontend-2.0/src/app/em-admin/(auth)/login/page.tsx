@@ -40,7 +40,7 @@ export default function Login() {
     onSubmit: async (values) => {
       try {
         setLoading(true);
-        const response = await axiosInstance.post("/admin/login", values);
+        const response = await axiosInstance.post("/user/login", values);
         const { token, admin } = response.data;
 
         console.log(values);
@@ -124,7 +124,7 @@ export default function Login() {
                 <Button disabled={loading} type="submit" className="w-full">
                   {loading ? (
                     <span>
-                      <Loader2 />{" "}
+                      <Loader2 className="animate-spin w-4 h-4 mr-2" />{" "}
                     </span>
                   ) : (
                     ""

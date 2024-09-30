@@ -1,4 +1,4 @@
-import { Home, Newspaper, Settings, Users } from "lucide-react";
+import { Home, Newspaper, Settings, SquarePen, User, Users } from "lucide-react";
 
 export const ADMIN_SIDEBAR_LINKS = [
   {
@@ -29,6 +29,11 @@ export const ADMIN_SIDEBAR_LINKS = [
   {
     label: "Authors",
     path: "/authors",
+    icon: () => <SquarePen className="h-4 w-4" />,
+  },
+  {
+    label: "Users",
+    path: "/users",
     icon: () => <Users className="h-4 w-4" />,
   },
   {

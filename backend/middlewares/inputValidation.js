@@ -1,24 +1,42 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
-  name: z
+  firstName: z
     .string({
-      required_error: "Name is required",
+      required_error: "First name is required",
     })
     .min(1, {
-      message: "Name is required",
+      message: "First name is required",
     }),
+
+  lastName: z
+    .string({
+      required_error: "Last name is required",
+    })
+    .min(1, {
+      message: "Last name is required",
+    }),
+
   email: z
     .string({
       required_error: "Email is required",
     })
     .email("Invalid email format"),
+
   password: z
     .string({
       required_error: "Password is required",
     })
     .min(6, "Password must be at least 6 characters long"),
+
+  userType: z
+    .enum(["admin", "editor", "publisher", "user"], {
+      invalid_type_error:
+        "Role must be one of 'admin', 'editor', 'publisher', or 'user'",
+    })
+    .optional(),
 });
+
 
 export const loginSchema = z.object({
   email: z
@@ -61,7 +79,7 @@ export const articleSchema = z.object({
       required_error: "Title is required",
     })
     .min(1, "Title is required"),
-    slug: z
+  slug: z
     .string({
       required_error: "slug is required",
     })

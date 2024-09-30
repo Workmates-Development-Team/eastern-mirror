@@ -10,5 +10,6 @@ export const profileState = atom({
     isActive: true,
     createdAt: "",
     updatedAt: "",
+    userType: ""
   },
 });

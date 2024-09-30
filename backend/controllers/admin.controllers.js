@@ -9,20 +9,16 @@ dotenv.config();
 class AdminController {
   static async register(req, res) {
     try {
-      // Validate the request body against the schema
       const { name, email, password } = registerSchema.parse(req.body);
 
-      // Check if the email is already in use
       let admin = await adminModels.findOne({ email });
       if (admin) {
         return res.status(400).json({ message: "Admin already exists" });
       }
 
-      // Create new admin
       admin = new adminModels({ name, email, password });
       await admin.save();
 
-      // Create a JWT token
       const token = jwt.sign({ id: admin.id }, process.env.JWT_SECRET, {
         expiresIn: "1d",
       });
@@ -44,22 +40,18 @@ class AdminController {
 
   static async login(req, res) {
     try {
-      // Validate the request body against the schema
       const { email, password } = loginSchema.parse(req.body);
 
-      // Find admin by email
       const admin = await adminModels.findOne({ email });
       if (!admin) {
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
-      // Check password
       const isMatch = await admin.comparePassword(password);
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
-      // Create a JWT token
       const token = jwt.sign({ id: admin.id }, process.env.JWT_SECRET, {
         expiresIn: "1d",
       });
@@ -75,7 +67,7 @@ class AdminController {
         });
       }
 
-       res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" });
     }
   }
 
@@ -84,7 +76,7 @@ class AdminController {
       const admin = await adminModels.findById(req.userId).select("-password");
       res.status(200).json(admin);
     } catch (error) {
-       res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" });
     }
   }
 
@@ -102,7 +94,7 @@ class AdminController {
       await admin.save();
       res.status(200).json({ message: "Admin updated successfully", admin });
     } catch (error) {
-       res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" });
     }
   }
 }

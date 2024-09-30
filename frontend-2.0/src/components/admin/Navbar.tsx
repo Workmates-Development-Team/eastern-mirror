@@ -53,6 +53,7 @@ const AdminNavbar = () => {
       email: "",
       isDeleted: false,
       isActive: true,
+      userType: '',
       createdAt: "",
       updatedAt: "",
     });

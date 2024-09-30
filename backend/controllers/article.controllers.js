@@ -5,8 +5,6 @@ import articleModels from "../models/article.models.js";
 import { articleSchema } from "../middlewares/inputValidation.js";
 import { getFilePath2 } from "../utils/helper.js";
 import fs from "fs";
-import { connect } from "http2";
-import mongoose, { Types } from "mongoose";
 
 class ArticleController {
   static async add(req, res) {
@@ -108,7 +106,6 @@ class ArticleController {
         publishedAt,
       } = req.body;
 
-      // Validate category and author
       if (category) {
         const categoryExists = await categoryModels.findById(category);
         if (!categoryExists) {
@@ -181,12 +178,10 @@ class ArticleController {
 
       const query = {};
 
-      // Add title search if applicable
       if (search) {
-        query.title = { $regex: search, $options: "i" }; // Case-insensitive regex search on title
+        query.title = { $regex: search, $options: "i" };
       }
 
-      // Handle category filtering
       if (category) {
         const categories = await categoryModels.find({ value: category });
         if (!categories.length) {
@@ -203,7 +198,6 @@ class ArticleController {
         }
       }
 
-      // Handle author filtering
       if (author) {
         const authorObj = await authorModels.findOne({ name: author });
         if (authorObj) {
@@ -211,7 +205,6 @@ class ArticleController {
         }
       }
 
-      // Query the articles with population and pagination
       const articles = await articleModels
         .find(query)
         .populate({
@@ -223,7 +216,6 @@ class ArticleController {
         .skip((page - 1) * limit)
         .limit(parseInt(limit));
 
-      // Count total documents matching the query
       const totalArticles = await articleModels.countDocuments(query);
 
       res.status(200).json({

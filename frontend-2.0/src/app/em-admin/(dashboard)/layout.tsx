@@ -24,7 +24,7 @@ const DashboardLayout = ({
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const { data } = await axiosInstance.get("/admin/profile");
+        const { data } = await axiosInstance.get("/user/profile");
         setAuth({
           isAuthenticated: true,
           token: "",
