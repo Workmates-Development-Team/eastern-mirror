@@ -61,31 +61,31 @@ class CategoryController {
         page = 1,
         limit = 10,
       } = req.query;
-  
+
       let query = {};
-  
+
       if (search) {
         query.name = { $regex: search, $options: "i" };
       }
-  
+
       // Convert page and limit to numbers
       const pageNumber = parseInt(page, 10);
       const pageSize = parseInt(limit, 10);
-  
+
       // Calculate the number of items to skip
       const skip = (pageNumber - 1) * pageSize;
-  
+
       const categories = await categoryModels
         .find(query)
         .sort({ [sortBy]: Number(sortOrder) })
         .skip(skip)
         .limit(pageSize);
-  
+
       const totalItems = await categoryModels.countDocuments(query);
-      
+
       // Calculate total pages
       const totalPages = Math.ceil(totalItems / pageSize);
-  
+
       res.status(200).json({
         categories,
         totalItems,
@@ -97,7 +97,17 @@ class CategoryController {
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
-  
+
+  static async getAllCategory(req, res) {
+    try {
+      const categories = await categoryModels.find().sort({ createdAt: -1 });
+
+      res.status(200).json(categories);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 
   static async getByParent(req, res) {
     try {

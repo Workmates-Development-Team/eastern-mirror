@@ -17,6 +17,7 @@ import axiosInstance from "@/utils/axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
+import { useQuery } from "@tanstack/react-query";
 
 // Dynamically import ReactQuill with no SSR
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -42,12 +43,28 @@ const AddPost = () => {
   const [media, setMedia] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [category, setCategory] = useState<CategoryOption[]>([]);
-  // const categories = useRecoilValue(categoryState);
-  const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState<AuthorProps[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<string>("");
   const router = useRouter();
+
+  const getCategories = async () => {
+    const { data } = await axiosInstance.get("/category/all/cat");
+    console.log(data);
+    return data;
+  };
+
+  const { data: categories } = useQuery({
+    queryKey: ["categories-all"],
+    queryFn: getCategories,
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   const getAuthors = async () => {
     try {
@@ -247,7 +264,7 @@ const AddPost = () => {
           <Autocomplete
             multiple
             id="tags-filled"
-            options={categories?.map((option) => option)}
+            options={categories?.map((option: any) => option)}
             freeSolo
             value={category}
             getOptionLabel={(option) =>

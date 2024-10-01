@@ -22,7 +22,7 @@ const generateUniqueUsername = async (baseUsername) => {
 class AuthorController {
   static async add(req, res) {
     try {
-      const userId = req.userId;
+      const userId = req.user?._id;
       const { name, email } = authorSchema.parse(req.body);
 
       const existingAuthor = await authorModels.findOne({ email });

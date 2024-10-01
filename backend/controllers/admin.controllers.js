@@ -73,7 +73,7 @@ class AdminController {
 
   static async getProfile(req, res) {
     try {
-      const admin = await adminModels.findById(req.userId).select("-password");
+      const admin = await adminModels.findById(req.user?._id).select("-password");
       res.status(200).json(admin);
     } catch (error) {
       res.status(500).json({ message: "Internal Server Error" });
