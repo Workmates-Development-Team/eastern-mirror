@@ -129,7 +129,7 @@ const Details = () => {
                 </div>
 
                 <div className="md:mt-6 mt-4">
-                  {data?.thumbnail ? (
+                  {/* {data?.thumbnail ? (
                     <Image
                       width={841}
                       height={300}
@@ -137,11 +137,11 @@ const Details = () => {
                       alt="image"
                       src={getImageUrl(data?.thumbnail)}
                     />
-                  ) : null}
+                  ) : null} */}
 
                   <div
                     dangerouslySetInnerHTML={{ __html: data?.content }}
-                    className="md:mt-10 mt-5 text-sm md:text-base"
+                    className="md:mt-10 mt-5 text-sm md:text-base content-custom"
                   ></div>
                 </div>
               </div>

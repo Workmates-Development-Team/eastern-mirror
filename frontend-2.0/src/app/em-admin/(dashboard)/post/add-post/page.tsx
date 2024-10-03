@@ -7,8 +7,6 @@ import { cn } from "@/lib/utils";
 import "react-quill/dist/quill.snow.css";
 import { ArrowUpToLine, X } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import { useRecoilValue } from "recoil";
-import { categoryState } from "@/atoms/categoryAtom";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
@@ -18,6 +16,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { useQuery } from "@tanstack/react-query";
+import './style.css'
 
 // Dynamically import ReactQuill with no SSR
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -384,11 +383,18 @@ const AddPost = () => {
         }
         modules={{
           toolbar: [
-            [{ header: "1" }, { header: "2" }, { font: [] }],
+            [{ font: [] }],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
             [{ size: [] }],
-            ["bold", "italic", "underline", "strike", "blockquote"],
+            ["bold", "italic", "underline", "strike"],
             [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image"],
+            [{ script: "sub" }, { script: "super" }],
+            [{ align: [] }],
+            [{ color: [] }, { background: [] }],
+            ["blockquote", "code-block"],
+            [{ indent: "-1" }, { indent: "+1" }],
+            [{ direction: "rtl" }],
+            ["link", "image", "video"],
             ["clean"],
           ],
         }}

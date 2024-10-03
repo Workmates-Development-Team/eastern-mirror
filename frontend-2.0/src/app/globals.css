@@ -76,3 +76,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.content-custom img {
+  margin: auto;
+}
