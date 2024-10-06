@@ -81,3 +81,7 @@
 .content-custom img {
   margin: auto;
 }
+
+.jodit-status-bar .jodit-status-bar__item a {
+  display: none;
+}
