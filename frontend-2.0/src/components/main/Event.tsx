@@ -3,41 +3,8 @@ import Link from "next/link";
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 
-const items = [
-  {
-    image: "/images/event1.png",
-    category: "Politics",
-    title: "From Ghazipur to Srinagar: The Life of RSS Product Manoj Sinha",
-    author: "Omar Rashid",
-    date: "23 mins read",
-  },
-  {
-    image: "/images/event1.png",
-    category: "Politics",
-    title: "From Ghazipur to Srinagar: The Life of RSS Product Manoj Sinha",
-    author: "Omar Rashid",
-    date: "23 mins read",
-  },
-  {
-    image: "/images/event1.png",
-    category: "Politics",
-    title: "From Ghazipur to Srinagar: The Life of RSS Product Manoj Sinha",
-    author: "Omar Rashid",
-    date: "23 mins read",
-  },
-];
 
-const Event = ({
-  data,
-}: {
-  data: {
-    thumbnail: string;
-    category: string;
-    title: string;
-    author: string;
-    date: string;
-  }[];
-}) => {
+const Event = ({ data }: { data?: [] }) => {
   if (!data?.length) return null;
 
   return (
@@ -65,37 +32,50 @@ const Event = ({
           ))}
 
           <div className="flex flex-col md:gap-4 gap-3">
-            {data?.slice(2, 6)?.map((item, i) => (
-              <div key={i} className="flex md:gap-4 gap-2.5">
-                <div className="">
-                  <div className="md:w-[120px] w-[110px]">
-                    <Image
-                      className="w-full md:h-[90px] h-[80px] object-cover"
-                      src={item.thumbnail}
-                      width={120}
-                      height={90}
-                      alt="image"
-                    />
-                  </div>
-                </div>
+            {data
+              ?.slice(2, 6)
+              ?.map(
+                (
+                  item: {
+                    thumbnail: string;
+                    category: string;
+                    title: string;
+                    author: string;
+                    date: string;
+                  },
+                  i
+                ) => (
+                  <div key={i} className="flex md:gap-4 gap-2.5">
+                    <div className="">
+                      <div className="md:w-[120px] w-[110px]">
+                        <Image
+                          className="w-full md:h-[90px] h-[80px] object-cover"
+                          src={item.thumbnail}
+                          width={120}
+                          height={90}
+                          alt="image"
+                        />
+                      </div>
+                    </div>
 
-                <div className="flex flex-col justify-center">
-                  <p className="text-[#b71c1c] md:text-xs text-[10px] uppercase md:font-semibold font-medium">
-                    Politics
-                  </p>
-                  <h2 className="text-[#080F18] lora-bold md:text-sm text-xs md:pb-2 pb-1.5">
-                    {item?.title.length > 50
-                      ? item.title.slice(0, 50).trim() + "..."
-                      : item.title}{" "}
-                  </h2>
+                    <div className="flex flex-col justify-center">
+                      <p className="text-[#b71c1c] md:text-xs text-[10px] uppercase md:font-semibold font-medium">
+                        Politics
+                      </p>
+                      <h2 className="text-[#080F18] lora-bold md:text-sm text-xs md:pb-2 pb-1.5">
+                        {item?.title.length > 50
+                          ? item.title.slice(0, 50).trim() + "..."
+                          : item.title}{" "}
+                      </h2>
 
-                  <div className="flex items-center justify-between md:text-xs text-[10px] text-[#080F18]">
-                    <p>Omar Rashid</p>
-                    <p>23 mins read</p>
+                      <div className="flex items-center justify-between md:text-xs text-[10px] text-[#080F18]">
+                        <p>Omar Rashid</p>
+                        <p>23 mins read</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                )
+              )}
           </div>
         </div>
       </div>

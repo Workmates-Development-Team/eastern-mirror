@@ -26,7 +26,7 @@ export default function Home() {
     retry: 1,
   });
 
-  const { data: events } = useQuery({
+  const { data: event } = useQuery({
     queryKey: ["events"],
     queryFn: () => fetchCategoryArticles("events", 5),
     staleTime: 60000,
@@ -121,7 +121,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <Section1 data={topNews || []} heading="TOP NEWS" link={"/top-news"} />
-      <Event data={events || []} />
+      <Event data={event || []} />
       <Section2 data={nagaland || []} heading="NAGALAND" link={'/nagaland'} />
       <Section4 data={emExclusive || []} heading="EM EXCLUSIVE" link={'/em-exclusive'} />
       <Section1 data={india || []} heading="INDIA"  link="/india"/>
