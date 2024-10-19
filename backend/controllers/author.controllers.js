@@ -150,12 +150,10 @@ class AuthorController {
     try {
       const {
         page = 1,
-        limit = 10,
         search = "",
         sortBy = "createdAt",
         sortOrder = "-1",
       } = req.query;
-      const skip = (page - 1) * limit;
 
       // Build search query
       const searchQuery = {
@@ -173,8 +171,6 @@ class AuthorController {
       const authors = await authorModels
         .find(searchQuery)
         .sort({ [sortBy]: Number(sortOrder) })
-        .skip(Number(skip))
-        .limit(Number(limit));
 
       res.status(200).json({ authors });
     } catch (error) {

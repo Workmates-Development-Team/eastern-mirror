@@ -26,6 +26,7 @@ import { useRecoilValue } from "recoil";
 import { authorState } from "@/atoms/authorAtom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+
 export type Category = {
   id: string;
   name: string;
@@ -146,6 +147,8 @@ export default function AuthorTable({ setSearch, search }: AUthorTableProps) {
             </TableBody>
           </Table>
         </div>
+
+        
       </div>
     </div>
   );
