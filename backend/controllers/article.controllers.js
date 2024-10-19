@@ -183,7 +183,7 @@ class ArticleController {
       }
 
       if (category) {
-        const categories = await categoryModels.find({ value: category });
+        const categories = await categoryModels.find({ slug: category });
         if (!categories.length) {
           return res.status(200).json({
             articles: [],

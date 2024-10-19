@@ -28,6 +28,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import axiosInstance from "@/utils/axios";
 import { useDebounce } from "use-debounce";
+import Link from "next/link";
 
 export type Article = {
   _id: string;
@@ -35,6 +36,7 @@ export type Article = {
   content: string;
   publishedAt: string;
   tags: string[];
+  slug: string;
   category: Category[];
   isPublished: boolean;
 };
@@ -60,6 +62,7 @@ export default function CategoryTable() {
   const [sort, setSort] = useState<string>("createdAt");
   const [order, setOrder] = useState<string>("desc");
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const fetchArticles = async (params: {
     page?: number;
@@ -82,10 +85,13 @@ export default function CategoryTable() {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["articles", { page, limit, sort, order, search: debouncedSearch }],
-    queryFn: () => fetchArticles({ page, limit, sort, order, search: debouncedSearch }),
+    queryKey: [
+      "articles",
+      { page, limit, sort, order, search: debouncedSearch },
+    ],
+    queryFn: () =>
+      fetchArticles({ page, limit, sort, order, search: debouncedSearch }),
     staleTime: 300000, // 5 minutes
-    
   });
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +103,23 @@ export default function CategoryTable() {
     setPage(newPage);
   };
 
+  const handleDelete = async (id: string) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this article?");
+    
+    if (!isConfirmed) {
+      return;
+    }
+  
+    try {
+      setLoading(true);
+      const { data } = await axiosInstance.delete(`/article/delete/${id}`);
+      refetch();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="w-full">
       <div className="py-4">
@@ -114,7 +137,6 @@ export default function CategoryTable() {
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
-                <TableHead>Content</TableHead>
                 <TableHead>Published Date</TableHead>
                 <TableHead>Tags</TableHead>
                 <TableHead>Categories</TableHead>
@@ -129,13 +151,7 @@ export default function CategoryTable() {
                     <TableCell>
                       <div>{row?.title}</div>
                     </TableCell>
-                    <TableCell>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: row?.content.slice(0, 150).trim(),
-                        }}
-                      ></div>
-                    </TableCell>
+
                     <TableCell>
                       <div>{formatDate(row?.publishedAt)}</div>
                     </TableCell>
@@ -164,25 +180,19 @@ export default function CategoryTable() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem
-                            onClick={() => alert(`Article ID: ${row._id}`)}
-                          >
-                            View Details
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() =>
-                              alert(`Editing Article ID: ${row._id}`)
-                            }
-                          >
-                            Edit Article
+
+                          <DropdownMenuItem>
+                            <Link href={`/em-admin/post/edit-post/${row.slug}`}>
+                              Edit Article
+                            </Link>
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            onClick={() =>
-                              navigator.clipboard.writeText(row._id)
-                            }
-                          >
-                            Copy Article ID
+                          <DropdownMenuItem>
+                            <button disabled={loading} onClick={() => handleDelete(row._id)}>
+                              {
+                                loading ? 'Deleting...': 'Delete Article'
+                              }
+                            </button>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

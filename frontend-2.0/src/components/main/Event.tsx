@@ -27,7 +27,19 @@ const items = [
   },
 ];
 
-const Event = () => {
+const Event = ({
+  data,
+}: {
+  data: {
+    thumbnail: string;
+    category: string;
+    title: string;
+    author: string;
+    date: string;
+  }[];
+}) => {
+  if (!data?.length) return null;
+
   return (
     <section>
       <div className="container py-2 px-4 md:px-6 md:mt-16 mt-8">
@@ -37,46 +49,29 @@ const Event = () => {
           </h2>
 
           <div>
-            <Link href={"#"} className="flex items-center md:gap-2 gap-1 uppercase text-sm md:text-base">
+            <Link
+              href={"#"}
+              className="flex items-center md:gap-2 gap-1 uppercase text-sm md:text-base"
+            >
               View More <FaArrowRightLong className="text-sm md:text-base" />
             </Link>
           </div>
         </div>
         <div className="grid md:grid-cols-3 grid-cols-1 md:gap-7 gap-5">
-          <div>
-            <CardVertical
-              data={{
-                image: "/images/event1.png",
-                category: "Politics",
-                title:
-                  "From Ghazipur to Srinagar: The Life of RSS Product Manoj Sinha",
-                author: "Omar Rashid",
-                date: "23 mins read",
-              }}
-            />
-          </div>
-
-          <div>
-            <CardVertical
-              data={{
-                image: "/images/event2.jpeg",
-                category: "Rights",
-                title:
-                  "Five Years After Abrogation, the Hinduisation of Kashmir, and the Kashmirisation of India",
-                author: "Apoorvanand",
-                date: "7 mins read",
-              }}
-            />
-          </div>
+          {data?.slice(0, 2).map((item, i) => (
+            <div key={i}>
+              <CardVertical data={item} />
+            </div>
+          ))}
 
           <div className="flex flex-col md:gap-4 gap-3">
-            {items?.map((item, i) => (
+            {data?.slice(2, 6)?.map((item, i) => (
               <div key={i} className="flex md:gap-4 gap-2.5">
                 <div className="">
                   <div className="md:w-[120px] w-[110px]">
                     <Image
                       className="w-full md:h-[90px] h-[80px] object-cover"
-                      src={item.image}
+                      src={item.thumbnail}
                       width={120}
                       height={90}
                       alt="image"
@@ -96,7 +91,7 @@ const Event = () => {
 
                   <div className="flex items-center justify-between md:text-xs text-[10px] text-[#080F18]">
                     <p>Omar Rashid</p>
-                    <p >23 mins read</p>
+                    <p>23 mins read</p>
                   </div>
                 </div>
               </div>
@@ -114,7 +109,7 @@ const CardVertical = ({
   data,
 }: {
   data: {
-    image: string;
+    thumbnail: string;
     category: string;
     title: string;
     author: string;
@@ -124,7 +119,7 @@ const CardVertical = ({
   <div>
     <div>
       <Image
-        src={data.image}
+        src={data.thumbnail}
         alt={data.title}
         className="w-full md:h-[250px] h-[225px] object-cover"
         width={397}

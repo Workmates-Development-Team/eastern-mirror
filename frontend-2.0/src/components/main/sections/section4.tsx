@@ -7,6 +7,7 @@ import { FaRegPlayCircle } from "react-icons/fa";
 import StoryCard from "../card/StoryCard";
 
 const Section4 = ({ data, heading }: PropsType) => {
+  if (!data?.length) return null;
   return (
     <section>
       <Heading title={heading} />

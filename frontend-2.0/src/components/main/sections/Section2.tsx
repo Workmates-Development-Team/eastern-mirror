@@ -13,33 +13,35 @@ const Section2 = ({ data, heading }: PropsType) => {
       <Heading title={heading} />
 
       <div className="container py-2 px-4 md:px-6 flex md:gap-7 gap-5 flex-col md:flex-row">
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-7 md:gap-4 flex-grow">
-          <div>
-            <BigCard data={data[0]} />
-          </div>
+        {data?.length ? (
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-7 md:gap-4 flex-grow">
+            <div>
+              <BigCard data={data[0]} />
+            </div>
 
-          <div className="flex flex-col md:gap-5 gap-3">
-            {data.slice(1, 4).map((item: any, i: number) => (
-              <SmallCard
-                data={item}
-                key={i}
-                isBorder={i !== data.slice(1, 4).length - 1}
-              />
-            ))}
+            <div className="flex flex-col md:gap-5 gap-3">
+              {data.slice(1, 4).map((item: any, i: number) => (
+                <SmallCard
+                  data={item}
+                  key={i}
+                  isBorder={i !== data.slice(1, 4).length - 1}
+                />
+              ))}
 
-            <div className="flex justify-center">
-              <Link
-                href="#"
-                className={cn(
-                  buttonVariants({ variant: "ghost" }),
-                  "bg-[#D4E2FF] text-[#244B9C] md:h-10 h-9 text-xs md:text-sm font-medium rounded-3xl hover:bg-[#D4E2FF] hover:text-[#244B9C]"
-                )}
-              >
-                View more
-              </Link>
+              <div className="flex justify-center">
+                <Link
+                  href="#"
+                  className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    "bg-[#D4E2FF] text-[#244B9C] md:h-10 h-9 text-xs md:text-sm font-medium rounded-3xl hover:bg-[#D4E2FF] hover:text-[#244B9C]"
+                  )}
+                >
+                  View more
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
 
         <div>
           <div className="md:w-[293px] flex justify-center md:block h-[530px]">

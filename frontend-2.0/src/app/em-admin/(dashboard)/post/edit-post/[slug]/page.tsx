@@ -5,10 +5,7 @@ import React, {
   DragEvent,
   ChangeEvent,
   useEffect,
-  useRef,
-  useMemo,
 } from "react";
-import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import "react-quill/dist/quill.snow.css";
@@ -20,14 +17,12 @@ import Chip from "@mui/material/Chip";
 import { Box } from "@mui/material";
 import axiosInstance from "@/utils/axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { useQuery } from "@tanstack/react-query";
 import "./style.css";
 import TextEditor from "@/components/admin/TextEditor";
-
-// Dynamically import ReactQuill with no SSR
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import axiosServer from "@/utils/axiosServer";
 
 type CategoryOption = {
   name: string;
@@ -44,7 +39,7 @@ type AuthorProps = {
   avatar?: string;
 };
 
-const AddPost = () => {
+const EditPost = () => {
   const [value, setValue] = useState<string>("");
   const [title, setTitle] = useState("");
   const [media, setMedia] = useState("");
@@ -54,6 +49,26 @@ const AddPost = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<string>("");
   const router = useRouter();
+  const { slug } = useParams();
+
+  const fetchData = async (slug: string) => {
+    const { data } = await axiosServer.get("/article/by/" + slug);
+    return data.article;
+  };
+
+  const { isPending, data } = useQuery({
+    queryKey: [slug],
+    queryFn: () => fetchData(slug as string),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });  
+
+  console.log(data)
+
+  useEffect(() => {
+    setTitle(data?.title)
+  }, [data])
   
 
   const getCategories = async () => {
@@ -198,6 +213,7 @@ const AddPost = () => {
       <input
         type="text"
         placeholder="Title"
+        value={title}
         className={cn(
           "lora-blod text-2xl border-none outline-none bg-transparent w-full pb-10"
         )}
@@ -385,7 +401,7 @@ const AddPost = () => {
 
       <TextEditor value={value} setValue={setValue} />
 
-
+      
       <div className="absolute top-20 z-10 right-4 flex gap-3">
         {/* <Button
           disabled={!title?.length && !value.length && !media.length}
@@ -408,6 +424,6 @@ const AddPost = () => {
   );
 };
 
-export default AddPost;
+export default EditPost;
 
 const suggestedTags = [{ title: "Facebook  account" }];

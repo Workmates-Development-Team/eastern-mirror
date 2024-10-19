@@ -100,7 +100,7 @@ class CategoryController {
 
   static async getAllCategory(req, res) {
     try {
-      const categories = await categoryModels.find().sort({ createdAt: -1 });
+      const categories = await categoryModels.find().sort({ name: 1 });
 
       res.status(200).json(categories);
     } catch (error) {
