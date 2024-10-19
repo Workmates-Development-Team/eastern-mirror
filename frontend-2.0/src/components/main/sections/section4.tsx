@@ -6,7 +6,7 @@ import Image from "next/image";
 import { FaRegPlayCircle } from "react-icons/fa";
 import StoryCard from "../card/StoryCard";
 
-const Section4 = ({ data, heading }: PropsType) => {
+const Section4 = ({ data, heading, link }: PropsType) => {
   if (!data?.length) return null;
   return (
     <section>
@@ -41,4 +41,5 @@ type PropsType = {
   heading: string;
   trending?: any;
   watchNow?: boolean;
+  link?: string;
 };

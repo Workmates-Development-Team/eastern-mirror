@@ -11,7 +11,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getImageUrl } from "@/utils/getImageUrl";
 import { formatDate } from "@/utils/date";
 
-const Section3 = ({ data, heading, trending, watchNow }: PropsType) => {
+const Section3 = ({ data, heading, trending, watchNow, link }: PropsType) => {
   if (!data?.length) return null;
   console.log(data);
   return (
@@ -101,4 +101,5 @@ type PropsType = {
   heading: string;
   trending?: any;
   watchNow?: boolean;
+  link?: string;
 };

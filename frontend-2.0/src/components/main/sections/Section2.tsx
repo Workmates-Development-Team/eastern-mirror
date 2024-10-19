@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { AdSlider } from "../AdSlider";
 
-const Section2 = ({ data, heading }: PropsType) => {
+const Section2 = ({ data, heading, link }: PropsType) => {
   return (
     <section>
       <Heading title={heading} />
@@ -30,7 +30,7 @@ const Section2 = ({ data, heading }: PropsType) => {
 
               <div className="flex justify-center">
                 <Link
-                  href="#"
+                  href={link}
                   className={cn(
                     buttonVariants({ variant: "ghost" }),
                     "bg-[#D4E2FF] text-[#244B9C] md:h-10 h-9 text-xs md:text-sm font-medium rounded-3xl hover:bg-[#D4E2FF] hover:text-[#244B9C]"
@@ -58,4 +58,5 @@ export default Section2;
 type PropsType = {
   data: any;
   heading: string;
+  link: string
 };
