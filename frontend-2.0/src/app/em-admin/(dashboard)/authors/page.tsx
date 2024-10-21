@@ -13,7 +13,7 @@ export default function Authors() {
 
   const getAuthors = async () => {
     try {
-      const { data } = await axiosInstance.get(`/author/all?search=${search}`);
+      const { data } = await axiosInstance.get(`/author/all?search=${search}&sortBy=name&sortOrder=1`);
       setAuthors(data?.authors);
     } catch (error) {
       console.log(error);

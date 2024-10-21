@@ -174,6 +174,8 @@ class ArticleController {
         search = "",
         category = "",
         author = "",
+        startDate = "",
+        endDate = "",
       } = req.query;
 
       const query = {};
@@ -202,6 +204,16 @@ class ArticleController {
         const authorObj = await authorModels.findOne({ name: author });
         if (authorObj) {
           query.author = authorObj._id;
+        }
+      }
+
+      if (startDate || endDate) {
+        query.createdAt = {};
+        if (startDate) {
+          query.createdAt.$gte = new Date(startDate);
+        }
+        if (endDate) {
+          query.createdAt.$lte = new Date(endDate);
         }
       }
 

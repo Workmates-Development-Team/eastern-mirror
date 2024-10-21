@@ -61,7 +61,7 @@ export default function AuthorTable({ setSearch, search }: AUthorTableProps) {
                 <TableHead>Name</TableHead>
                 <TableHead>Username</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Action</TableHead>
+                {/* <TableHead>Action</TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -104,7 +104,7 @@ export default function AuthorTable({ setSearch, search }: AUthorTableProps) {
                         </Badge>
                       </div>
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -134,7 +134,7 @@ export default function AuthorTable({ setSearch, search }: AUthorTableProps) {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))
               ) : (

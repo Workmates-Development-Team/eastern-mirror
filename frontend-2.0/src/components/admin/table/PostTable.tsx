@@ -20,8 +20,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { useRecoilValue } from "recoil";
-import { articleState } from "@/atoms/articleAtom";
 import { formatDate } from "@/utils/date";
 import { Pagination } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -29,6 +27,10 @@ import { useState } from "react";
 import axiosInstance from "@/utils/axios";
 import { useDebounce } from "use-debounce";
 import Link from "next/link";
+import CategoryFilter from "./filter/CategoryFilter";
+import DateRangePicker from "./filter/DateRangeFilter";
+import { Separator } from "@/components/ui/separator";
+import Sorting from "./filter/Sorting";
 
 export type Article = {
   _id: string;
@@ -63,6 +65,11 @@ export default function CategoryTable() {
   const [order, setOrder] = useState<string>("desc");
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState("");
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+
+  console.log(category);
 
   const fetchArticles = async (params: {
     page?: number;
@@ -74,7 +81,11 @@ export default function CategoryTable() {
     author?: string;
   }): Promise<FetchArticlesResponse> => {
     const { data } = await axiosInstance.get(
-      `/article/all?page=${params?.page}&search=${params?.search}`
+      `/article/all?page=${params?.page}&search=${
+        params?.search
+      }&sort=${sort}&order=${order}&category=${category}&startDate=${
+        startDate || ""
+      }&endDate=${endDate || ""}`
     );
     setTotalPages(data?.totalPages);
     return data;
@@ -87,7 +98,16 @@ export default function CategoryTable() {
   } = useQuery({
     queryKey: [
       "articles",
-      { page, limit, sort, order, search: debouncedSearch },
+      {
+        page,
+        limit,
+        sort,
+        order,
+        search: debouncedSearch,
+        category,
+        endDate,
+        startDate,
+      },
     ],
     queryFn: () =>
       fetchArticles({ page, limit, sort, order, search: debouncedSearch }),
@@ -104,12 +124,14 @@ export default function CategoryTable() {
   };
 
   const handleDelete = async (id: string) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this article?");
-    
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this article?"
+    );
+
     if (!isConfirmed) {
       return;
     }
-  
+
     try {
       setLoading(true);
       const { data } = await axiosInstance.delete(`/article/delete/${id}`);
@@ -124,13 +146,36 @@ export default function CategoryTable() {
     <div className="w-full">
       <div className="py-4">
         <h2 className="text-lg font-semibold">Categories</h2>
-        <div className="flex items-center py-4">
+        <div className="flex items-center py-4 justify-between">
           <Input
             placeholder="Search post..."
-            className="max-w-sm"
+            className="max-w-xs"
             value={search}
             onChange={handleSearch}
           />
+          <Separator orientation="vertical" />
+          <div className="flex justify-end gap-3">
+            <CategoryFilter category={category} setCategory={setCategory} />
+            <Sorting setSort={setSort} setOrder={setOrder} />
+            <DateRangePicker
+              setStartDate={setStartDate}
+              startDate={startDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+            />{" "}
+            {startDate || endDate ? (
+              <Button
+                onClick={() => {
+                  setStartDate(undefined);
+                  setEndDate(undefined);
+                }}
+              >
+                Clear
+              </Button>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
         <div className="rounded-md border">
           <Table>
@@ -188,10 +233,11 @@ export default function CategoryTable() {
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>
-                            <button disabled={loading} onClick={() => handleDelete(row._id)}>
-                              {
-                                loading ? 'Deleting...': 'Delete Article'
-                              }
+                            <button
+                              disabled={loading}
+                              onClick={() => handleDelete(row._id)}
+                            >
+                              {loading ? "Deleting..." : "Delete Article"}
                             </button>
                           </DropdownMenuItem>
                         </DropdownMenuContent>

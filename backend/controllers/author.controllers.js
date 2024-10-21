@@ -149,7 +149,6 @@ class AuthorController {
   static async getAll(req, res) {
     try {
       const {
-        page = 1,
         search = "",
         sortBy = "createdAt",
         sortOrder = "-1",
