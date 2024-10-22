@@ -45,8 +45,8 @@ type AuthorProps = {
 };
 
 const AddPost = () => {
-  const [value, setValue] = useState<string>("");
-  const [title, setTitle] = useState("");
+  const [value, setValue] = useState<string>(() => sessionStorage.getItem("postContent") || "");
+  const [title, setTitle] = useState(() => sessionStorage.getItem("postTitle") || "");
   const [media, setMedia] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [category, setCategory] = useState<CategoryOption[]>([]);
@@ -55,6 +55,14 @@ const AddPost = () => {
   const [selectedAuthor, setSelectedAuthor] = useState<string>("");
   const router = useRouter();
   
+  useEffect(() => {
+    sessionStorage.setItem("postTitle", title);
+  }, [title]);
+
+  useEffect(() => {
+    sessionStorage.setItem("postContent", value);
+  }, [value]);
+
 
   const getCategories = async () => {
     const { data } = await axiosInstance.get("/category/all/cat");
@@ -182,6 +190,7 @@ const AddPost = () => {
       e.preventDefault();
       e.returnValue =
         "You have unsaved changes. Do you want to save the draft or leave the page?";
+        
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -192,6 +201,18 @@ const AddPost = () => {
   }, [title, value, media]);
 
   
+  const handleClearForm = () => {
+    setTitle("");
+    setValue("");
+    setMedia("");
+    setFile(null);
+    setCategory([]);
+    setSelectedTags([]);
+    setSelectedAuthor("");
+    sessionStorage.removeItem("postTitle");
+    sessionStorage.removeItem("postContent");
+    sessionStorage.removeItem("postMedia");
+  };
 
   return (
     <div className="p-[50px]">
@@ -202,6 +223,7 @@ const AddPost = () => {
           "lora-blod text-2xl border-none outline-none bg-transparent w-full pb-10"
         )}
         onChange={(e) => setTitle(e.target.value)}
+        value={title}
       />
 
       <div
@@ -386,24 +408,21 @@ const AddPost = () => {
       <TextEditor value={value} setValue={setValue} />
 
 
-      <div className="absolute top-20 z-10 right-4 flex gap-3">
-        {/* <Button
-          disabled={!title?.length && !value.length && !media.length}
-          className=" rounded-3xl"
-          size="sm"
-          onClick={handleSubmit}
-        >
-          Save to draft
-        </Button> */}
+      <div className="flex gap-4 mt-4">
         <Button
-          disabled={!title?.length || !value.length}
-          className="rounded-3xl"
-          size="sm"
+          disabled={!title || !value}
           onClick={handleSubmit}
+          className="bg-green-600 hover:bg-green-700"
         >
-          Publish <ArrowUpToLine className="ml-2 w-4 h-4" />
+          Publish
         </Button>
-      </div>
+        <Button
+          onClick={handleClearForm}
+          className="bg-red-600 hover:bg-red-700"
+        >
+          Clear Form
+        </Button>
+</div>
     </div>
   );
 };
