@@ -293,11 +293,13 @@ const EditPost = () => {
             }}
             renderTags={(value: readonly any[], getTagProps) =>
               value.map((option: any, index: number) => (
-                <Chip
-                  variant="outlined"
-                  label={option.name}
-                  {...getTagProps({ index })}
-                />
+                <React.Fragment key={index}>
+                  <Chip
+                    variant="outlined"
+                    label={option.name}
+                    {...getTagProps({ index })}
+                  />
+                </React.Fragment>
               ))
             }
             renderInput={(params) => (
@@ -342,11 +344,13 @@ const EditPost = () => {
           }}
           renderTags={(value: readonly string[], getTagProps) =>
             value.map((option: string, index: number) => (
-              <Chip
-                variant="outlined"
-                label={option}
-                {...getTagProps({ index })}
-              />
+              <React.Fragment key={index}>
+                <Chip
+                  variant="outlined"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              </React.Fragment>
             ))
           }
           renderInput={(params) => (
