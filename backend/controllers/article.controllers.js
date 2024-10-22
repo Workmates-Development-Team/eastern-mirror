@@ -70,6 +70,90 @@ class ArticleController {
     }
   }
 
+  static async edit(req, res) {
+    try {
+      const { id } = req.params;
+  
+      // Validate article ID
+      const article = await articleModels.findById(id);
+      if (!article) {
+        return res.status(404).json({ message: "Article not found" });
+      }
+  
+      // Parse the request body for updated fields
+      const {
+        title,
+        content,
+        category,
+        tags,
+        isPopular,
+        showOnTop,
+        showOnHomePage,
+        author,
+        isPublished,
+        publishedAt,
+        slug,
+      } = articleSchema.parse(req.body);
+  
+      // Handle thumbnail update
+      let thumbnail = article.thumbnail; // Keep the old thumbnail
+      if (req.file) {
+        // If a new thumbnail is provided, delete the old one and set the new one
+        if (thumbnail) {
+          const oldFilePath = getFilePath2(thumbnail);
+          fs.unlink(oldFilePath, (err) => {
+            if (err) {
+              console.error("Failed to delete the old thumbnail:", err);
+            }
+          });
+        }
+        thumbnail = `/article/${req.file.filename}`;
+      }
+  
+      // Check if author exists
+      const authorExists = await authorModels.findById(author);
+      if (!authorExists) {
+        return res.status(400).json({ message: "Invalid author ID" });
+      }
+  
+      // Update the article fields
+      article.title = title;
+      article.content = content;
+      article.thumbnail = thumbnail;
+      article.category = JSON.parse(category);
+      article.tags = JSON.parse(tags);
+      article.isPopular = isPopular;
+      article.showOnTop = showOnTop;
+      article.showOnHomePage = showOnHomePage;
+      article.isPublished = isPublished;
+      article.publishedAt = publishedAt;
+      article.author = author;
+      article.slug = slug;
+  
+      // Save updated article
+      await article.save();
+      
+      res.status(200).json({ message: "Article updated successfully", article });
+    } catch (error) {
+      console.log(error);
+  
+      if (error instanceof z.ZodError) {
+        if (req.file) {
+          const filePath = getFilePath2(req.file.filename);
+          fs.unlink(filePath, (err) => {
+            if (err) {
+              console.error("Failed to delete the uploaded file:", err);
+            }
+          });
+        }
+        return res.status(400).json({ message: error.errors[0]?.message || "Validation error" });
+      }
+  
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+  
+
   static async togglePublish(req, res) {
     try {
       const { id } = req.params;

@@ -11,6 +11,14 @@ router.post(
   thumbnailUpload.single("thumbnail"),
   ArticleController.add
 );
+
+router.put(
+  "/edit/:id",
+  authMiddleware,
+  thumbnailUpload.single("thumbnail"),
+  ArticleController.edit
+);
+
 router.patch("/toggle-publish/:id", ArticleController.togglePublish);
 router.put("/update/:id", ArticleController.update);
 router.delete("/delete/:id", ArticleController.delete);

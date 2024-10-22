@@ -1,11 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  DragEvent,
-  ChangeEvent,
-  useEffect,
-} from "react";
+import React, { useState, DragEvent, ChangeEvent, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import "react-quill/dist/quill.snow.css";
@@ -18,7 +13,6 @@ import { Box } from "@mui/material";
 import axiosInstance from "@/utils/axios";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
-import { Switch } from "@/components/ui/switch";
 import { useQuery } from "@tanstack/react-query";
 import "./style.css";
 import TextEditor from "@/components/admin/TextEditor";
@@ -37,6 +31,10 @@ type AuthorProps = {
   name: string;
   _id: string;
   avatar?: string;
+};
+
+type TagProps = {
+  title: string;
 };
 
 const EditPost = () => {
@@ -62,18 +60,19 @@ const EditPost = () => {
     staleTime: 60000,
     refetchOnWindowFocus: false,
     retry: 1,
-  });  
-
-  console.log(data)
+  });
 
   useEffect(() => {
-    setTitle(data?.title)
-  }, [data])
-  
+    setTitle(data?.title);
+    setValue(data?.content);
+    setSelectedTags(data?.tags || []);
+    setSelectedAuthor(data?.author?._id || "");
+    setCategory(data?.category || []);
+    setMedia(process.env.NEXT_PUBLIC_API_BASE_URL + data?.thumbnail);
+  }, [data]);
 
   const getCategories = async () => {
     const { data } = await axiosInstance.get("/category/all/cat");
-    console.log(data);
     return data;
   };
 
@@ -84,10 +83,6 @@ const EditPost = () => {
     refetchOnWindowFocus: false,
     retry: 1,
   });
-
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   const getAuthors = async () => {
     try {
@@ -112,18 +107,7 @@ const EditPost = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log({
-        title,
-        content: value,
-        category: category?.map((item) => item?._id),
-        author: selectedAuthor,
-        tags: selectedTags,
-        slug: slugify(title),
-        thumbnail: file,
-      });
-
       const slug = slugify(title);
-
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", value);
@@ -137,13 +121,13 @@ const EditPost = () => {
       if (file) {
         formData.append("thumbnail", file);
       }
+
       const { data } = await axiosInstance.post("/article/add", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log(data);
       toast.success(data?.message);
       router.push("/em-admin/post/");
     } catch (error: any) {
@@ -206,7 +190,13 @@ const EditPost = () => {
     };
   }, [title, value, media]);
 
-  
+  const suggestedTags: TagProps[] = [
+    { title: "Tech" },
+    { title: "Science" },
+    { title: "Education" },
+    { title: "Health" },
+    { title: "Finance" },
+  ];
 
   return (
     <div className="p-[50px]">
@@ -295,135 +285,82 @@ const EditPost = () => {
             onChange={(event, newValue) => {
               setCategory(newValue as CategoryOption[]);
             }}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                const { key, ...tagProps } = getTagProps({ index });
-                return (
-                  <Chip
-                    variant="outlined"
-                    label={typeof option === "string" ? option : option.name}
-                    key={key}
-                    {...tagProps}
-                  />
-                );
-              })
+            renderTags={(value: readonly any[], getTagProps) =>
+              value.map((option: any, index: number) => (
+                <Chip
+                  variant="outlined"
+                  label={option.name}
+                  {...getTagProps({ index })}
+                />
+              ))
             }
             renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder="Select Tags"
-              />
+              <TextField {...params} placeholder="Select Categories" />
             )}
           />
         </div>
 
-        <div className="flex flex-col gap-2  col-span-2">
-          <Label htmlFor="name">Tags</Label>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="name">Author</Label>
           <Autocomplete
-            multiple
-            id="tags-filled"
-            options={suggestedTags?.map((option) => option.title)}
-            freeSolo
-            value={selectedTags}
-            onChange={(event, newValue) => {
-              setSelectedTags(newValue);
-            }}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                const { key, ...tagProps } = getTagProps({ index });
-                return (
-                  <Chip
-                    variant="outlined"
-                    label={option}
-                    key={key}
-                    {...tagProps}
-                  />
-                );
-              })
+            options={authors?.map((option) => option)}
+            value={
+              selectedAuthor
+                ? authors.find((author) => author._id === selectedAuthor) ||
+                  null
+                : null
             }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder="Select Tags"
-              />
-            )}
-          />
-        </div>
-        <div className="flex flex-col gap-2 col-span-2">
-          <Label htmlFor="author">Author</Label>
-          <Autocomplete
-            id="author"
-            options={authors}
-            autoHighlight
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) =>
+              typeof option === "string" ? option : option.name || ""
+            }
             onChange={(event, newValue) => {
               setSelectedAuthor(newValue?._id || "");
             }}
-            renderOption={(props, option) => {
-              const { key, ...optionProps } = props;
-              return (
-                <Box
-                  key={option._id}
-                  component="li"
-                  sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                  {...optionProps}
-                >
-                  <img
-                    loading="lazy"
-                    width="20"
-                    height="20"
-                    className="rounded-full aspect-square h-5 w-5"
-                    src={
-                      option?.avatar
-                        ? process.env.NEXT_PUBLIC_API_BASE_URL + option.avatar
-                        : "/images/noprofile.png"
-                    }
-                    alt=""
-                  />
-                  {option.name}
-                </Box>
-              );
-            }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                inputProps={{
-                  ...params.inputProps,
-                  autoComplete: "off",
-                }}
-              />
+              <TextField {...params} placeholder="Select Author" />
             )}
           />
         </div>
       </div>
 
-      <TextEditor value={value} setValue={setValue} />
-
-      
-      <div className="absolute top-20 z-10 right-4 flex gap-3">
-        {/* <Button
-          disabled={!title?.length && !value.length && !media.length}
-          className=" rounded-3xl"
-          size="sm"
-          onClick={handleSubmit}
-        >
-          Save to draft
-        </Button> */}
-        <Button
-          disabled={!title?.length || !value.length}
-          className="rounded-3xl"
-          size="sm"
-          onClick={handleSubmit}
-        >
-          Publish <ArrowUpToLine className="ml-2 w-4 h-4" />
-        </Button>
+      <div className="flex flex-col gap-2 mb-6">
+        <Label htmlFor="name">Tags</Label>
+        <Autocomplete
+          multiple
+          id="tags-filled"
+          options={suggestedTags.map((option) => option.title)}
+          freeSolo
+          value={selectedTags}
+          onChange={(event, newValue) => {
+            setSelectedTags(newValue);
+          }}
+          renderTags={(value: readonly string[], getTagProps) =>
+            value.map((option: string, index: number) => (
+              <Chip
+                variant="outlined"
+                label={option}
+                {...getTagProps({ index })}
+              />
+            ))
+          }
+          renderInput={(params) => (
+            <TextField {...params} placeholder="Select Tags" />
+          )}
+        />
       </div>
+
+      <div className="border border-gray-300 rounded-md p-4 mb-6">
+        <TextEditor value={value} setValue={setValue} />
+      </div>
+
+      <Box sx={{ display: "flex", justifyContent: "end" }}>
+        <Button className="bg-[#00A76F]" onClick={handleSubmit}>
+          Publish Article
+          <ArrowUpToLine className="w-4 h-4 ml-2" />
+        </Button>
+      </Box>
     </div>
   );
 };
 
 export default EditPost;
-
-const suggestedTags = [{ title: "Facebook  account" }];
