@@ -46,6 +46,7 @@ const EditPost = () => {
   const [authors, setAuthors] = useState<AuthorProps[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<string>("");
+  const [id, setId] = useState<string>("");
   const router = useRouter();
   const { slug } = useParams();
 
@@ -69,6 +70,7 @@ const EditPost = () => {
     setSelectedAuthor(data?.author?._id || "");
     setCategory(data?.category || []);
     setMedia(process.env.NEXT_PUBLIC_API_BASE_URL + data?.thumbnail);
+    setId(data?._id);
   }, [data]);
 
   const getCategories = async () => {
@@ -122,11 +124,15 @@ const EditPost = () => {
         formData.append("thumbnail", file);
       }
 
-      const { data } = await axiosInstance.post("/article/add", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axiosInstance.put(
+        "/article/edit/" + id,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       toast.success(data?.message);
       router.push("/em-admin/post/");
@@ -355,7 +361,7 @@ const EditPost = () => {
 
       <Box sx={{ display: "flex", justifyContent: "end" }}>
         <Button className="bg-[#00A76F]" onClick={handleSubmit}>
-          Publish Article
+          Update Article
           <ArrowUpToLine className="w-4 h-4 ml-2" />
         </Button>
       </Box>

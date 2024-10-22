@@ -73,13 +73,13 @@ class ArticleController {
   static async edit(req, res) {
     try {
       const { id } = req.params;
-  
+
       // Validate article ID
       const article = await articleModels.findById(id);
       if (!article) {
         return res.status(404).json({ message: "Article not found" });
       }
-  
+
       // Parse the request body for updated fields
       const {
         title,
@@ -90,11 +90,11 @@ class ArticleController {
         showOnTop,
         showOnHomePage,
         author,
-        isPublished,
+        isPublished = true,
         publishedAt,
         slug,
       } = articleSchema.parse(req.body);
-  
+
       // Handle thumbnail update
       let thumbnail = article.thumbnail; // Keep the old thumbnail
       if (req.file) {
@@ -109,13 +109,13 @@ class ArticleController {
         }
         thumbnail = `/article/${req.file.filename}`;
       }
-  
+
       // Check if author exists
       const authorExists = await authorModels.findById(author);
       if (!authorExists) {
         return res.status(400).json({ message: "Invalid author ID" });
       }
-  
+
       // Update the article fields
       article.title = title;
       article.content = content;
@@ -129,14 +129,16 @@ class ArticleController {
       article.publishedAt = publishedAt;
       article.author = author;
       article.slug = slug;
-  
+
       // Save updated article
       await article.save();
-      
-      res.status(200).json({ message: "Article updated successfully", article });
+
+      res
+        .status(200)
+        .json({ message: "Article updated successfully", article });
     } catch (error) {
       console.log(error);
-  
+
       if (error instanceof z.ZodError) {
         if (req.file) {
           const filePath = getFilePath2(req.file.filename);
@@ -146,13 +148,14 @@ class ArticleController {
             }
           });
         }
-        return res.status(400).json({ message: error.errors[0]?.message || "Validation error" });
+        return res
+          .status(400)
+          .json({ message: error.errors[0]?.message || "Validation error" });
       }
-  
+
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
-  
 
   static async togglePublish(req, res) {
     try {
