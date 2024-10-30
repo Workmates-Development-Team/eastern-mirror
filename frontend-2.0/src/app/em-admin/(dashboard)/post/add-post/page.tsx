@@ -138,6 +138,8 @@ const AddPost = () => {
 
       console.log(data);
       toast.success(data?.message);
+
+      handleClearForm()
       router.push("/em-admin/post/");
     } catch (error: any) {
       console.log(error);

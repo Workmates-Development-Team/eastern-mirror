@@ -6,6 +6,7 @@ import { url_maker } from "@/lib/utils";
 import { TOP_NEWS } from "@/static/data";
 import axiosServer from "@/utils/axiosServer";
 import { formatDate } from "@/utils/date";
+import { getImageUrl } from "@/utils/getImageUrl";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,7 +28,6 @@ type dataInstance = {
 
 const Details = () => {
   const { slug } = useParams();
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const fetchData = async (slug: string) => {
@@ -43,11 +43,25 @@ const Details = () => {
     retry: 1,
   });
 
+  const fetchPopular = async () => {
+    const { data } = await axiosServer.get(
+      "/article/all?category=most-popular&limit=5"
+    );
+    return data.articles;
+  };
+
+  const { isPending: loading, data: populars } = useQuery({
+    queryKey: ['most-popular'],
+    queryFn: () => fetchPopular(),
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+
   if (!isPending && !data) {
     return router.push("/");
   }
 
-  console.log(isPending, data)
 
   return (
     <div className="min-h-screen">
@@ -127,16 +141,6 @@ const Details = () => {
                 </div>
 
                 <div className="md:mt-6 mt-4">
-                  {/* {data?.thumbnail ? (
-                    <Image
-                      width={841}
-                      height={300}
-                      className="mx-auto max-h-[474px]  object-contain"
-                      alt="image"
-                      src={getImageUrl(data?.thumbnail)}
-                    />
-                  ) : null} */}
-
                   <div
                     dangerouslySetInnerHTML={{ __html: data?.content }}
                     className="md:mt-10 mt-5 text-sm md:text-base content-custom"
@@ -145,52 +149,54 @@ const Details = () => {
               </div>
             </div>
 
-            <div className="md:col-span-1 col-span-3">
-              <div className="flex justify-center md:mt-28 mt-8">
-                <div className="bg-[#002366] py-2 px-4 text-white md:text-lg text-base roboto-regular">
-                  <p>MOST POPULAR</p>
+            {populars?.length ? (
+              <div className="md:col-span-1 col-span-3">
+                <div className="flex justify-center md:mt-28 mt-8">
+                  <div className="bg-[#002366] py-2 px-4 text-white md:text-lg text-base roboto-regular">
+                    <p>MOST POPULAR</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-col md:gap-7 gap-2 md:mt-10 mt-7">
-                {TOP_NEWS.slice(0, 4).map((item: any, i: number) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="">
-                      <div className="md:w-[150px] w-[120px]">
-                        <Link href={"/" + url_maker(item.title)}>
-                          <Image
-                            className="md:w-[150px] w-[120px] md:h-[150px] h-[120px] object-cover"
-                            src={item.image}
-                            width={150}
-                            height={150}
-                            alt="image"
-                          />
+                <div className="flex flex-col md:gap-7 gap-2 md:mt-10 mt-7">
+                  {populars?.map((item: any, i: number) => (
+                    <div key={i} className="flex gap-4">
+                      <div className="">
+                        <div className="md:w-[150px] w-[120px]">
+                          <Link href={"/details/" + item?.slug}>
+                            <Image
+                              className="md:w-[150px] w-[120px] md:h-[150px] h-[120px] object-cover"
+                              src={getImageUrl(data?.thumbnail)}
+                              width={150}
+                              height={150}
+                              alt="image"
+                            />
+                          </Link>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col justify-center">
+                        <Link href={"/" + data?.slug}>
+                          <h2 className="text-[#080F18] lora-bold md:text-lg text-sm leading-tight md:leading-normal pb-2.5">
+                            {item?.title.length > 50
+                              ? item?.trim?.title.slice(0, 50).trim() + "..."
+                              : item.title}{" "}
+                          </h2>
                         </Link>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: item?.content?.slice(0, 67) + "...",
+                          }}
+                          className="text-[#646464] md:text-sm text-xs md:pb-2.5"
+                        ></div>
+                        <p className="text-xs text-[#BBBBBB] hidden md:block">
+                          {formatDate(data?.publishedAt)}
+                        </p>
                       </div>
                     </div>
-
-                    <div className="flex flex-col justify-center">
-                      <Link href={"/" + data?.slug}>
-                        <h2 className="text-[#080F18] lora-bold md:text-lg text-sm leading-tight md:leading-normal pb-2.5">
-                          {item?.title.length > 50
-                            ? item.title.slice(0, 50).trim() + "..."
-                            : item.title}{" "}
-                        </h2>
-                      </Link>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: item?.content?.slice(0, 67) + "...",
-                        }}
-                        className="text-[#646464] md:text-sm text-xs md:pb-2.5"
-                      ></div>
-                      <p className="text-xs text-[#BBBBBB] hidden md:block">
-                        {formatDate(data?.publishedAt)}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
 
           {/* <Section4 data={TOP_NEWS} heading="EM EXCLUSIVE" /> */}

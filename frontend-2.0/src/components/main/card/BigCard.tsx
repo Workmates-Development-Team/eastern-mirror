@@ -41,12 +41,12 @@ const BigCard = ({ data }: { data: PropsType }) => {
               <h2 className="lora-bold pt-1.5 md:text-xl text-base leading-5 sm:leading-normal">{data?.title}</h2>
             </Link>
           </div>
-          <div
+          {/* <div
             dangerouslySetInnerHTML={{
               __html: data?.content.slice(0, 137) + "...",
             }}
             className="md:pt-5 mt-3 md:px-5 w-[90%] md:text-sm text-xs roboto-regular text-[#646464]"
-          ></div>
+          ></div> */}
         </div>
       </div>
     </div>

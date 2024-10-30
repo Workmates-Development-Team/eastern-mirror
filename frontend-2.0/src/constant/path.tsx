@@ -36,25 +36,25 @@ export const ADMIN_SIDEBAR_LINKS = [
     path: "/users",
     icon: () => <Users className="h-4 w-4" />,
   },
-  {
-    label: "Settings",
-    path: "/em-admin/settings",
-    icon: () => <Settings className="h-4 w-4" />,
-    subLinks: [
-      {
-        label: "All Posts",
-        path: "/em-admin",
-      },
-      {
-        label: "Add New Post",
-        path: "/em-admin",
-      },
-      {
-        label: "Categories",
-        path: "/em-admin",
-      },
-    ],
-  },
+  // {
+  //   label: "Settings",
+  //   path: "/em-admin/settings",
+  //   icon: () => <Settings className="h-4 w-4" />,
+  //   subLinks: [
+  //     {
+  //       label: "All Posts",
+  //       path: "/em-admin",
+  //     },
+  //     {
+  //       label: "Add New Post",
+  //       path: "/em-admin",
+  //     },
+  //     {
+  //       label: "Categories",
+  //       path: "/em-admin",
+  //     },
+  //   ],
+  // },
 ];
 
 export const NAVBAR_LINKS = [

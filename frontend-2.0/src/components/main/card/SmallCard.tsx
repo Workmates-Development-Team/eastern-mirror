@@ -13,18 +13,18 @@ const SmallCard = ({ data, isBorder }: PropsType) => {
         " border-[#DDDDDD] md:pb-4 pb-3 grid grid-cols-6 md:gap-7 gap-2"
       )}
     >
-      <div className="col-span-4">
+      <div className="col-span-4 flex flex-col justify-center">
         <Link href={"/details/" + data?.slug}>
           <h2 className="text-[#080F18] text-sm lora-bold md:text-lg leading-tight md:leading-normal md:pb-2.5 pb-2">
             {data?.title}
           </h2>
         </Link>
-        <div
+        {/* <div
           dangerouslySetInnerHTML={{
             __html: data?.content.slice(0, 101).trim() + "...",
           }}
           className="text-[#646464] md:text-sm text-xs md:pb-2.5 pb-1.5"
-        ></div>
+        ></div> */}
         <p className="text-xs hidden md:block text-[#BBBBBB]">
           {formatDate(data?.publishedAt)}
         </p>

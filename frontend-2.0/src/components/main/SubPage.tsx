@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import BreadcrumbComponent from "./BreadcrumbConponent";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -9,6 +11,8 @@ import Image from "next/image";
 import { getImageUrl } from "@/utils/getImageUrl";
 import { formatDate } from "@/utils/date";
 import Loader from "../Loader";
+import { Pagination } from "@mui/material";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SubPage = ({
   categories,
@@ -16,13 +20,39 @@ const SubPage = ({
   links,
   title,
   loading,
+  totalPage,
+  page,
+  setPage,
 }: {
   categories?: { name: string; href: string }[];
   data: any;
   links: {}[];
   title: string;
   loading: boolean;
+  totalPage?: number;
+  page?: number;
+  setPage?: Dispatch<SetStateAction<number>>;
 }) => {
+  const router = useRouter();
+  // useEffect(() => {
+  //   const queryPage = parseInt(router.query.page as string) || 1;
+  //   setPage?.(queryPage);
+  // }, [router.query.page, setPage]);
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    router.push(`?page=${value}`);
+    // router.push({
+    //   pathname: router.pathname,
+    //   query: {
+    //     ...router.query,
+    //     page: value,
+    //   },
+    // });
+  };
+
   return (
     <div className="min-h-screen">
       <div className="container py-2 px-4 md:px-6 mt-3">
@@ -63,6 +93,15 @@ const SubPage = ({
                   <p>No data found</p>
                 </div>
               )}
+            </div>
+
+            <div className="flex justify-center mt-12">
+              <Pagination
+                color="primary"
+                count={totalPage || 0}
+                page={page || 1}
+                onChange={handlePageChange}
+              />
             </div>
           </div>
 
@@ -157,7 +196,7 @@ const Card = ({ data }: { data: any }) => {
         </Link>
         <div
           dangerouslySetInnerHTML={{
-            __html: data?.content.slice(0, 200) + "...",
+            __html: data?.content?.trim()?.slice(0, 200) + "...",
           }}
           className="text-[#646464] md:text-sm text-xs pb-2.5 truncate md:whitespace-normal md:overflow-visible md:text-overflow-clip"
         ></div>
